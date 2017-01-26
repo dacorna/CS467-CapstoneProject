@@ -1,0 +1,11 @@
+Entrance
+This is the entrance to the dungeon/cave/whatever. It should be long and descriptive. There will be much fiction and mystery ahead for there are traps! And Puzzles!
+This is the short description
+0
+0
+1
+1
+1
+sword
+torch
+nail
