@@ -1,12 +1,15 @@
 #pragma once
 
+#include "Item.h"
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <vector>
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
+using std::vector;
 
 class Room
 {
@@ -15,6 +18,7 @@ protected:
 	// tentative - each room contains a max of four exits into other rooms
 	// currently named directionally 
 	Room *north, *east, *south, *west;
+	vector<Item> items;
 	// more to come
 public:
 	Room();
@@ -26,4 +30,6 @@ public:
 	virtual void setExits(Room*, Room*) {}
 	virtual void setExits(Room*, Room*, Room*) {}
 	virtual void setExits(Room*, Room*, Room*, Room*) {}
+	void addItem(Item);
+	void showItems();
 };

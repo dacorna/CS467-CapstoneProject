@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Item.h"
+#include <iostream>
 #include <vector>
 #include <string>
 using std::vector;
@@ -14,7 +15,7 @@ private:
 public:
 	Bag();
 	~Bag();
-	bool add(Item*);
+	bool add(Item);
 	bool hasItem(string);	// enter item.name
 	void displayBag();
 };

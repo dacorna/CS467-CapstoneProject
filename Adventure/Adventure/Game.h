@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Cave.h"
+#include "Character.h"
 #include <iostream>
 #include <vector>
 using std::vector;
@@ -12,6 +13,7 @@ class Game
 {
 private:
 	Cave cave;
+	Character player;
 	bool playerAlive;
 	int timeLimit;
 	int timeCount;
@@ -19,6 +21,6 @@ private:
 public:
 	Game();
 	~Game();
-	void startGame();
+	void startGame(string);
 	void enterRoom(Room*);
 };

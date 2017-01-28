@@ -11,7 +11,11 @@ private:
 	// more to come
 public:
 	Item();
+	Item(string);
+	Item(string, string);
 	~Item();
 	string getName() { return name; }
 	string getDescription() { return description; }
+	void setName(string);
+	void setDescription(string);
 };
