@@ -1,0 +1,12 @@
+#Template for Rooms
+Name of room
+Long form Description
+Short Description
+bool isVisited
+bool northLocked
+bool southLocked
+bool westLocked
+bool eastLocked
+item1
+item2
+item3

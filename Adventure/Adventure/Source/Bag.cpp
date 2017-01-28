@@ -13,8 +13,8 @@ bool Bag::hasItem(string itemName)
 	for (unsigned i = 0; i < items.size(); i++) {
 		if (items.at(i).getName() == itemName)
 			return true;
-	}
-	
+}
+
 	return false;	
 }
 
