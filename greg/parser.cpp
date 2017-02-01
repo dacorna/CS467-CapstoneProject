@@ -1,3 +1,4 @@
+#include <string>
 #include "parser.h"
 
  ParsedInput  parse(std::string input)
