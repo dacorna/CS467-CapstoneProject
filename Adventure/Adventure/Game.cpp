@@ -1,4 +1,6 @@
 #include "Game.h"
+#include <ios>
+#include <limits>
 
 Game::Game()
 {
@@ -34,6 +36,9 @@ void Game::startGame(string type)
 			if (timeCount > timeLimit) playerAlive = false;
 
 			cout << ">  ";
+			//cin.ignore(numeric_limits<streamsize>::max(), '\n');		- not defined 
+			// discard input buffer
+			cin.sync();
 			getline(cin, userInput);
 			p = parse(userInput);
 			// get commandID from command? maybe use enum to store commands? 
@@ -59,7 +64,7 @@ void Game::startGame(string type)
 			// other cases here 
 			default:
 				// likely invalid command - jump back to get user input again
-
+				break;
 			}
 			
 		} while (playerAlive);

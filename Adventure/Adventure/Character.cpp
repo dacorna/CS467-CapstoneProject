@@ -20,7 +20,7 @@ void Character::setName(string nameIn)
 void Character::enterRoom(Room* roomIn)
  {
 	if (roomIn != NULL)
-		 {
+		{
 		previousRoom = currentRoom;
 		currentRoom = roomIn;
 		if (currentRoom->getIsVisited() == false)
@@ -33,6 +33,7 @@ void Character::enterRoom(Room* roomIn)
 			cout << currentRoom->getShortDescription() << endl;
 			}
 		}
+
 	else
 		 {
 		cout << "You can't go that way!" << endl;

@@ -16,7 +16,7 @@ protected:
 public:
 	Character();
 	~Character();
-	void enterRoom(Room*) {}
+	void enterRoom(Room*);
 	void setCurrentRoom(Room* r) { currentRoom = r; }
 	Room* getRoom() { return currentRoom; }
 	Room* getPreviousRoom() { return previousRoom; }

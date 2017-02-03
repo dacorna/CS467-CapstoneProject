@@ -34,7 +34,7 @@ public:
 	//virtual void setExits(Room*) {}
 	//virtual void setExits(Room*, Room*) {}
 	//virtual void setExits(Room*, Room*, Room*) {}
-	virtual void setExits(Room*, Room*, Room*, Room*) {}
+	void setExits(Room*, Room*, Room*, Room*);
 	Room* getNorth(){ return north; }
 	Room* getSouth(){ return south; }
 	Room* getEast(){ return east; }
