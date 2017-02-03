@@ -1,0 +1,1 @@
+g++ -std=c++11 main.cpp Entrance.cpp Exit.cpp Room.cpp Character.cpp -o test.exe
