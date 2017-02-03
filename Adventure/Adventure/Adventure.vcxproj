@@ -64,21 +64,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Air.h" />
     <ClInclude Include="Bag.h" />
     <ClInclude Include="Cave.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="Earth.h" />
+    <ClInclude Include="Entrance.h" />
+    <ClInclude Include="Exit.h" />
+    <ClInclude Include="Fire.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GreatCavern.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Outside.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="TrollBridge.h" />
+    <ClInclude Include="Water.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Air.cpp" />
     <ClCompile Include="Bag.cpp" />
     <ClCompile Include="Cave.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Earth.cpp" />
+    <ClCompile Include="Entrance.cpp" />
+    <ClCompile Include="Exit.cpp" />
+    <ClCompile Include="Fire.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GreatCavern.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Outside.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="TrollBridge.cpp" />
+    <ClCompile Include="Water.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

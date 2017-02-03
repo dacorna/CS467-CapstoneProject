@@ -15,9 +15,10 @@ protected:
 public:
 	Character();
 	~Character();
-	virtual void enterRoom(Room*) {}
+	void enterRoom(Room*) {}
 	Room* getRoom() { return currentRoom; }
 	Room* getPreviousRoom() { return previousRoom; }
 	string getName() { return name; }
 	string getDescription() { return description; }
+	void setName(string);
 };

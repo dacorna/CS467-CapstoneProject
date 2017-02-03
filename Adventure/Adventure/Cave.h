@@ -1,6 +1,15 @@
 #pragma once
 
 #include "Room.h"
+#include "Entrance.h"
+#include "Exit.h"
+#include "GreatCavern.h"
+#include "Outside.h"
+#include "Fire.h"
+#include "Earth.h"
+#include "Air.h"
+#include "Water.h"
+#include "TrollBridge.h"
 
 class Cave
 {
@@ -8,6 +17,7 @@ private:
 	/*
 		Pointers to Rooms go here
 	*/
+	Room* outside;
 	Room* entrance;
 	Room* exit;
 	Room* fire;

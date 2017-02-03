@@ -19,3 +19,15 @@ void Room::showItems()
 	}
 }
 
+void Room::setIsVisited()
+{
+	isVisited = true;
+}
+
+void Room::setExits(Room* northIn, Room* southIn, Room* eastIn, Room* westIn)
+{
+	north = northIn;
+	south = southIn;
+	east = eastIn;
+	west = westIn;
+}
