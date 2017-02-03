@@ -21,8 +21,11 @@ private:
 	Room* mazeRoom;
 	// more rooms to come!
 	friend class Game;
+	//JP - should all of the items be contained in here, too?
 
 public:
 	Cave();
 	~Cave();
+	//setupRooms(); //This function will set the exits for each of the rooms, and then call the function (room method?) to load gamestate variables from the files
+	
 };

@@ -18,7 +18,6 @@ using std::vector;
 
 void loadRoom(string filename)
 {
-    string roomName, longDesc, shortDesc;
     bool isVisited, northLocked, southLocked, westLocked, eastLocked;
     //Have to figure out items, because there can be a variable amount -- Vector, duh
 	vector<string> items;
@@ -29,16 +28,7 @@ void loadRoom(string filename)
     std::ifstream roomFile (filename);
     if(roomFile.is_open())
     {
-		//These first calls to getline are standard, they will always be in every room file
-        getline(roomFile, buffer);
-        roomName = buffer;
-
-        getline(roomFile, buffer);
-        longDesc = buffer;
-
-        getline(roomFile, buffer);
-        shortDesc = buffer;
-
+		//These first calls to getline are standard, they will always be in every room file.
         getline(roomFile, buffer);
         isVisited = std::stoi(buffer);
 		
@@ -63,7 +53,8 @@ void loadRoom(string filename)
 		
 		
     }
-    cout << roomName << endl << longDesc << endl << shortDesc << endl << isVisited << endl << northLocked << ',' << southLocked << ',' << westLocked << ',' << eastLocked << endl;
+	
+	cout << isVisited << ',' << northLocked << ',' << southLocked << ',' << westLocked << ',' << eastLocked << endl;
 	
 	for(int j = 0; j < i; j++)
 	{
