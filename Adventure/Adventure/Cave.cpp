@@ -11,15 +11,17 @@ Cave::Cave()
 	earth = new Earth;
 	air = new Air;
 	trollBridge = new TrollBridge;
+	mazeRoom = new MazeRoom;
 	outside->setExits(entrance, NULL, NULL, NULL);
 	entrance->setExits(NULL, NULL, greatCavern, NULL);
 	exit->setExits(NULL, NULL, outside, NULL);
-	greatCavern->setExits(NULL, NULL, NULL, entrance);
-	fire->setExits(NULL, NULL, NULL, NULL);
+	greatCavern->setExits(mazeRoom, NULL, NULL, entrance);
+	fire->setExits(trollBridge, NULL, mazeRoom, NULL);
 	water->setExits(NULL, NULL, NULL, NULL);
-	earth->setExits(NULL, NULL, NULL, NULL);
+	earth->setExits(NULL, NULL, trollBridge, NULL);
 	air->setExits(NULL, NULL, NULL, NULL);
-	trollBridge->setExits(NULL, NULL, NULL, NULL);
+	trollBridge->setExits(NULL, fire, NULL, earth);
+	mazeRoom->setExits(NULL, greatCavern, NULL, fire);
 }
 
 Cave::~Cave()
@@ -33,4 +35,5 @@ Cave::~Cave()
 	delete earth;
 	delete air;
 	delete trollBridge;
+	delete mazeRoom;
 }

@@ -2,6 +2,7 @@
 
 #include "Cave.h"
 #include "Character.h"
+#include "parser.h"
 #include <iostream>
 #include <vector>
 using std::vector;
@@ -14,6 +15,8 @@ class Game
 private:
 	Cave cave;
 	Character player;
+	ParsedInput p;
+	string userInput;
 	bool playerAlive;
 	int timeLimit;
 	int timeCount;

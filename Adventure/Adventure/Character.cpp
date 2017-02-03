@@ -2,18 +2,20 @@
 
 Character::Character()
 {
-
+	isAlive = true;
+	name = "Player1";
+	description = "Cave dweller";
 }
 
 Character::~Character()
 {
-
+	
 }
 
 void Character::setName(string nameIn)
- {
+{
 	name = nameIn;
-	}
+}
 
 void Character::enterRoom(Room* roomIn)
  {

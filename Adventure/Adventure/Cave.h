@@ -10,6 +10,7 @@
 #include "Air.h"
 #include "Water.h"
 #include "TrollBridge.h"
+#include "MazeRoom.h"
 
 class Cave
 {

@@ -75,7 +75,9 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GreatCavern.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="MazeRoom.h" />
     <ClInclude Include="Outside.h" />
+    <ClInclude Include="parser.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="TrollBridge.h" />
     <ClInclude Include="Water.h" />
@@ -93,7 +95,9 @@
     <ClCompile Include="GreatCavern.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MazeRoom.cpp" />
     <ClCompile Include="Outside.cpp" />
+    <ClCompile Include="parser.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="TrollBridge.cpp" />
     <ClCompile Include="Water.cpp" />
