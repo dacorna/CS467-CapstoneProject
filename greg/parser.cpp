@@ -2,6 +2,8 @@
 #include <boost/algorithm/string.hpp>
 #include<map>
 #include <vector>
+#include <sstream>
+#include <algorithm>
 #include "parser.h"
 
 //define all basic commands
@@ -21,7 +23,7 @@ bool FindPreposition (std::string input);
 	ParsedInput p;
 	p = Separate(cInput);
 	
-	p = ValidateInput(p);
+	//p = ValidateInput(p);
 	
 	return p;
 }
@@ -29,17 +31,91 @@ bool FindPreposition (std::string input);
  ParsedInput  Separate(std::string input)
 {
 	ParsedInput p;
-	bool preposition;
+	//bool preposition;
+	int n = std::count(input.begin(), input.end(), ' ');
+	 std::string words[n+1];
+	
+   	 int i = 0;
+    	std::stringstream ssin(input);
+    	while (ssin.good() && i <= n){
+        		ssin >> words[i];
+        		++i;
+   	 }
+   	
+	 for(i = 0; i <=n; i++){
+        		std::cout << words[i] << std::endl;
+   	}
+
+	//preposition = FindPreposition(input);
+	//p.hasPreposition = preposition;
+
+	
+
+	//std::string delimiter = " ";
+	//p.command = input.substr(0, input.find(delimiter));
+	//input.erase(0,  p.command.length());
+	//p.action = input;
+	
+	std::map<std::string, std::string> m;
+	m["GO"]="GO";
+	m["HEAD"]="GO";
+	m["TRAVEL"]="GO";
+	m["HEAD TO"]="GO";
+	m["HEAD"]="GO";
+	
+	m["LOOK"]="LOOK";
+	m["LOOK UP"]="LOOK";
+	m["LOOK INSIDE"]="LOOK";
 
 
-	preposition = FindPreposition(input);
-	p.hasPreposition = preposition;
+	std::string command;
+	command = words[0];
+	int endCommand;
+	 for(i = 0; i <n; i++){
+		if ( m.find(command) == m.end() ) {
+  			//p.isParsed = false;
+		} else {
+  			p.command = m[command];
+			p.isParsed = true;
+			endCommand = i;
+		}
+		command.append(" ");
+		command.append(words[i+1]);  
+	}
 
-	std::string delimiter = " ";
-	p.command = input.substr(0, input.find(delimiter));
-	input.erase(0,  p.command.length());
-	p.action = input;
+	
+	//std::map<std::string, std::string> p;
+	//p["INTO"]="INTO";
+	
+	const char *GamePrepositions[] = {
+	                "ABOUT", 
+	                "WITH", 
+	                 "INTO",
+		"IN",
+		"THE"
+	 0};
+	std::string preposition;
+
+	p.action = words[endCommand+1];
+	
+	preposition =  words[endCommand+2];
+
+	 while (GamePrepositions[i] != '\0'){
+		if(std::strcmp (preposition.c_str(),GamePrepositions[i] ) == 0){
+			p.hasPreposition = 1;
+			p.preposition = preposition;
+			break;
+		}  
+
+		 i++;
+	}
+
+	p.secondAction = words[endCommand+3];
+
+
+
 	return p;
+
 }
 
 bool FindPreposition (std::string input){
@@ -58,7 +134,6 @@ bool FindPreposition (std::string input){
 	 while (GamePrepositions[i] != '\0'){
 		std::size_t found = input.find(GamePrepositions[i]);
 		if(found!=std::string::npos){
-			std::cout << "Hi ";
 			prepositions++;	
 		}        		
        		 i++;
@@ -83,6 +158,9 @@ ParsedInput  ValidateInput(ParsedInput p)
 	
 	std::map<std::string, std::string> m;
 	m["HEAD"]="GO";
+	m["TRAVEL"]="GO";
+	m["HEAD TO"]="GO";
+
 
 	if ( m.find(p.command) == m.end() ) {
   		p.isParsed = false;

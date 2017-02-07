@@ -6,6 +6,7 @@ struct ParsedInput{
   bool isParsed;
   bool hasPreposition;
   std::string command;
+  std::string preposition;
   std::string action;
   std::string secondAction;
 };
