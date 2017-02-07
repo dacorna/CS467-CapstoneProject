@@ -4,13 +4,12 @@
 
 struct ParsedInput{
   bool isParsed;
+  bool hasPreposition;
   std::string command;
   std::string action;
+  std::string secondAction;
 };
 
 ParsedInput parse(std::string ); 
-ParsedInput  Separate(std::string input);
-ParsedInput ValidateInput(ParsedInput p);
-std::string Capitalize (std::string str);
  
 #endif
