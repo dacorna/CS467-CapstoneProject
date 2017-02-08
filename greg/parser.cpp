@@ -30,89 +30,149 @@ bool FindPreposition (std::string input);
 
  ParsedInput  Separate(std::string input)
 {
+
+
 	ParsedInput p;
-	//bool preposition;
-	int n = std::count(input.begin(), input.end(), ' ');
-	 std::string words[n+1];
-	
+	p.isParsed = false;
+
+
+	std::string pattern = "THE ";
+	const char *filterList[] = {
+	                "THE ", 
+	                " THE",
+	                "'S",
+	 0};
+	int x = 0;
+	while (filterList[x] != '\0'){
+		std::string temp (filterList[x]);
+		std::string::size_type r = input.find(temp);
+   		while (r!= std::string::npos) {
+   			  input.erase(r,temp.length());
+   			  r = input.find(temp, r);
+  		 }
+		x++;
+	}
+
+
+
+
+	int nwords = std::count(input.begin(), input.end(), ' ')+1;
+	 std::string words[nwords];
    	 int i = 0;
     	std::stringstream ssin(input);
-    	while (ssin.good() && i <= n){
+    	while (ssin.good() && i < nwords){
         		ssin >> words[i];
         		++i;
    	 }
-   	
-	 for(i = 0; i <=n; i++){
+	 for(i = 0; i <nwords; i++){
         		std::cout << words[i] << std::endl;
    	}
 
-	//preposition = FindPreposition(input);
-	//p.hasPreposition = preposition;
-
 	
 
-	//std::string delimiter = " ";
-	//p.command = input.substr(0, input.find(delimiter));
-	//input.erase(0,  p.command.length());
-	//p.action = input;
 	
 	std::map<std::string, std::string> m;
 	m["GO"]="GO";
+	m["GO IN"]="GO";
+	m["GO TO"]="GO";
 	m["HEAD"]="GO";
 	m["TRAVEL"]="GO";
 	m["HEAD TO"]="GO";
 	m["HEAD"]="GO";
+	m["MOVE"]="GO";
 	
 	m["LOOK"]="LOOK";
 	m["LOOK UP"]="LOOK";
+	m["LOOK INTO"]="LOOK";
+	m["LOOK AT"]="LOOK";
 	m["LOOK INSIDE"]="LOOK";
-
+	m["INSPECT"]="LOOK";
+	m["SEARCH"]="LOOK";
 
 	std::string command;
-	command = words[0];
 	int endCommand;
-	 for(i = 0; i <n; i++){
-		if ( m.find(command) == m.end() ) {
-  			//p.isParsed = false;
-		} else {
-  			p.command = m[command];
+
+	if (nwords == 2){
+		p.hasPreposition = false;
+		if ( m.find(words[0] ) != m.end() ) {
+			p.command = m[words[0] ];
 			p.isParsed = true;
-			endCommand = i;
+		}else {
+
+			p.isParsed = false;
+			p.error = "Could not parse command. " ;
 		}
-		command.append(" ");
-		command.append(words[i+1]);  
+		p.firstObject = words[1];
+
+		std::string vObject;
+		vObject.append(words[0] );
+		vObject.append(" ");
+		vObject.append(words[1]);
+		if ( m.find(vObject ) != m.end() ) {
+			p.isParsed = false;
+			p.error = "Could not parse object. " ;
+		}
+
+		return p;
+
+	}else {
+
+	 	for(i = 0; i <nwords-1; i++){
+			command.append(words[i]);  
+			if ( m.find(command) != m.end() ) {
+  				p.command = m[command];
+				p.isParsed = true;
+				endCommand = i;
+			}
+			command.append(" ");
+		}
 	}
 
-	
-	//std::map<std::string, std::string> p;
-	//p["INTO"]="INTO";
-	
+	if(p.isParsed == false){
+		p.error = "Could not parse command. " ;
+		return p;
+	}  
+
+	int objectOneStart = endCommand+1;
 	const char *GamePrepositions[] = {
 	                "ABOUT", 
 	                "WITH", 
 	                 "INTO",
-		"IN",
-		"THE"
+	                 "IN",
+	                  "ON",
 	 0};
-	std::string preposition;
-
-	p.action = words[endCommand+1];
-	
-	preposition =  words[endCommand+2];
-
-	 while (GamePrepositions[i] != '\0'){
-		if(std::strcmp (preposition.c_str(),GamePrepositions[i] ) == 0){
-			p.hasPreposition = 1;
-			p.preposition = preposition;
-			break;
-		}  
-
-		 i++;
+	int s=0;
+	int t = 0;
+	int objectOneEnd = endCommand+1;
+	for(s =objectOneStart ; s <nwords; s++){
+        		 for (t=0;GamePrepositions[t] != '\0';t++){
+			if(std::strcmp (words[s].c_str(),GamePrepositions[t] ) == 0){
+				p.hasPreposition = true;
+				p.preposition = words[s];
+				objectOneEnd = s-1;
+				break;
+			}  
+			
+		}
 	}
 
-	p.secondAction = words[endCommand+3];
+	int y;
+	for(y=objectOneStart ;y<=objectOneEnd;y++){
+		p.firstObject.append(words[y]);
+		p.firstObject.append(" ");
+	}
+
+	if (p.hasPreposition == false){
+
+		return p;
+	}
 
 
+	int z;
+	for(z=objectOneEnd+2 ;z<nwords;z++){
+		p.secondObject.append(words[z]);
+		p.secondObject.append(" ");
+	}
 
 	return p;
 
@@ -121,8 +181,6 @@ bool FindPreposition (std::string input);
 bool FindPreposition (std::string input){
 
 	int prepositions = 0;
-	
-
 	const char *GamePrepositions[] = {
 	                "ABOUT", 
 	                "WITH", 

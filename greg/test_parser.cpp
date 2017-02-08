@@ -2,24 +2,62 @@
 #include <iostream>
 #include "parser.h"
  
+void Check(std::string input);
+
 int main()
 {
 
-	ParsedInput p;
-	std::string InputText = "look up [TEXT] in [something]";
+	std::string text;
 
-	p = parse(InputText);
+	text = "look up the";
+	Check(text);
+
+	std::cout << "****************************************************" << std::endl;
+
+
+	text = "look up the [TEXT] in's the [something's]";
+	Check(text);
+
+	std::cout << "****************************************************" << std::endl;
+
+
+	 text = "look at bird ";
+	Check(text);
+
+	std::cout << "****************************************************" << std::endl;
+
+	
+	text = "look look at bird ";
+	Check(text);
+
+	std::cout << "****************************************************" << std::endl;
+
+	 text = "fook up [TEXT] in [something]";
+	Check(text);
+
+
+	std::cout << std::endl;
+
+
+}
+
+void Check(std::string input){
+
+	ParsedInput p;
+	p = parse(input);
+
 
 	if (p.isParsed == true){
-		std::cout << "Original: " << InputText << std::endl;
-  		std::cout << "Output Command: " << p.command  << std::endl;
-		std::cout << "Output Action: " << p.action  << std::endl;
-		std::cout << "Has Preposition: " << p.hasPreposition << std::endl;
-		std::cout << "Preposition: " << p.preposition << std::endl;
-		std::cout << "Second Action: " << p.secondAction << std::endl;
+		std::cout << input << std::endl;
+  		std::cout << "Command: " << p.command  << "\t";
+		std::cout << "First Object: " << p.firstObject  << std::endl;
+		if (p.hasPreposition == true){
+			std::cout << "Preposition: " << p.preposition  << "\t";
+			std::cout << "Second Object: " << p.secondObject << std::endl;
+		}
   	}else {
-		std::cout << "Parse Error: " << InputText << std::endl;
+		std::cout << "Original: " << input << std::endl;
+		std::cout << "Parse Error: " << p.error << std::endl;
 	}
 
-	return 0;
 }
