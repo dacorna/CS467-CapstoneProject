@@ -8,7 +8,7 @@ using std::vector;
 
 class Exit : public Room
 {
-	public:
-		Exit();		
-	
+public:
+	Exit();
+
 };

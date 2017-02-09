@@ -6,9 +6,9 @@ using std::cin;
 using std::endl;
 using std::vector;
 
-class Entrance : public Room
-{
-public:
-	Entrance();
+class Water : public Room {
 
+public:
+	Water();
+	~Water();
 };

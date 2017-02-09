@@ -2,12 +2,14 @@
 
 Character::Character()
 {
-	
+	isAlive = true;
+	name = "Player1";
+	description = "Cave dweller";
 }
 
 Character::~Character()
 {
-
+	
 }
 
 void Character::setName(string nameIn)
@@ -16,23 +18,24 @@ void Character::setName(string nameIn)
 }
 
 void Character::enterRoom(Room* roomIn)
-{
-	if(roomIn != NULL)
-	{
+ {
+	if (roomIn != NULL)
+		{
 		previousRoom = currentRoom;
 		currentRoom = roomIn;
-		if(currentRoom->getIsVisited() == false)
-		{
+		if (currentRoom->getIsVisited() == false)
+			 {
 			currentRoom->setIsVisited();
 			cout << currentRoom->getLongDescription() << endl;
-		}
+			}
 		else
-		{
+			 {
 			cout << currentRoom->getShortDescription() << endl;
+			}
+		}
+
+	else
+		 {
+		cout << "You can't go that way!" << endl;
 		}
 	}
-	else
-	{
-		cout << "You can't go that way!" << endl;
-	}
-}
