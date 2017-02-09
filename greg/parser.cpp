@@ -41,6 +41,8 @@ bool FindPreposition (std::string input);
 	                "THE ", 
 	                " THE",
 	                "'S",
+		".",
+		"!",
 	 0};
 	int x = 0;
 	while (filterList[x] != '\0'){
@@ -64,23 +66,22 @@ bool FindPreposition (std::string input);
         		ssin >> words[i];
         		++i;
    	 }
-	 for(i = 0; i <nwords; i++){
-        		std::cout << words[i] << std::endl;
-   	}
+	 //for(i = 0; i <nwords; i++){
+        	//	std::cout << words[i] << std::endl;
+   	//}
 
-	
-
-	
 	std::map<std::string, std::string> m;
 	m["GO"]="GO";
 	m["GO IN"]="GO";
 	m["GO TO"]="GO";
 	m["HEAD"]="GO";
-	m["TRAVEL"]="GO";
 	m["HEAD TO"]="GO";
-	m["HEAD"]="GO";
+	m["TRAVEL"]="GO";
+	m["TRAVEL TO"]="GO";
 	m["MOVE"]="GO";
-	
+	m["MOVE TO"]="GO";
+	m["WALK"]="GO";
+
 	m["LOOK"]="LOOK";
 	m["LOOK UP"]="LOOK";
 	m["LOOK INTO"]="LOOK";
@@ -88,6 +89,23 @@ bool FindPreposition (std::string input);
 	m["LOOK INSIDE"]="LOOK";
 	m["INSPECT"]="LOOK";
 	m["SEARCH"]="LOOK";
+
+	m["EAT"]="CONSUME";
+	m["DRINK"]="CONSUME";
+	m["SIP"]="CONSUME";
+
+	m["ATTACK"]="ATTACK";
+	m["STRIKE"]="ATTACK";
+	m["SWING"]="ATTACK";
+	m["PUNCH"]="ATTACK";
+
+	m["TALK"]="TALK";
+	m["TALK TO"]="TALK";
+	m["SPEAK"]="TALK";
+	m["SPEAK TO"]="TALK";
+
+	m["SET"] = "SET";
+	m["PLACE"] = "SET";
 
 	std::string command;
 	int endCommand;
@@ -156,17 +174,20 @@ bool FindPreposition (std::string input);
 		}
 	}
 
+	if (p.hasPreposition == false){
+		int w;
+		for(w=objectOneStart ;w<nwords;w++){
+			p.firstObject.append(words[w]);
+			p.firstObject.append(" ");
+		}
+		return p;
+	}
+
 	int y;
 	for(y=objectOneStart ;y<=objectOneEnd;y++){
 		p.firstObject.append(words[y]);
 		p.firstObject.append(" ");
 	}
-
-	if (p.hasPreposition == false){
-
-		return p;
-	}
-
 
 	int z;
 	for(z=objectOneEnd+2 ;z<nwords;z++){

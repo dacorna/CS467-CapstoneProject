@@ -9,35 +9,32 @@ int main()
 
 	std::string text;
 
-	text = "look up the";
+	text = "attack troll";
 	Check(text);
 
 	std::cout << "****************************************************" << std::endl;
-
-
-	text = "look up the [TEXT] in's the [something's]";
-	Check(text);
-
-	std::cout << "****************************************************" << std::endl;
-
-
 	 text = "look at bird ";
 	Check(text);
 
 	std::cout << "****************************************************" << std::endl;
-
-	
-	text = "look look at bird ";
+	text = "look up the [TEXT] in's the [something's]";
 	Check(text);
 
 	std::cout << "****************************************************" << std::endl;
-
-	 text = "fook up [TEXT] in [something]";
+	 text = "Eat the yellow jelly bean with great bizantine fork.";
 	Check(text);
 
+	std::cout << "****************************************************" << std::endl;
+	 text = "Speak to the affable Ogre.";
+	Check(text);
 
-	std::cout << std::endl;
+	std::cout << "****************************************************" << std::endl;
+	 text = "Drink oily Potion";
+	Check(text);
 
+	std::cout << "****************************************************" << std::endl;
+	text = "look look at bird ";
+	Check(text);
 
 }
 
