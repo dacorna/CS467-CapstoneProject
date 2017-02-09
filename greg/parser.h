@@ -3,8 +3,13 @@
 
 
 struct ParsedInput{
+  bool isParsed;
+  std::string error;
+  bool hasPreposition;
   std::string command;
-  std::string action;
+  std::string preposition;
+  std::string firstObject;
+  std::string secondObject;
 };
 
 ParsedInput parse(std::string ); 
