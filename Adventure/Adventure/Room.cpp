@@ -11,6 +11,14 @@ void Room::addItem(Item item)
 	items.push_back(item);
 }
 
+void Room::removeItem(string item)
+{
+	for(unsigned i=0; i < items.size(); i++) {
+		if(items.at(i).getName() == item)
+			items.erase(items.begin() + i);
+	} 
+}
+
 void Room::showItems()
 {
 	for (unsigned i = 0; i < items.size(); i++) {

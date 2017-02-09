@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Room.h"
+#include "Bag.h"
 #include <string>
 using std::string;
 
@@ -12,7 +13,7 @@ protected:
 	bool isAlive;
 	Room* currentRoom;
 	Room* previousRoom;
-	// more to come
+	Bag bag;
 public:
 	Character();
 	~Character();
@@ -23,4 +24,5 @@ public:
 	string getName() { return name; }
 	string getDescription() { return description; }
 	void setName(string);
+	Bag getBag() {return bag;}
 };

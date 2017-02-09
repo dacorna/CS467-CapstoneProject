@@ -44,6 +44,41 @@ void Game::startGame(string type)
 			// get commandID from command? maybe use enum to store commands? 
 			// or perhaps map a command string to a function that does something? this would prevent having a huge switch statement
 			// just a test here
+			if(p.command == "GO") {
+				if(p.firstObject == "NORTH")
+					player.enterRoom(player.getRoom()->getNorth());
+				else if(p.firstObject == "SOUTH")
+					player.enterRoom(player.getRoom()->getSouth());
+				else if(p.firstObject == "EAST")
+					player.enterRoom(player.getRoom()->getEast());
+				else
+					player.enterRoom(player.getRoom()->getWest());
+			}
+			else if(p.command == "LOOK") {
+				if(p.firstObject == "ROOM")
+					player.getRoom()->getLongDescription();
+				else if(p.firstObject == "MAP")
+					if(player.getBag().hasItem("MAP"))
+						cout << "Looking at map..." << endl;
+				else if(p.firstObject == "BAG")
+					player.getBag().displayBag();
+				else
+					player.getRoom()->getShortDescription();
+			}
+			else if(p.command == "DROP") {
+				if(p.firstObject == "")
+					cout << "Drop what? " << endl;
+				else {
+					Item itm = player.getBag().getItem(p.firstObject);
+					if(itm.getName() != "noItem")
+						player.getRoom()->addItem(itm);
+
+					player.getBag().dropItem(p.firstObject);
+							 	
+				}
+			} 	  
+
+			/*
 			int commandId = 1;
 
 			switch (commandId) {
@@ -66,7 +101,8 @@ void Game::startGame(string type)
 				// likely invalid command - jump back to get user input again
 				break;
 			}
-			
+			*/
+
 		} while (playerAlive);
 
 		if (!playerAlive) {

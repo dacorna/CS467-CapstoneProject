@@ -17,5 +17,8 @@ public:
 	~Bag();
 	bool add(Item);
 	bool hasItem(string);	// enter item.name
+	int getItemIndex(string);
+	Item getItem(string);
 	void displayBag();
+	void dropItem(string);	
 };
