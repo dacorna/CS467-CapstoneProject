@@ -12,16 +12,27 @@ Cave::Cave()
 	air = new Air;
 	trollBridge = new TrollBridge;
 	mazeRoom = new MazeRoom;
+	bridge = new Bridge;
+	dragonLair = new DragonLair;
+	guardianPost = new GuardianPost;
+	library = new Library;
+	mine = new Mine;
+	treasure = new Treasure;
 	outside->setExits(entrance, NULL, NULL, NULL);
-	entrance->setExits(NULL, NULL, greatCavern, NULL);
-	exit->setExits(NULL, NULL, outside, NULL);
-	greatCavern->setExits(mazeRoom, NULL, NULL, entrance);
-	fire->setExits(trollBridge, NULL, mazeRoom, NULL);
-	water->setExits(NULL, NULL, NULL, NULL);
-	earth->setExits(NULL, NULL, trollBridge, NULL);
-	air->setExits(NULL, NULL, NULL, NULL);
-	trollBridge->setExits(NULL, fire, NULL, earth);
-	mazeRoom->setExits(NULL, greatCavern, NULL, fire);
+	entrance->setExits(greatCavern, NULL, NULL, NULL);
+	exit->setExits(outside, treasure, NULL, NULL);
+	greatCavern->setExits(bridge, NULL, fire, water);
+	fire->setExits(NULL, NULL, NULL, greatCavern);
+	water->setExits(NULL, NULL, greatCavern, NULL);
+	bridge->setExits(mine, greatCavern, NULL, NULL);
+	mine->setExits(mazeRoom, bridge, earth, library);
+	earth->setExits(air, NULL, NULL, mine);
+	air->setExits(NULL, earth, NULL, NULL);
+	library->setExits(NULL, NULL, mine, NULL);
+	trollBridge->setExits(guardianPost, mazeRoom, NULL, NULL);
+	mazeRoom->setExits(trollBridge, mine, NULL, NULL);
+	dragonLair->setExits(exit, guardianPost, NULL, treasure);
+	treasure->setExits(exit, NULL, dragonLair, NULL);
 }
 
 Cave::~Cave()

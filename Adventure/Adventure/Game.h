@@ -20,7 +20,7 @@ private:
 	bool playerAlive;
 	int timeLimit;
 	int timeCount;
-	// more to come
+	
 public:
 	Game();
 	~Game();
