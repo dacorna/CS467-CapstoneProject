@@ -2,6 +2,8 @@
 #include <ios>
 #include <limits>
 #include <fstream>
+#include <iostream>
+//#include <boost/filesystem.hpp>
 
 Game::Game()
 {
@@ -19,6 +21,7 @@ void Game::startGame(string type)
 {
 	if (type == "new") {
 		// start new game
+		setUpNewGame();
 		player.setCurrentRoom(cave.outside);
 		// load background/story files 
 		// below will likely be stored in a game background/story file that will be loaded in
@@ -124,7 +127,7 @@ void Game::enterRoom(Room* nextRoom)
 string Game::loadSavedGameList()
 {
 	vector<string> listOfGames;
-	string listFilename = "gamelist.txt";
+	string listFilename = "game.list";
 	string buffer;
 	int i = 0;
 	
@@ -160,66 +163,124 @@ string Game::loadSavedGameList()
 
 void Game::loadRoomFiles(string nameOfGame)
 {
-	cout << "Chosen game: " << nameOfGame << endl;
+	////I don't know of an easy way to iterate through the rooms, so I didn't
+	//std::ifstream airFile (nameOfGame + "\\" + "air.txt");
+	//if(airFile.is_open())
+	//{
+	//	getline(airFile, buffer);
+	//	cave.air->setIsVisited();
+	//}
+	//else
+	//{
+	//	//TODO: Handle the error
+	//}
+	//airFile.close();
+	//
+	//std::ifstream earthFile (nameOfGame + "\\" + "earth.txt");
+	//if(earthFile.is_open())
+	//{
+	//	cave.earth->setIsVisited();
+	//}
+	//else
+	//{
+	//	//TODO: Handle the error
+	//}
+	//earthFile.close();
+	//
+	//std::ifstream entranceFile (nameOfGame + "\\" + "entrance.txt");
+	//if(entranceFile.is_open())
+	//{
+	//	cave.entrance->setIsVisited();
+	//}
+	//else
+	//{
+	//	//TODO: Handle the error
+	//}
+	//entranceFile.close();
+	//
+	//std::ifstream exitFile (nameOfGame + "\\" + "exit.txt");
+	//if(exitFile.is_open())
+	//{
+	//	cave.exit->setIsVisited();
+	//}
+	//else
+	//{
+	//	//TODO: Handle the error
+	//}
+	//exitFile.close();
+	//
+	//std::ifstream fireFile (nameOfGame + "\\" + "fire.txt");
+	//if(fireFile.is_open())
+	//{
+	//	cave.fire->setIsVisited();
+	//}
+	//else
+	//{
+	//	//TODO: Handle the error
+	//}
+	//fireFile.close();
+	//
+	//cout << cave.air->getIsVisited() << endl;
+	//cout << cave.earth->getIsVisited() << endl;
+	//cout << cave.entrance->getIsVisited() << endl;
+	//cout << cave.exit->getIsVisited() << endl;
+	//cout << cave.fire->getIsVisited() << endl;
+}
 
-	std::ifstream airFile (nameOfGame + "\\" + "air.txt");
-	if(airFile.is_open())
+void Game::setUpNewGame()
+{
+	string gameNameUser;
+	string buffer;
+	vector<string> listOfGameNames;
+	bool uniqueName;
+	
+	//Read all of the previous game names
+	std::ifstream gameFileListRead;
+	gameFileListRead.open("game.list");
+	if(gameFileListRead.is_open())
 	{
-		cave.air->setIsVisited();
+		while(getline(gameFileListRead, buffer))
+		{
+			listOfGameNames.push_back(buffer);
+		}
 	}
 	else
 	{
-		//TODO: Handle the error
+		exit;
 	}
-	airFile.close();
-	
-	std::ifstream earthFile (nameOfGame + "\\" + "earth.txt");
-	if(earthFile.is_open())
+	//Check for uniqueness, and repeat until a unique name is provided
+	do
 	{
-		cave.earth->setIsVisited();
+		uniqueName = true;
+		cout << "Please choose a name for your new game" << endl << "(if already taken, you will be prompted again): ";
+		cin >> gameNameUser;
+		for(int i = 0; i < listOfGameNames.size(); i++)
+		{
+			if(gameNameUser == listOfGameNames[i])
+			{
+				uniqueName = false;
+			}
+		}
+	} while(uniqueName == false);
+	
+	gameFileListRead.close();
+	
+	//Open file to write, and write the new, unique game name to the end of the file
+	std::ofstream gameFileListWrite;
+	gameFileListWrite.open("game.list", std::ifstream::app);
+	if(gameFileListWrite.is_open())
+	{
+		gameFileListWrite << gameNameUser << endl;
 	}
 	else
 	{
-		//TODO: Handle the error
+		exit;
 	}
-	earthFile.close();
+	gameFileListWrite.close();
 	
-	std::ifstream entranceFile (nameOfGame + "\\" + "entrance.txt");
-	if(entranceFile.is_open())
-	{
-		cave.entrance->setIsVisited();
-	}
-	else
-	{
-		//TODO: Handle the error
-	}
-	entranceFile.close();
+	//Ok, now the game has a unique name listed in the game.list file, which was be used from loadgame
+	//Now to create a directory for this game's files
+	//boost::filesystem::path newDirectory(gameNameUser.c_str());
+	//boost::filesystem::path dir(newDirectory);
 	
-	std::ifstream exitFile (nameOfGame + "\\" + "exit.txt");
-	if(exitFile.is_open())
-	{
-		cave.exit->setIsVisited();
-	}
-	else
-	{
-		//TODO: Handle the error
-	}
-	exitFile.close();
-	
-	std::ifstream fireFile (nameOfGame + "\\" + "fire.txt");
-	if(fireFile.is_open())
-	{
-		cave.fire->setIsVisited();
-	}
-	else
-	{
-		//TODO: Handle the error
-	}
-	fireFile.close();
-	
-	cout << cave.air->getIsVisited() << endl;
-	cout << cave.earth->getIsVisited() << endl;
-	cout << cave.entrance->getIsVisited() << endl;
-	cout << cave.exit->getIsVisited() << endl;
-	cout << cave.fire->getIsVisited() << endl;
 }

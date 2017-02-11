@@ -28,4 +28,5 @@ public:
 	void enterRoom(Room*);
 	std::string loadSavedGameList();
 	void loadRoomFiles(string);
+	void setUpNewGame();
 };
