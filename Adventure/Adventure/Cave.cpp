@@ -55,3 +55,17 @@ Cave::~Cave()
 	delete mine;
 	delete treasure;
 }
+
+void Cave::setItems()
+{
+	entrance->addItem(map);
+	greatCavern->addItem(torch);
+	water->addItem(waterskin);
+	bridge->addItem(pickaxe);
+	mine->addItem(ore);
+	library->addItem(inkPot);
+	air->addItem(feather);
+	mazeRoom->addItem(sword);
+	guardianPost->addItem(goldPiece);
+	treasure->addItem(treasureChest);
+}

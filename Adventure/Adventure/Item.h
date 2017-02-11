@@ -8,7 +8,8 @@ class Item
 private:
 	string name;
 	string description;
-	// more to come
+	bool canPickup;
+	
 public:
 	Item();
 	Item(string);
@@ -18,4 +19,6 @@ public:
 	string getDescription() { return description; }
 	void setName(string);
 	void setDescription(string);
+	bool canPickupItem() { return canPickup; }
+	void setCanPickUp(bool);
 };

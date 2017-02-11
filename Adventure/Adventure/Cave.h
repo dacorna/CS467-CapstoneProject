@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Item.h"
 #include "Room.h"
 #include "Entrance.h"
 #include "Exit.h"
@@ -42,13 +43,26 @@ private:
 	Room* library;
 	Room* mine;
 	Room* treasure;
-	// more rooms to come!
+	
+	Item torch;
+	Item waterskin;
+	Item pickaxe;
+	Item ore;
+	Item feather;
+	Item inkPot;
+	Item sword;
+	Item goldPiece;
+	Item treasureChest;
+	Item map;
+
 	friend class Game;
 	//JP - should all of the items be contained in here, too?
+	// DC- yep, just started thinking about this, and it seems that they should
 
 public:
 	Cave();
 	~Cave();
+	void setItems();
 	//setupRooms(); //This function will set the exits for each of the rooms, and then call the function (room method?) to load gamestate variables from the files
 	
 };

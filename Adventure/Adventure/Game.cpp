@@ -14,6 +14,17 @@ Game::~Game()
 
 }
 
+void Game::displayCommands()
+{
+	cout << "Verbs which the game understands and what they do (Hint: there are more!)" << endl;
+	for (int i = 0; i < 20; i++)
+	{
+		if (commandTable[i][0] == "")
+			return;
+		cout << commandTable[i][0] << "  ---  " << commandTable[i][1] << endl;
+	}
+}
+
 void Game::startGame(string type)
 {
 	if (type == "new") {
@@ -85,14 +96,39 @@ void Game::startGame(string type)
 				if(p.firstObject == "")
 					cout << "Drop what? " << endl;
 				else {
+					// first add item to current room, then drop it from bag
 					Item itm = player.getBag().getItem(p.firstObject);
 					if(itm.getName() != "noItem")
 						player.getRoom()->addItem(itm);
 
 					player.getBag().dropItem(p.firstObject);
-							 	
+					cout << p.firstObject << " has been dropped" << endl;
 				}
-			} 	  
+			} 	
+			else if (p.command == "TAKE") {
+				if (p.firstObject == "")
+					cout << "Take what? " << endl;
+				else {
+					Room *rm = player.getRoom();
+					if (rm->hasItem(p.firstObject)) {
+						if (rm->getItem(p.firstObject).canPickupItem()) {
+							if (player.getBag().add(rm->getItem(p.firstObject)))
+								cout << p.firstObject << " has been added to your bag" << endl;
+						}
+						else
+							cout << "Can't reach that item yet!" << endl;
+					}
+					else
+						cout << "Nothing like that around here!" << endl;
+				}
+			}
+			else if (p.command == "INVENTORY") {
+				player.getBag().displayBag();
+			}
+			else if (p.command == "HELP") {
+				cout << endl;
+				displayCommands();
+			}
 
 			/*
 			int commandId = 1;
