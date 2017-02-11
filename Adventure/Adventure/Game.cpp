@@ -42,10 +42,10 @@ void Game::startGame(string type)
 			getline(cin, userInput);
 			p = parse(userInput);
 			// test return of parser
-			cout << "p.command = " << p.command << endl;
-			cout << "command length = " << p.command.length() << endl;
-			cout << "p.firstObject = " << p.firstObject << endl;
-			cout << "p.firstObject length = " << p.firstObject.length() << endl;  		
+			//cout << "p.command = " << p.command << endl;
+			//cout << "command length = " << p.command.length() << endl;
+			//cout << "p.firstObject = " << p.firstObject << endl;
+			//cout << "p.firstObject length = " << p.firstObject.length() << endl;  		
 	
 			
 			// considering using a table-driven method with function pointers 
@@ -73,7 +73,6 @@ void Game::startGame(string type)
 				  	   cout << "Looking at map..." << endl;
 				}
 				else if(p.firstObject == "BAG") {
-					
 					player.getBag().displayBag();
 				}
 				else {

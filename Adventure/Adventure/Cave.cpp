@@ -19,9 +19,9 @@ Cave::Cave()
 	mine = new Mine;
 	treasure = new Treasure;
 	outside->setExits(entrance, NULL, NULL, NULL);
-	entrance->setExits(greatCavern, NULL, NULL, NULL);
-	exit->setExits(outside, treasure, NULL, NULL);
-	greatCavern->setExits(bridge, NULL, fire, water);
+	entrance->setExits(greatCavern, outside, NULL, NULL);
+	exit->setExits(outside, dragonLair, NULL, NULL);
+	greatCavern->setExits(bridge, entrance, fire, water);
 	fire->setExits(NULL, NULL, NULL, greatCavern);
 	water->setExits(NULL, NULL, greatCavern, NULL);
 	bridge->setExits(mine, greatCavern, NULL, NULL);
@@ -31,6 +31,7 @@ Cave::Cave()
 	library->setExits(NULL, NULL, mine, NULL);
 	trollBridge->setExits(guardianPost, mazeRoom, NULL, NULL);
 	mazeRoom->setExits(trollBridge, mine, NULL, NULL);
+	guardianPost->setExits(dragonLair, trollBridge, NULL, NULL);
 	dragonLair->setExits(exit, guardianPost, NULL, treasure);
 	treasure->setExits(exit, NULL, dragonLair, NULL);
 }
@@ -47,4 +48,10 @@ Cave::~Cave()
 	delete air;
 	delete trollBridge;
 	delete mazeRoom;
+	delete bridge;
+	delete dragonLair;
+	delete guardianPost;
+	delete library;
+	delete mine;
+	delete treasure;
 }
