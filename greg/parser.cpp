@@ -90,6 +90,7 @@ bool FindPreposition (std::string input);
 	m["INSPECT"]="LOOK";
 	m["SEARCH"]="LOOK";
 
+	m["CONSUME"]="CONSUME";
 	m["EAT"]="CONSUME";
 	m["DRINK"]="CONSUME";
 	m["SIP"]="CONSUME";
@@ -106,6 +107,12 @@ bool FindPreposition (std::string input);
 
 	m["SET"] = "SET";
 	m["PLACE"] = "SET";
+
+	m["SAVE"] = "SAVE";
+	m["STORE"] = "SAVE";
+	m["LOAD"] = "LOAD";
+	m["RESTORE"] = "RESTORE";
+
 
 	std::string command;
 	int endCommand;
@@ -201,29 +208,6 @@ bool FindPreposition (std::string input);
 
 bool FindPreposition (std::string input){
 
-	int prepositions = 0;
-	const char *GamePrepositions[] = {
-	                "ABOUT", 
-	                "WITH", 
-	                 "ON",
-	                 "TO",
-	 0};
-	 int i =0;
-
-	 while (GamePrepositions[i] != '\0'){
-		std::size_t found = input.find(GamePrepositions[i]);
-		if(found!=std::string::npos){
-			prepositions++;	
-		}        		
-       		 i++;
-   	 }
-
-	if (prepositions == 1){
-		return 1;
-	} else {
-		return 0;
-	}
-		
 
 }
 
@@ -235,19 +219,4 @@ std::string Capitalize (std::string str){
 ParsedInput  ValidateInput(ParsedInput p)
 {
 	
-	std::map<std::string, std::string> m;
-	m["HEAD"]="GO";
-	m["TRAVEL"]="GO";
-	m["HEAD TO"]="GO";
-
-
-	if ( m.find(p.command) == m.end() ) {
-  		p.isParsed = false;
-	} else {
-  		p.command = m[p.command];
-		p.isParsed = true;
-	}
-
-	return p;
-
 }

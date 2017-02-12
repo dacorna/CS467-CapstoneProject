@@ -12,6 +12,9 @@ int main()
 	text = "attack troll";
 	Check(text);
 
+	text = "strike troll with sword";
+	Check(text);
+
 	std::cout << "****************************************************" << std::endl;
 	 text = "look at bird ";
 	Check(text);
@@ -33,7 +36,7 @@ int main()
 	Check(text);
 
 	std::cout << "****************************************************" << std::endl;
-	text = "look look at bird ";
+	text = "load Greg's game";
 	Check(text);
 
 }
