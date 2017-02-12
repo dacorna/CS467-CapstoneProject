@@ -4,7 +4,7 @@
 int main()
 {
 	Game newGame;
-	string nameOfGame;
+	string gameName;
 	cout << "Main Menu" << endl << endl;
 	cout << "1. Start a new game" << endl;
 	cout << "2. Continue saved game" << endl;
@@ -17,9 +17,9 @@ int main()
 		newGame.startGame("new");
 		break;
 	case 2:
-		cout << endl << "Choose a game ... " << endl;
-		nameOfGame = newGame.loadSavedGameList();	// this function will get list of all saved games, have user pick one, and then load that game instance
-		newGame.loadRoomFiles(nameOfGame);
+		gameName = newGame.loadSavedGameList();	// this function will get list of all saved games, have user pick one, and then load that game instance
+		newGame.loadGameFiles(gameName);
+		newGame.startGame("load");
 		break;
 	case 3:
 		cout << endl << "GOODBYE!" << endl;

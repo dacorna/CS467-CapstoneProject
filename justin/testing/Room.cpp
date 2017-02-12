@@ -27,6 +27,26 @@ void Room::showItems()
 	}
 }
 
+bool Room::hasItem(string itemName)
+{
+	for (unsigned i = 0; i < items.size(); i++) {
+		if (items.at(i).getName() == itemName)
+			return true;
+	}
+	return false;
+}
+
+Item Room::getItem(string itemName)
+{
+	for (unsigned i = 0; i < items.size(); i++) {
+		if (items.at(i).getName() == itemName)
+			return items.at(i);
+	}
+	// item not found
+	Item noItem("noItem");
+	return noItem;
+}
+
 void Room::setIsVisited()
 {
 	isVisited = true;
