@@ -36,12 +36,26 @@ int main()
 	Check(text);
 
 	std::cout << "****************************************************" << std::endl;
-	text = "load Greg's game";
+	text = "load Game";
 	Check(text);
 
 	std::cout << "****************************************************" << std::endl;
 	text = "save";
 	Check(text);
+
+	std::cout << "****************************************************" << std::endl;
+	text = "save game";
+	Check(text);
+
+	std::cout << "****************************************************" << std::endl;
+	text = "attack";
+	Check(text);
+
+	std::cout << "****************************************************" << std::endl;
+	text = "Speak to";
+	Check(text);
+
+
 
 }
 

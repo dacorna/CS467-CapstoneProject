@@ -66,15 +66,6 @@ bool FindPreposition (std::string input);
         		ssin >> words[i];
         		++i;
    	 }
-	 //for(i = 0; i <nwords; i++){
-        	//	std::cout << words[i] << std::endl;
-   	//}
-
-	if (nwords == 1){
-		p.isParsed = false;
-		p.error = "Could not parse command: Not enough words. " ;
-		return p;
-	}
 
 
 	std::map<std::string, std::string> m;
@@ -129,46 +120,29 @@ bool FindPreposition (std::string input);
 	std::string command;
 	int endCommand;
 
-	if (nwords == 2){
-		p.hasPreposition = false;
-		if ( m.find(words[0] ) != m.end() ) {
-			p.command = m[words[0] ];
+
+	 for(i = 0; i <nwords; i++){
+		command.append(words[i]);  
+		if ( m.find(command) != m.end() ) {
+  			p.command = m[command];
 			p.isParsed = true;
-		}else {
-
-			p.isParsed = false;
-			p.error = "Could not parse command. " ;
+			endCommand = i;
 		}
-		p.firstObject = words[1];
-
-		std::string vObject;
-		vObject.append(words[0] );
-		vObject.append(" ");
-		vObject.append(words[1]);
-		if ( m.find(vObject ) != m.end() ) {
-			p.isParsed = false;
-			p.error = "Could not parse object. " ;
-		}
-
-		return p;
-
-	}else {
-
-	 	for(i = 0; i <nwords-1; i++){
-			command.append(words[i]);  
-			if ( m.find(command) != m.end() ) {
-  				p.command = m[command];
-				p.isParsed = true;
-				endCommand = i;
-			}
-			command.append(" ");
-		}
+		command.append(" ");
 	}
-
 	if(p.isParsed == false){
 		p.error = "Could not parse command. " ;
 		return p;
 	}  
+
+	if(nwords == endCommand+1){
+		if (p.command != "SAVE" && p.command != "LOAD"){
+			p.isParsed = false;
+			p.error = "Could not parse command: Not enough words. " ;
+			return p;
+		}
+		
+	}
 
 	int objectOneStart = endCommand+1;
 	const char *GamePrepositions[] = {
