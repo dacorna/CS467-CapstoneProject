@@ -14,6 +14,17 @@ Game::~Game()
 
 }
 
+void Game::displayCommands()
+{
+	cout << "Verbs which the game understands and what they do (Hint: there are more!)" << endl;
+	for (int i = 0; i < 20; i++)
+	{
+		if (commandTable[i][0] == "")
+			return;
+		cout << commandTable[i][0] << "  ---  " << commandTable[i][1] << endl;
+	}
+}
+
 void Game::startGame(string type)
 {
 	if (type == "new") {
@@ -41,9 +52,16 @@ void Game::startGame(string type)
 			cin.sync();
 			getline(cin, userInput);
 			p = parse(userInput);
-			// get commandID from command? maybe use enum to store commands? 
-			// or perhaps map a command string to a function that does something? this would prevent having a huge switch statement
-			// just a test here
+			// test return of parser
+			//cout << "p.command = " << p.command << endl;
+			//cout << "command length = " << p.command.length() << endl;
+			//cout << "p.firstObject = " << p.firstObject << endl;
+			//cout << "p.firstObject length = " << p.firstObject.length() << endl;  		
+	
+			
+			// considering using a table-driven method with function pointers 
+			//  but for now we go with the big huge if-else block
+			  
 			if(p.command == "GO") {
 				if(p.firstObject == "NORTH")
 					player.enterRoom(player.getRoom()->getNorth());
@@ -55,28 +73,62 @@ void Game::startGame(string type)
 					player.enterRoom(player.getRoom()->getWest());
 			}
 			else if(p.command == "LOOK") {
-				if(p.firstObject == "ROOM")
-					player.getRoom()->getLongDescription();
-				else if(p.firstObject == "MAP")
+				
+				if(p.firstObject == "ROOM") {
+					
+					cout << player.getRoom()->getLongDescription() << endl;
+				}
+				else if(p.firstObject == "MAP") {
+					
 					if(player.getBag().hasItem("MAP"))
-						cout << "Looking at map..." << endl;
-				else if(p.firstObject == "BAG")
+				  	   cout << "Looking at map..." << endl;
+				}
+				else if(p.firstObject == "BAG") {
 					player.getBag().displayBag();
-				else
-					player.getRoom()->getShortDescription();
+				}
+				else {
+					cout << player.getRoom()->getLongDescription() << endl;
+				}
+				
 			}
 			else if(p.command == "DROP") {
+				cout << "Inside the drop block" << endl;
 				if(p.firstObject == "")
 					cout << "Drop what? " << endl;
 				else {
+					// first add item to current room, then drop it from bag
 					Item itm = player.getBag().getItem(p.firstObject);
 					if(itm.getName() != "noItem")
 						player.getRoom()->addItem(itm);
 
 					player.getBag().dropItem(p.firstObject);
-							 	
+					cout << p.firstObject << " has been dropped" << endl;
 				}
-			} 	  
+			} 	
+			else if (p.command == "TAKE") {
+				if (p.firstObject == "")
+					cout << "Take what? " << endl;
+				else {
+					Room *rm = player.getRoom();
+					if (rm->hasItem(p.firstObject)) {
+						if (rm->getItem(p.firstObject).canPickupItem()) {
+							if (player.getBag().add(rm->getItem(p.firstObject)))
+								cout << p.firstObject << " has been added to your bag" << endl;
+						}
+						else
+							cout << "Can't reach that item yet!" << endl;
+					}
+					else
+						cout << "Nothing like that around here!" << endl;
+				}
+			}
+			else if (p.command == "INVENTORY") {
+				player.getBag().displayBag();
+			}
+			else if (p.command == "HELP") {
+				cout << endl;
+				displayCommands();
+			}
 
 			/*
 			int commandId = 1;

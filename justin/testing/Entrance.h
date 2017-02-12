@@ -8,7 +8,7 @@ using std::vector;
 
 class Entrance : public Room
 {
-	public:
-		Entrance();		
-	
+public:
+	Entrance();
+
 };

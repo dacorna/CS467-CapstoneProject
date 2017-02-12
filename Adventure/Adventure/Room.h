@@ -19,9 +19,11 @@ protected:
 	vector<Item> items;
 	string longDescription;
 	string shortDescription;
+	string exploreStory;
 	bool isVisited = false;
 		//JP - 	In the specific room subclasses, would we want to put room specific booleans? Like switchPulled, or would be want something like northLocked, southLocked, etc? Just my ideas. I think something standard, like northLocked, etc would
 		//		make for easier loading and saving. Maybe set item states within the items?
+		// DC - I agree with a standard like northLocked, southLocked
 public:
 	Room();
 	~Room();
@@ -38,6 +40,8 @@ public:
 	void addItem(Item);
 	void removeItem(string);
 	void showItems();
+	bool hasItem(string);
+	Item getItem(string);
 	void setIsVisited();
 	bool getIsVisited() { return isVisited; } //needed for testing, might not actually need?
 	string getLongDescription() { return longDescription; }

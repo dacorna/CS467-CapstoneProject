@@ -1,1 +1,1 @@
-g++ -std=c++11 main.cpp Entrance.cpp Exit.cpp Room.cpp Character.cpp -o test.exe
+g++ -std=c++11 main.cpp Entrance.cpp Exit.cpp Room.cpp Air.cpp Bag.cpp Cave.cpp Character.cpp Earth.cpp Fire.cpp Game.cpp GreatCavern.cpp Item.cpp TrollBridge.cpp MazeRoom.cpp Outside.cpp Water.cpp parser.cpp -I C:\Users\Justin\Downloads\boost_1_63_0 -o test.exe

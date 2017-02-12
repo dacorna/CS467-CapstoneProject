@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Item.h"
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -14,11 +15,8 @@ class Room
 {
 protected:
 	string name;
-	// tentative - each room contains a max of four exits into other rooms
-	// currently named directionally 
 	Room *north, *east, *south, *west;
-	//vector<Item> items;
-	// more to come
+	vector<Item> items;
 	string longDescription;
 	string shortDescription;
 	bool isVisited = false;
@@ -27,19 +25,21 @@ protected:
 public:
 	Room();
 	~Room();
-	virtual string getName() {return name;}
-	// also tentative - unsure if I want to do it this way 
-	// setExits for a givenRoom can be implemented with anywhere from 1 to 4 exit rooms
-	virtual void setExits(Room*, Room*, Room*, Room*);
-	Room* getNorth(){ return north;}
-	Room* getSouth(){ return south;}
-	Room* getEast(){ return east;}
-	Room* getWest(){ return west;}
-	//void addItem(Item);
-	//void showItems();
+	virtual string getName() { return name; }
+	
+	//virtual void setExits(Room*) {}
+	//virtual void setExits(Room*, Room*) {}
+	//virtual void setExits(Room*, Room*, Room*) {}
+	void setExits(Room*, Room*, Room*, Room*);
+	Room* getNorth(){ return north; }
+	Room* getSouth(){ return south; }
+	Room* getEast(){ return east; }
+	Room* getWest(){ return west; }
+	void addItem(Item);
+	void removeItem(string);
+	void showItems();
 	void setIsVisited();
 	bool getIsVisited() { return isVisited; } //needed for testing, might not actually need?
 	string getLongDescription() { return longDescription; }
 	string getShortDescription() { return shortDescription; }
-	
 };

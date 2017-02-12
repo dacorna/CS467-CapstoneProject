@@ -20,10 +20,22 @@ private:
 	bool playerAlive;
 	int timeLimit;
 	int timeCount;
-	// more to come
+	string commandTable[20][2] = { 
+			{ "go [direction]", "moves player toward the direction given (north/east/etc)" } 
+			, { "look", "gives long description of current room" }
+			, { "look at [object]", "gives description of the object specified" }
+			, { "open [object]", "opens object specified if possible (ex. door, chest)" }
+			, { "take [object]", "adds object specified to player's bag, if possible" }
+			, { "inventory", "lists the items in player's bag" }
+			, { "use [object]", "if player has object, it may be used" }
+			, { "drop [object]", "remove object from player's bag" }
+			, { "explore", "walks player around current room to reveal intricacies" }
+	};
+	
 public:
 	Game();
 	~Game();
 	void startGame(string);
 	void enterRoom(Room*);
+	void displayCommands();
 };
