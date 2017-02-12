@@ -1,10 +1,9 @@
 #include <string>
 #include <boost/algorithm/string.hpp>
-#include <map>
+#include<map>
 #include <vector>
 #include <sstream>
 #include <algorithm>
-#include <iostream>
 #include "parser.h"
 
 //define all basic commands
@@ -90,6 +89,30 @@ ParsedInput  Separate(std::string input)
 	m["INSPECT"] = "LOOK";
 	m["SEARCH"] = "LOOK";
 
+	m["CONSUME"]="CONSUME";
+	m["EAT"]="CONSUME";
+	m["DRINK"]="CONSUME";
+	m["SIP"]="CONSUME";
+
+	m["ATTACK"]="ATTACK";
+	m["STRIKE"]="ATTACK";
+	m["SWING"]="ATTACK";
+	m["PUNCH"]="ATTACK";
+
+	m["TALK"]="TALK";
+	m["TALK TO"]="TALK";
+	m["SPEAK"]="TALK";
+	m["SPEAK TO"]="TALK";
+
+	m["SET"] = "SET";
+	m["PLACE"] = "SET";
+
+	m["SAVE"] = "SAVE";
+	m["STORE"] = "SAVE";
+	m["LOAD"] = "LOAD";
+	m["RESTORE"] = "LOAD";
+	
+	
 	std::string command;
 	int endCommand;
 

@@ -27,3 +27,8 @@ void Item::setDescription(string newDescription)
 	description = newDescription;
 }
 
+void Item::setCanPickUp(bool pickupable)
+{
+	canPickup = pickupable;
+}
+
