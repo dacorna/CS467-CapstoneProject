@@ -70,6 +70,13 @@ bool FindPreposition (std::string input);
         	//	std::cout << words[i] << std::endl;
    	//}
 
+	if (nwords == 1){
+		p.isParsed = false;
+		p.error = "Could not parse command: Not enough words. " ;
+		return p;
+	}
+
+
 	std::map<std::string, std::string> m;
 	m["GO"]="GO";
 	m["GO IN"]="GO";
@@ -110,7 +117,12 @@ bool FindPreposition (std::string input);
 
 	m["SAVE"] = "SAVE";
 	m["STORE"] = "SAVE";
+	m["SAVE GAME"] = "SAVE";
+	m["SAVEGAME"] = "SAVE";
+
 	m["LOAD"] = "LOAD";
+	m["LOAD GAME"] = "LOAD";
+	m["LOADGAME"] = "LOAD";
 	m["RESTORE"] = "LOAD";
 
 

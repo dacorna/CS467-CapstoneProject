@@ -39,6 +39,10 @@ int main()
 	text = "load Greg's game";
 	Check(text);
 
+	std::cout << "****************************************************" << std::endl;
+	text = "save";
+	Check(text);
+
 }
 
 void Check(std::string input){
