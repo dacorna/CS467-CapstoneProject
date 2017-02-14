@@ -34,9 +34,8 @@ bool FindPreposition (std::string input);
 
 	ParsedInput p;
 	p.isParsed = false;
+	p.hasPreposition = false;
 
-
-	std::string pattern = "THE ";
 	const char *filterList[] = {
 	                "THE ", 
 	                " THE",
@@ -54,9 +53,6 @@ bool FindPreposition (std::string input);
   		 }
 		x++;
 	}
-
-
-
 
 	int nwords = std::count(input.begin(), input.end(), ' ')+1;
 	 std::string words[nwords];
@@ -131,14 +127,14 @@ bool FindPreposition (std::string input);
 		command.append(" ");
 	}
 	if(p.isParsed == false){
-		p.error = "Could not parse command. " ;
+		p.error = "Could not parse command: command not found!" ;
 		return p;
 	}  
 
 	if(nwords == endCommand+1){
 		if (p.command != "SAVE" && p.command != "LOAD"){
 			p.isParsed = false;
-			p.error = "Could not parse command: Not enough words. " ;
+			p.error = "Could not parse command: no objects!" ;
 			return p;
 		}
 		
@@ -192,17 +188,7 @@ bool FindPreposition (std::string input);
 
 }
 
-bool FindPreposition (std::string input){
-
-
-}
-
 std::string Capitalize (std::string str){
 	boost::to_upper(str);
 	return str;
-}
-
-ParsedInput  ValidateInput(ParsedInput p)
-{
-	
 }

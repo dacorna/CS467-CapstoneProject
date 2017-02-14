@@ -55,6 +55,15 @@ int main()
 	text = "Speak to";
 	Check(text);
 
+	std::cout << "****************************************************" << std::endl;
+	text = "";
+	Check(text);
+
+	std::cout << "****************************************************" << std::endl;
+	text = " ";
+	Check(text);
+
+
 
 
 }
