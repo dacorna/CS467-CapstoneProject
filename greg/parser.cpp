@@ -93,7 +93,6 @@ bool FindPreposition (std::string input);
 	m["ATTACK"]="ATTACK";
 	m["STRIKE"]="ATTACK";
 	m["SWING"]="ATTACK";
-	m["PUNCH"]="ATTACK";
 
 	m["TALK"]="TALK";
 	m["TALK TO"]="TALK";
@@ -164,6 +163,7 @@ bool FindPreposition (std::string input);
 	                 "INTO",
 	                 "IN",
 	                  "ON",
+		"AT",
 	 0};
 	int s=0;
 	int t = 0;
