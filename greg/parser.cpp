@@ -122,7 +122,9 @@ bool FindPreposition (std::string input);
 	m["RESTORE"] = "LOAD";
 
 	m["INVENTORY"] =  "INVENTORY"	;
-	m["BAG"] =  "BAG"	;
+	m["BAG"] =  "BAG";
+
+	m["EXPLORE"] =  "EXPLORE";
 
 	m["HELP"] =  "HELP";
 	m["?"] =  "HELP";
