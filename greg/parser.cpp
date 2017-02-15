@@ -77,12 +77,13 @@ bool FindPreposition (std::string input);
 	m["WALK"]="GO";
 
 	m["LOOK"]="LOOK";
-	m["LOOK UP"]="LOOK";
-	m["LOOK INTO"]="LOOK";
-	m["LOOK AT"]="LOOK";
-	m["LOOK INSIDE"]="LOOK";
-	m["INSPECT"]="LOOK";
-	m["SEARCH"]="LOOK";
+	
+	m["LOOK AT"]="LOOK  AT";
+                     m["LOOK UP"]="LOOK  AT";
+	m["LOOK INTO"]="LOOK  AT";
+	m["LOOK INSIDE"]="LOOK  AT";
+	m["INSPECT"]="LOOK  AT";
+	m["SEARCH"]="LOOK AT";
 
 	m["CONSUME"]="CONSUME";
 	m["EAT"]="CONSUME";
@@ -102,6 +103,14 @@ bool FindPreposition (std::string input);
 	m["SET"] = "SET";
 	m["PLACE"] = "SET";
 
+	m["TAKE"] = "TAKE";
+	m["GRAB"] = "TAKE";
+	m["PICK UP"] = "TAKE";
+	m["PICKUP"] = "TAKE";
+
+	m["DROP"] = "DROP";
+	m["LEAVE"] = "DROP";
+
 	m["SAVE"] = "SAVE";
 	m["STORE"] = "SAVE";
 	m["SAVE GAME"] = "SAVE";
@@ -112,6 +121,11 @@ bool FindPreposition (std::string input);
 	m["LOADGAME"] = "LOAD";
 	m["RESTORE"] = "LOAD";
 
+	m["INVENTORY"] =  "INVENTORY"	;
+	m["BAG"] =  "BAG"	;
+
+	m["HELP"] =  "HELP";
+	m["?"] =  "HELP";
 
 	std::string command;
 	int endCommand;
@@ -132,7 +146,8 @@ bool FindPreposition (std::string input);
 	}  
 
 	if(nwords == endCommand+1){
-		if (p.command != "SAVE" && p.command != "LOAD"){
+		if (p.command != "SAVE" && p.command != "LOAD"
+			 && p.command != "INVENTORY"  && p.command != "HELP"){
 			p.isParsed = false;
 			p.error = "Could not parse command: no objects!" ;
 			return p;
