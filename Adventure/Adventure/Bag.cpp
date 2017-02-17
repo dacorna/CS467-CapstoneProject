@@ -11,9 +11,9 @@ Bag::~Bag()
 bool Bag::hasItem(string itemName)
 {
 	for (unsigned i = 0; i < items.size(); i++) {
-		if (items.at(i).getName() == itemName)
+		if (items.at(i)->getName() == itemName)
 			return true;
-}
+	}
 
 	return false;	
 }
@@ -21,38 +21,47 @@ bool Bag::hasItem(string itemName)
 int Bag::getItemIndex(string itemName)
 {
 	for(unsigned i = 0; i < items.size(); i++) {
-		if (items.at(i).getName() == itemName)
+		if (items.at(i)->getName() == itemName)
 			return i;
 	}
 	// item not found
 	return -1;
 }
 
-Item Bag::getItem(string itemName)
+Item* Bag::getItem(string itemName)
 {
 	for(unsigned i = 0; i < items.size(); i++) {
-		if (items.at(i).getName() == itemName)
+		if (items.at(i)->getName() == itemName)
 			return items.at(i);
 	}
 	// item not found
-	Item noItem("noItem");
-	return noItem;	 
+	//Item noItem("noItem");
+	//return &noItem;
+	return NULL;		 
 }
 
-bool Bag::add(Item item)
+bool Bag::add(Item* item)
 {
-	if (hasItem(item.getName())) {
+	if (hasItem(item->getName())) {
 		std::cout << "Item already in bag" << std::endl;
 		return false;
 	}
 	items.push_back(item);
+	
 	return true;
 }
 
 void Bag::displayBag()
 {
+	
+	if(items.size() == 0)
+	{
+		std::cout << "You have nothing in your bag!" << std::endl; 
+		return;
+	}
+	std::cout << "Player inventory: " << std::endl; 
 	for (unsigned i = 0; i < items.size(); i++) {
-		std::cout << "\nItem " << i + 1 << ": " << items.at(i).getName() << std::endl;
+		std::cout << "\nItem " << i + 1 << ": " << items.at(i)->getName() << std::endl;
 	}
 }
 

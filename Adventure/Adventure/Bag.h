@@ -11,14 +11,14 @@ class Bag
 {
 private:
 	int maxSize;
-	vector<Item> items;
+	vector<Item*> items;
 public:
 	Bag();
 	~Bag();
-	bool add(Item);
+	bool add(Item*);
 	bool hasItem(string);	// enter item.name
 	int getItemIndex(string);
-	Item getItem(string);
+	Item* getItem(string);
 	void displayBag();
 	void dropItem(string);	
 };

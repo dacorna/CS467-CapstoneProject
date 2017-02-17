@@ -3,6 +3,7 @@
 #include "Cave.h"
 #include "Character.h"
 #include "parser.h"
+#include "Bag.h"
 #include <iostream>
 #include <vector>
 using std::vector;
@@ -15,6 +16,7 @@ class Game
 private:
 	Cave cave;
 	Character player;
+	Bag bag;
 	ParsedInput p;
 	string userInput;
 	bool playerAlive;
@@ -32,10 +34,19 @@ private:
 			, { "explore", "walks player around current room to reveal intricacies" }
 	};
 	
+	string gameName;
+	
 public:
 	Game();
 	~Game();
 	void startGame(string);
 	void enterRoom(Room*);
 	void displayCommands();
+	
+	std::string loadSavedGameList();
+	void loadGameFiles(string);
+	void setUpNewGame();
+	void saveGameFiles(string);
+	void setGameName(string);
+	string getGameName();
 };

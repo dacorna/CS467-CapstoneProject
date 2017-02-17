@@ -22,9 +22,7 @@
 class Cave
 {
 private:
-	/*
-		Pointers to Rooms go here
-	*/
+	
 	Room* outside;
 	Room* entrance;
 	Room* exit;
@@ -44,16 +42,16 @@ private:
 	Room* mine;
 	Room* treasure;
 	
-	Item torch;
-	Item waterskin;
-	Item pickaxe;
-	Item ore;
-	Item feather;
-	Item inkPot;
-	Item sword;
-	Item goldPiece;
-	Item treasureChest;
-	Item map;
+	Item* torch;
+	Item* waterskin;
+	Item* pickaxe;
+	Item* ore;
+	Item* feather;
+	Item* inkPot;
+	Item* sword;
+	Item* goldPiece;
+	Item* treasureChest;
+	Item* map;
 
 	friend class Game;
 	//JP - should all of the items be contained in here, too?
@@ -63,6 +61,8 @@ public:
 	Cave();
 	~Cave();
 	void setItems();
+	void setLocks();
+	void unlockAllDoors();
 	//setupRooms(); //This function will set the exits for each of the rooms, and then call the function (room method?) to load gamestate variables from the files
 	
 };

@@ -19,6 +19,7 @@ void Character::setName(string nameIn)
 
 void Character::enterRoom(Room* roomIn)
  {
+	 
 	if (roomIn != NULL)
 		{
 		previousRoom = currentRoom;
@@ -30,6 +31,7 @@ void Character::enterRoom(Room* roomIn)
 			}
 		else
 			 {
+			 
 			cout << currentRoom->getShortDescription() << endl;
 			}
 		}
