@@ -65,6 +65,11 @@ bool FindPreposition (std::string input);
 
 
 	std::map<std::string, std::string> m;
+
+	m["PUSH"] = "PUSH";
+	m["CHEAT"] = "CHEAT";
+	m["USE"] = "USE";
+
 	m["GO"]="GO";
 	m["GO IN"]="GO";
 	m["GO TO"]="GO";
@@ -75,6 +80,12 @@ bool FindPreposition (std::string input);
 	m["MOVE"]="GO";
 	m["MOVE TO"]="GO";
 	m["WALK"]="GO";
+
+	m["NORTH"] = "quickGO";
+	m["SOUTH"] = "quickGO";
+	m["EAST"] = "quickGO";
+	m["WEST"] = "quickGO";
+
 
 	m["LOOK"]="LOOK";
 	
@@ -147,6 +158,14 @@ bool FindPreposition (std::string input);
 	}  
 
 	if(nwords == endCommand+1){
+
+		if (p.command == "quickGO"){
+			p.command = "GO";
+			p.firstObject = words[0];
+			p.isParsed = true;
+			return p;
+
+		}
 		if (p.command != "SAVE" && p.command != "LOAD"
 			 && p.command != "INVENTORY"  && p.command != "HELP"){
 			p.isParsed = false;
