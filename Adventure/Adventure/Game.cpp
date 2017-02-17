@@ -85,9 +85,12 @@ void Game::startGame(string type)
 			cout << "p.firstObject = " << p.firstObject << endl;
 			cout << "p.firstObject length = " << p.firstObject.length() << endl;  		
 			*/
+			// this is for testing until certain commands are added to the parser 
 			trim(userInput);
-			if(userInput == "cheat")
+			if (userInput == "cheat")
 				p.command = "CHEAT";
+			else if (userInput == "explore")
+				p.command = "EXPLORE";
 
 			rm = player.getRoom();
 			
@@ -191,6 +194,9 @@ void Game::startGame(string type)
 				else 
 					cout << "There's nothing to push here." << endl;
 						 
+			}
+			else if (p.command == "EXPLORE") {
+				cout << rm->getExploreStory() << endl;
 			}
 			else if (p.command == "CHEAT") {
 				cave.unlockAllDoors();

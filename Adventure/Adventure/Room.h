@@ -47,6 +47,7 @@ public:
 	bool getIsVisited() { return isVisited; } //needed for testing, might not actually need?
 	string getLongDescription() { return longDescription; }
 	string getShortDescription() { return shortDescription; }
+	string getExploreStory() { return exploreStory; }
 	bool isLocked(string);
 	void setLock(int, bool);
 	virtual bool pushSwitch() {}
