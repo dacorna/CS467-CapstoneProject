@@ -51,5 +51,7 @@ public:
 	bool isLocked(string);
 	void setLock(int, bool);
 	virtual bool pushSwitch() {}
-	virtual bool FireExtinguished() {} 	
+	virtual bool FireExtinguished() {} 
+	virtual void extinguishFire() {}
+	virtual bool switchState() {}
 };

@@ -18,8 +18,3 @@ bool Fire::pushSwitch()
 	switchPushed = !currentState;
 	return switchPushed;
 }
-
-void Fire::extinguishFire()
-{
-	fireExtinguished = true;
-}
