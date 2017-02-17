@@ -167,7 +167,8 @@ bool FindPreposition (std::string input);
 
 		}
 		if (p.command != "SAVE" && p.command != "LOAD"
-			 && p.command != "INVENTORY"  && p.command != "HELP"){
+			 && p.command != "INVENTORY"  && p.command != "HELP"
+                                                                && p.command != "CHEAT"){
 			p.isParsed = false;
 			p.error = "Could not parse command: no objects!" ;
 			return p;
