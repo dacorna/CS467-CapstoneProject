@@ -16,10 +16,7 @@ int main()
 		newGame.startGame("new");
 		break;
 	case 2:
-		gameName = newGame.loadSavedGameList();	// this function will get list of all saved games, have user pick one, and then load that game instance
-		newGame.loadGameFiles(gameName);
-		newGame.startGame("load");
-		break;
+		// loadSavedGameList();	// this function will get list of all saved games, have user pick one, and then load that game instance
 		break;
 	case 3:
 		cout << endl << "GOODBYE!" << endl;
