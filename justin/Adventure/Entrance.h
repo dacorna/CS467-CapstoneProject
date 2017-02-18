@@ -10,5 +10,6 @@ class Entrance : public Room
 {
 public:
 	Entrance();
+	~Entrance();
 
 };

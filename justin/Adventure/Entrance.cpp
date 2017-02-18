@@ -12,3 +12,6 @@ Entrance::Entrance()
 	longDescription = "This is the entrance. It is dark and gloomy. Dust covers everything. In the corner, there is a faint light to the north.";
 	shortDescription = "This is the entrance. There is light to the north.";
 }
+
+Entrance::~Entrance()
+{}

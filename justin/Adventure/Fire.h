@@ -7,9 +7,6 @@ using std::endl;
 using std::vector;
 
 class Fire : public Room{
-private:
-	bool switchPushed;
-	bool fireExtinguished;
 
 public:
 	Fire();

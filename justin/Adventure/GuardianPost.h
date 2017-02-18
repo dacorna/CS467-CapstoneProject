@@ -12,4 +12,5 @@ class GuardianPost : public Room {
 
 public:
 	GuardianPost();
+	~GuardianPost();
 };

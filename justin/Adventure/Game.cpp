@@ -74,7 +74,7 @@ void Game::startGame(string type)
 			cout << endl << endl;	
 			
 			p = parse(userInput);
-			// trim any leading or trailing white spaces
+			//trim any leading or trailing white spaces
 			trim(p.command);
 			trim(p.firstObject);
 			trim(p.secondObject);
@@ -86,11 +86,11 @@ void Game::startGame(string type)
 			cout << "p.firstObject length = " << p.firstObject.length() << endl;  		
 			*/
 			// this is for testing until certain commands are added to the parser 
-			trim(userInput);
-			if (userInput == "cheat")
-				p.command = "CHEAT";
-			else if (userInput == "explore")
-				p.command = "EXPLORE";
+			//trim(userInput);
+			//if (userInput == "cheat")
+			//	p.command = "CHEAT";
+			//else if (userInput == "explore")
+			//	p.command = "EXPLORE";
 
 			rm = player.getRoom();
 			

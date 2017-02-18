@@ -12,3 +12,6 @@ Exit::Exit()
 	longDescription = "This is the exit. It is dark and gloomy. Dust covers everything. Go forth to be outside again.";
 	shortDescription = "This is the exit. You win! Go anywhere to get back outside.";
 }
+
+Exit::~Exit()
+{}

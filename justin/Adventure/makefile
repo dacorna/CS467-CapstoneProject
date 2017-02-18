@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++0x -lboost_system -lboost_filesystem
+CXXFLAGS = -std=c++0x -lboost_system -lboost_filesystem -ggdb
 
 PROGS = test
 

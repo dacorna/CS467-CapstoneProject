@@ -12,4 +12,5 @@ class Mine : public Room {
 
 public:
 	Mine();
+	~Mine();
 };

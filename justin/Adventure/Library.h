@@ -12,4 +12,5 @@ class Library : public Room {
 
 public:
 	Library();
+	~Library();
 };
