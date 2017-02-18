@@ -18,9 +18,10 @@ Cave::Cave()
 	library = new Library;
 	mine = new Mine;
 	treasure = new Treasure;
+	outsideEnd = new OutsideEnd;
 	outside->setExits(entrance, NULL, NULL, NULL);
 	entrance->setExits(greatCavern, outside, NULL, NULL);
-	exit->setExits(outside, dragonLair, NULL, NULL);
+	exit->setExits(outsideEnd, dragonLair, outsideEnd, outsideEnd);
 	greatCavern->setExits(bridge, entrance, fire, water);
 	fire->setExits(NULL, NULL, NULL, greatCavern);
 	water->setExits(NULL, NULL, greatCavern, NULL);
@@ -63,6 +64,7 @@ Cave::~Cave()
 	delete guardianPost;
 	delete library;
 	delete mine;
+	delete outsideEnd;
 	delete treasure;
 	delete map;
 	delete torch;

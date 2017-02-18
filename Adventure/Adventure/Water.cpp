@@ -10,3 +10,11 @@ Water::Water() {
 Water::~Water() {
 
 }
+
+void Water::useItem(Bag bag, string item)
+{
+	if (item == "WATERSKIN") {
+		// check if bag has waterskin
+		// fill waterskin with water
+	}
+}

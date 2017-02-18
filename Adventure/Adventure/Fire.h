@@ -18,4 +18,5 @@ public:
 	bool FireExtinguished() { return fireExtinguished; }
 	void extinguishFire() { fireExtinguished = true; }
 	bool switchState() { return switchPushed; }
+	void useItem(Bag, string);
 };

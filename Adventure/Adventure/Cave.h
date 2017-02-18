@@ -18,6 +18,7 @@
 #include "Library.h"
 #include "Mine.h"
 #include "Treasure.h"
+#include "OutsideEnd.h"
 
 class Cave
 {
@@ -41,7 +42,8 @@ private:
 	Room* library;
 	Room* mine;
 	Room* treasure;
-	
+	Room* outsideEnd;
+
 	Item* torch;
 	Item* waterskin;
 	Item* pickaxe;

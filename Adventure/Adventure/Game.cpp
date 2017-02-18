@@ -58,6 +58,10 @@ void Game::startGame(string type)
 	cout << endl << player.getRoom()->getLongDescription() << endl;
 	cin.get();
 		do {
+			if(player.getRoom()->getName() == "OutsideEnd") {
+				cout << "Safe travels!" << endl;
+				return; 	
+			}
 			timeCount++;
 			if(timeCount > timeLimit) playerAlive = false;
 
@@ -85,12 +89,19 @@ void Game::startGame(string type)
 			cout << "p.firstObject = " << p.firstObject << endl;
 			cout << "p.firstObject length = " << p.firstObject.length() << endl;  		
 			*/
+
 			// this is for testing until certain commands are added to the parser 
+			// ********************************************************************
 			trim(userInput);
 			if (userInput == "cheat")
 				p.command = "CHEAT";
-			else if (userInput == "explore")
-				p.command = "EXPLORE";
+			//else if (userInput == "explore")
+			//	p.command = "EXPLORE";
+			else if (userInput == "uncheat")
+				p.command = "UNCHEAT";
+			else if (userInput == "use")
+				p.command = "USE";
+			// ********************************************************************
 
 			rm = player.getRoom();
 			
@@ -117,6 +128,9 @@ void Game::startGame(string type)
 						player.enterRoom(rm->getWest());
 					else
 						cout << "The door is locked" << endl;
+				}
+				else if (p.firstObject == "BACK") {
+					player.enterRoom(player.getPreviousRoom());
 				}
 				else
 					cout << "I don't know where that is" << endl; 
@@ -159,8 +173,11 @@ void Game::startGame(string type)
 				}
 			} 	
 			else if (p.command == "TAKE") {
+				if (p.firstObject == "treasure") p.firstObject = "TREASURECHEST";	// temporary fix
+				if (p.firstObject == "ink") p.firstObject = "INKPOT";			// same
 				if (p.firstObject == "")
 					cout << "Take what? " << endl;
+				
 				else {
 					
 					if (rm->hasItem(p.firstObject)) {
@@ -182,7 +199,8 @@ void Game::startGame(string type)
 			}
 			else if (p.command == "PUSH") {
 				// push the switch
-				if(player.getRoom()->getName() == "fire")
+				if(player.getRoom()->getName() == "Fire") {
+					rm->extinguishFire(); // temp add for testing and fun until full implementation
 					if(player.getRoom()->FireExtinguished()) {
 						bool lock;
 						lock = player.getRoom()->pushSwitch();
@@ -191,6 +209,7 @@ void Game::startGame(string type)
 					}
 					else
 						cout << "A fire blocks you from pushing the switch!" << endl;
+				}
 				else 
 					cout << "There's nothing to push here." << endl;
 						 
@@ -198,9 +217,17 @@ void Game::startGame(string type)
 			else if (p.command == "EXPLORE") {
 				cout << rm->getExploreStory() << endl;
 			}
+			else if(p.command == "USE") {
+				// call rm->useItem(bag, p.firstObject);	// uses an item however it was intended in given room
+				cout << "Sorry, we haven't implemented that yet!" << endl;
+			} 
 			else if (p.command == "CHEAT") {
 				cave.unlockAllDoors();
 				cout << "CHEAT CODE ACTIVATED! All doors have been unlocked. Proceed with caution." << endl;  
+			}
+			else if (p.command == "UNCHEAT") {
+				cave.setLocks();
+				cout << "Cheat code has been deactivated. All locks have been reset" << endl;
 			}
 			else if (p.command == "INVENTORY") {
 				bag.displayBag();
