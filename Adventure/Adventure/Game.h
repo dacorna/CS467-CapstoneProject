@@ -47,10 +47,10 @@ public:
 	void enterRoom(Room*);
 	void displayCommands();
 	
-	std::string loadSavedGameList();
+	void loadSavedGameList();
 	void loadGameFiles(string);
 	void setUpNewGame();
 	void saveGameFiles(string);
 	void setGameName(string);
-	string getGameName();
+	std::string getGameName();
 };

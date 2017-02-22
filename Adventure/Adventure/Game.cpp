@@ -259,7 +259,7 @@ void Game::enterRoom(Room* nextRoom)
 
 }
 
-string Game::loadSavedGameList()
+void Game::loadSavedGameList()
 {
 	vector<string> listOfGames;
 	string listFilename = "game.list";
@@ -293,7 +293,7 @@ string Game::loadSavedGameList()
 		cin >> choice;
 	}
 	
-	return listOfGames[choice - 1];
+	//return listOfGames[choice - 1];
 	
 	setGameName(listOfGames[choice - 1]);
 	
@@ -351,6 +351,22 @@ void Game::loadGameFiles(string gameNameIn)
 			cave.dragonLair->setIsVisited();
 		}
 		
+		//Read in westLocked value
+		getline(dragonLairFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 1)
+		{
+			cave.dragonLair->setLock(4, false);
+		}
+		
+		//Read in northLocked value
+		getline(dragonLairFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 1)
+		{
+			cave.dragonLair->setLock(1, false);
+		}
+		
 	}
 	else
 	{
@@ -367,6 +383,14 @@ void Game::loadGameFiles(string gameNameIn)
 		if(iBuffer == 1)
 		{
 			cave.earth->setIsVisited();
+		}
+		
+		//Read in northLocked value
+		getline(earthFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.earth->setLock(1, false);
 		}
 		
 	}
@@ -441,6 +465,14 @@ void Game::loadGameFiles(string gameNameIn)
 			cave.greatCavern->setIsVisited();
 		}
 		
+		//Read in the value of northLocked
+		getline(greatCavernFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.greatCavern->setLock(1, false);
+		}
+		
 	}
 	else
 	{
@@ -457,6 +489,30 @@ void Game::loadGameFiles(string gameNameIn)
 		if(iBuffer == 1)
 		{
 			cave.guardianPost->setIsVisited();
+		}
+		
+		//Read in northLocked value
+		getline(guardianPostFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.guardianPost->setLock(1, false);
+		}
+		
+		//Read in eastLocked value
+		getline(guardianPostFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.guardianPost->setLock(3, false);
+		}
+		
+		//Read in westLocked value
+		getline(guardianPostFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.guardianPost->setLock(4, false);
 		}
 		
 	}
@@ -513,6 +569,14 @@ void Game::loadGameFiles(string gameNameIn)
 			cave.mine->setIsVisited();
 		}
 		
+		//Read in northLocked value
+		getline(mineFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.mine->setLock(1, false);
+		}
+		
 	}
 	else
 	{
@@ -537,6 +601,24 @@ void Game::loadGameFiles(string gameNameIn)
 		//TODO: Handle the error
 	}
 	outsideFile.close();
+	
+	std::ifstream outsideEndFile (gameNameIn + "/" + "outsideEnd");
+	if(outsideEndFile.is_open())
+	{
+		//Read in isVisited value
+		getline(outsideEndFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 1)
+		{
+			cave.outsideEnd->setIsVisited();
+		}
+		
+	}
+	else
+	{
+		//TODO: Handle the error
+	}
+	outsideEndFile.close();
 	
 	std::ifstream treasureFile (gameNameIn + "/" + "treasure");
 	if(treasureFile.is_open())
@@ -565,6 +647,14 @@ void Game::loadGameFiles(string gameNameIn)
 		if(iBuffer == 1)
 		{
 			cave.trollBridge->setIsVisited();
+		}
+		
+		//Read in northLocked value
+		getline(trollBridgeFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.trollBridge->setLock(1, false);
 		}
 		
 	}
@@ -776,6 +866,8 @@ void Game::saveGameFiles(string gameNameIn)
 	if(dragonLairFile.is_open())
 	{
 		dragonLairFile << cave.dragonLair->getIsVisited() << endl;
+		dragonLairFile << cave.dragonLair->isLocked("WEST") << endl;
+		dragonLairFile << cave.dragonLair->isLocked("NORTH") << endl;
 	}
 	else
 	{
@@ -787,6 +879,7 @@ void Game::saveGameFiles(string gameNameIn)
 	if(earthFile.is_open())
 	{
 		earthFile << cave.earth->getIsVisited() << endl;
+		earthFile << cave.earth->isLocked("NORTH") << endl;
 	}
 	else
 	{
@@ -831,6 +924,7 @@ void Game::saveGameFiles(string gameNameIn)
 	if(greatCavernFile.is_open())
 	{
 		greatCavernFile << cave.greatCavern->getIsVisited() << endl;
+		greatCavernFile << cave.greatCavern->isLocked("NORTH") << endl;
 	}
 	else
 	{
@@ -842,6 +936,9 @@ void Game::saveGameFiles(string gameNameIn)
 	if(guardianPostFile.is_open())
 	{
 		guardianPostFile << cave.guardianPost->getIsVisited() << endl;
+		guardianPostFile << cave.guardianPost->isLocked("NORTH") << endl;
+		guardianPostFile << cave.guardianPost->isLocked("EAST") << endl;
+		guardianPostFile << cave.guardianPost->isLocked("WEST") << endl;
 	}
 	else
 	{
@@ -875,6 +972,7 @@ void Game::saveGameFiles(string gameNameIn)
 	if(mineFile.is_open())
 	{
 		mineFile << cave.mine->getIsVisited() << endl;
+		mineFile << cave.mine->isLocked("NORTH") << endl;
 	}
 	else
 	{
@@ -893,6 +991,17 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	outsideFile.close();
 	
+	std::ofstream outsideEndFile (gameNameIn + "/" + "outsideEnd");
+	if(outsideEndFile.is_open())
+	{
+		outsideEndFile << cave.outsideEnd->getIsVisited() << endl;
+	}
+	else
+	{
+		//TODO: Handle the error
+	}
+	outsideEndFile.close();
+	
 	std::ofstream treasureFile (gameNameIn + "/" + "treasure");
 	if(treasureFile.is_open())
 	{
@@ -908,6 +1017,7 @@ void Game::saveGameFiles(string gameNameIn)
 	if(trollBridgeFile.is_open())
 	{
 		trollBridgeFile << cave.trollBridge->getIsVisited() << endl;
+		trollBridgeFile << cave.trollBridge->isLocked("NORTH") << endl;
 	}
 	else
 	{
