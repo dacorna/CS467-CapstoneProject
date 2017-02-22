@@ -66,5 +66,5 @@ public:
 	void setLocks();
 	void unlockAllDoors();
 	//setupRooms(); //This function will set the exits for each of the rooms, and then call the function (room method?) to load gamestate variables from the files
-	
+	Item* returnItem(string); //provide name of an item to get it
 };
