@@ -1,1 +1,0 @@
-g++ -std=c++11 loadRoom.cpp -o loadRoom.exe

@@ -1,9 +1,0 @@
-#Template for Rooms
-bool isVisited 
-bool northLocked 
-bool southLocked 
-bool westLocked 
-bool eastLocked
-item1
-item2
-item3
