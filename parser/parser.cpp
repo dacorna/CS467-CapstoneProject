@@ -235,11 +235,11 @@ bool FindPreposition (std::string input);
 	int z;
 	for(z=objectOneEnd+2 ;z<nwords;z++){
 		p.secondObject.append(words[z]);
-		if (y<nwords-1){
+		if (y<nwords-2){
                                          		 p.secondObject.append(" ");
 		}
 	}
-
+	
 
 	if ( n.find(p.firstObject) != n.end() ) {
   			p.firstObject= n[p.firstObject];

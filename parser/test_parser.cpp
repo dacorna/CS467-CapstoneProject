@@ -15,6 +15,9 @@ int main()
 	text = "grab treasure";
 	Check(text);
 
+                     text = "strike treasure chest with ink";
+	Check(text);
+
 	text = "sip the ink";
 	Check(text);
 
