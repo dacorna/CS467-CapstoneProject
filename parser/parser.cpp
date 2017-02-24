@@ -200,11 +200,25 @@ bool FindPreposition (std::string input);
 		}
 	}
 
+	std::map<std::string, std::string> n;;
+	n["TREASURE CHEST"] = "TREASURECHEST";
+	n["TREASURE"] = "TREASURECHEST";
+
+	n["INKPOT"] = "INKPOT";
+	n["INK"] = "INKPOT";
+
 	if (p.hasPreposition == false){
 		int w;
 		for(w=objectOneStart ;w<nwords;w++){
 			p.firstObject.append(words[w]);
-			p.firstObject.append(" ");
+			if (w<nwords-1){
+				p.firstObject.append(" ");
+			}
+		}
+		
+
+		if ( n.find(p.firstObject) != n.end() ) {
+  			p.firstObject= n[p.firstObject];
 		}
 		return p;
 	}
@@ -212,14 +226,29 @@ bool FindPreposition (std::string input);
 	int y;
 	for(y=objectOneStart ;y<=objectOneEnd;y++){
 		p.firstObject.append(words[y]);
-		p.firstObject.append(" ");
+		if (y<objectOneEnd-1){
+                                         		p.firstObject.append(" ");
+		}
 	}
+	
 
 	int z;
 	for(z=objectOneEnd+2 ;z<nwords;z++){
 		p.secondObject.append(words[z]);
-		p.secondObject.append(" ");
+		if (y<nwords-1){
+                                         		 p.secondObject.append(" ");
+		}
 	}
+
+
+	if ( n.find(p.firstObject) != n.end() ) {
+  			p.firstObject= n[p.firstObject];
+		}
+
+	if ( n.find(p.secondObject) != n.end() ) {
+  			p.secondObject= n[p.secondObject];
+		}
+
 
 	return p;
 

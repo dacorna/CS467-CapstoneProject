@@ -12,6 +12,12 @@ int main()
 	text = "attack troll";
 	Check(text);
 
+	text = "grab treasure";
+	Check(text);
+
+	text = "sip the ink";
+	Check(text);
+
 	text = "strike troll with sword";
 	Check(text);
 
