@@ -12,5 +12,5 @@ class Mine : public Room {
 
 public:
 	Mine();
-	~Mine();
+	void useItem(Bag, string);
 };

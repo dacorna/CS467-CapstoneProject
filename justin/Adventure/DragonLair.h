@@ -12,5 +12,4 @@ class DragonLair : public Room {
 
 public:
 	DragonLair();
-	~DragonLair();
 };
