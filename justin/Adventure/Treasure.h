@@ -1,4 +1,4 @@
-//#include "Room.h"
+#include "Room.h"
 
 #include "Room.h"
 
@@ -12,5 +12,5 @@ class Treasure : public Room {
 
 public:
 	Treasure();
-	~Treasure();
+	void useItem(Bag, string);
 };

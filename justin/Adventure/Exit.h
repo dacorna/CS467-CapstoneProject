@@ -10,6 +10,5 @@ class Exit : public Room
 {
 public:
 	Exit();
-	~Exit();
 
 };

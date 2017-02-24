@@ -18,6 +18,7 @@
 #include "Library.h"
 #include "Mine.h"
 #include "Treasure.h"
+#include "OutsideEnd.h"
 
 class Cave
 {
@@ -41,7 +42,8 @@ private:
 	Room* library;
 	Room* mine;
 	Room* treasure;
-	
+	Room* outsideEnd;
+
 	Item* torch;
 	Item* waterskin;
 	Item* pickaxe;
@@ -64,5 +66,5 @@ public:
 	void setLocks();
 	void unlockAllDoors();
 	//setupRooms(); //This function will set the exits for each of the rooms, and then call the function (room method?) to load gamestate variables from the files
-	
+	Item* returnItem(string); //provide name of an item to get it
 };

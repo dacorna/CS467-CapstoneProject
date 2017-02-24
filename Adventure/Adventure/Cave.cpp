@@ -18,9 +18,10 @@ Cave::Cave()
 	library = new Library;
 	mine = new Mine;
 	treasure = new Treasure;
+	outsideEnd = new OutsideEnd;
 	outside->setExits(entrance, NULL, NULL, NULL);
 	entrance->setExits(greatCavern, outside, NULL, NULL);
-	exit->setExits(outside, dragonLair, NULL, NULL);
+	exit->setExits(outsideEnd, dragonLair, outsideEnd, outsideEnd);
 	greatCavern->setExits(bridge, entrance, fire, water);
 	fire->setExits(NULL, NULL, NULL, greatCavern);
 	water->setExits(NULL, NULL, greatCavern, NULL);
@@ -63,6 +64,7 @@ Cave::~Cave()
 	delete guardianPost;
 	delete library;
 	delete mine;
+	delete outsideEnd;
 	delete treasure;
 	delete map;
 	delete torch;
@@ -98,16 +100,19 @@ void Cave::setItems()
 	sword->setCanPickUp(true);
 	goldPiece->setCanPickUp(true);
 	treasureChest->setCanPickUp(true);
-	entrance->addItem(map);
-	greatCavern->addItem(torch);
-	water->addItem(waterskin);
-	bridge->addItem(pickaxe);
-	mine->addItem(ore);
-	library->addItem(inkPot);
-	air->addItem(feather);
-	mazeRoom->addItem(sword);
-	guardianPost->addItem(goldPiece);
-	treasure->addItem(treasureChest);
+	//JP - moving the intial item location assignment to the setUpNewGame function
+	//	because these items will be saved/loaded into different files when the game 
+	//	progresses.
+	//entrance->addItem(map);
+	//greatCavern->addItem(torch);
+	//water->addItem(waterskin);
+	//bridge->addItem(pickaxe);
+	//mine->addItem(ore);
+	//library->addItem(inkPot);
+	//air->addItem(feather);
+	//mazeRoom->addItem(sword);
+	//guardianPost->addItem(goldPiece);
+	//treasure->addItem(treasureChest);
 }
 
 void Cave::setLocks()
@@ -134,4 +139,52 @@ void Cave::unlockAllDoors()
 	guardianPost->setLock(4, false);
 	dragonLair->setLock(4, false);
 	dragonLair->setLock(1, false);
+}
+
+Item* Cave::returnItem(string nameIn)
+{
+	if(nameIn == "MAP")
+	{
+		return map;
+	}
+	else if(nameIn == "TORCH")
+	{
+		return torch;
+	}
+	else if(nameIn == "WATERSKIN")
+	{
+		return waterskin;
+	}
+	else if(nameIn == "PICKAXE")
+	{
+		return pickaxe;
+	}
+	else if(nameIn == "ORE")
+	{
+		return ore;
+	}
+	else if(nameIn == "INKPOT")
+	{
+		return inkPot;
+	}
+	else if(nameIn == "FEATHER")
+	{
+		return feather;
+	}
+	else if(nameIn == "SWORD")
+	{
+		return sword;
+	}
+	else if(nameIn == "GOLDPIECE")
+	{
+		return goldPiece;
+	}
+	else if(nameIn == "TREASURECHEST")
+	{
+		return treasureChest;
+	}
+	else
+	{
+		return NULL;
+	}
 }

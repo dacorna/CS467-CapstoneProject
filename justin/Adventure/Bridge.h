@@ -12,5 +12,4 @@ class Bridge : public Room {
 
 public:
 	Bridge();
-	~Bridge();
 };

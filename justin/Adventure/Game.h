@@ -32,9 +32,13 @@ private:
 			, { "use [object]", "if player has object, it may be used" }
 			, { "drop [object]", "remove object from player's bag" }
 			, { "explore", "walks player around current room to reveal intricacies" }
+			, { "cheat", "unlocks all doors" }
+			, { "uncheat", "re-locks the doors" }
+			, { "push", "pushes a switch (or other pushable things)" }
 	};
 	
 	string gameName;
+	bool isTorchLit;
 	
 public:
 	Game();
@@ -43,10 +47,10 @@ public:
 	void enterRoom(Room*);
 	void displayCommands();
 	
-	std::string loadSavedGameList();
+	void loadSavedGameList();
 	void loadGameFiles(string);
 	void setUpNewGame();
 	void saveGameFiles(string);
 	void setGameName(string);
-	string getGameName();
+	std::string getGameName();
 };

@@ -101,11 +101,11 @@ void Room::setExits(Room* northIn, Room* southIn, Room* eastIn, Room* westIn)
 	west = westIn;
 }
 
-bool Room::pushSwitch()
-{}
-
-void Room::extinguishFire()
-{}
-
-bool Room::FireExtinguished()
-{}
+void Room::printLongDescAndItems()
+{
+	cout << longDescription << endl;
+	for(int i = 0; i < items.size(); i++)
+	{
+		cout << items[i]->getInRoomDescription() << endl;
+	}
+}

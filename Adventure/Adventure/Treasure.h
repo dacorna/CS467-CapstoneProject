@@ -12,4 +12,5 @@ class Treasure : public Room {
 
 public:
 	Treasure();
+	void useItem(Bag, string);
 };

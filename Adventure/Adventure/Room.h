@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Item.h"
+#include "Bag.h"
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -25,6 +26,8 @@ protected:
 		//JP - 	In the specific room subclasses, would we want to put room specific booleans? Like switchPulled, or would be want something like northLocked, southLocked, etc? Just my ideas. I think something standard, like northLocked, etc would
 		//		make for easier loading and saving. Maybe set item states within the items?
 		// DC - I agree with a standard like northLocked, southLocked
+		
+	friend class Game;
 public:
 	Room();
 	~Room();
@@ -54,4 +57,6 @@ public:
 	virtual bool FireExtinguished() {} 
 	virtual void extinguishFire() {}
 	virtual bool switchState() {}
+	virtual void useItem(Bag, string) {}
+	virtual int special() {} // implement in each room eventually, so we can call special each time a room is entered -- return int representing result of interaction
 };
