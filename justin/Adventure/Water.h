@@ -11,4 +11,5 @@ class Water : public Room {
 public:
 	Water();
 	~Water();
+	void useItem(Bag, string);
 };

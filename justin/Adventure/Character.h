@@ -14,6 +14,8 @@ protected:
 	Room* currentRoom;
 	Room* previousRoom;
 	Bag bag;
+	
+	friend class Game;
 public:
 	Character();
 	~Character();

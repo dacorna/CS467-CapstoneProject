@@ -55,9 +55,14 @@ void Game::startGame(string type)
 	else {
 		loadGameFiles(getGameName());
 	}
-	cout << endl << player.getRoom()->getLongDescription() << endl;
+	cout << endl;// << player.getRoom()->getLongDescription() << endl;
+	player.getRoom()->printLongDescAndItems();
 	cin.get();
 		do {
+			if(player.getRoom()->getName() == "OutsideEnd") {
+				cout << "Safe travels!" << endl;
+				return; 	
+			}
 			timeCount++;
 			if(timeCount > timeLimit) playerAlive = false;
 
@@ -85,12 +90,19 @@ void Game::startGame(string type)
 			cout << "p.firstObject = " << p.firstObject << endl;
 			cout << "p.firstObject length = " << p.firstObject.length() << endl;  		
 			*/
+
 			// this is for testing until certain commands are added to the parser 
+			// ********************************************************************
 			trim(userInput);
 			if (userInput == "cheat")
 				p.command = "CHEAT";
-			else if (userInput == "explore")
-				p.command = "EXPLORE";
+			//else if (userInput == "explore")
+			//	p.command = "EXPLORE";
+			else if (userInput == "uncheat")
+				p.command = "UNCHEAT";
+			else if (userInput == "use")
+				p.command = "USE";
+			// ********************************************************************
 
 			rm = player.getRoom();
 			
@@ -118,6 +130,9 @@ void Game::startGame(string type)
 					else
 						cout << "The door is locked" << endl;
 				}
+				else if (p.firstObject == "BACK") {
+					player.enterRoom(player.getPreviousRoom());
+				}
 				else
 					cout << "I don't know where that is" << endl; 
 			}
@@ -125,7 +140,8 @@ void Game::startGame(string type)
 				
 				if(p.firstObject == "ROOM") {
 					
-					cout << player.getRoom()->getLongDescription() << endl;
+					//cout << player.getRoom()->getLongDescription() << endl;
+					player.getRoom()->printLongDescAndItems();
 				}
 				else if(p.firstObject == "MAP") {
 					
@@ -138,7 +154,8 @@ void Game::startGame(string type)
 					bag.displayBag();
 				}
 				else {
-					cout << player.getRoom()->getLongDescription() << endl;
+					//cout << player.getRoom()->getLongDescription() << endl;
+					player.getRoom()->printLongDescAndItems();
 				}
 				
 			}
@@ -159,8 +176,11 @@ void Game::startGame(string type)
 				}
 			} 	
 			else if (p.command == "TAKE") {
+				if (p.firstObject == "treasure") p.firstObject = "TREASURECHEST";	// temporary fix
+				if (p.firstObject == "ink") p.firstObject = "INKPOT";			// same
 				if (p.firstObject == "")
 					cout << "Take what? " << endl;
+				
 				else {
 					
 					if (rm->hasItem(p.firstObject)) {
@@ -182,7 +202,8 @@ void Game::startGame(string type)
 			}
 			else if (p.command == "PUSH") {
 				// push the switch
-				if(player.getRoom()->getName() == "fire")
+				if(player.getRoom()->getName() == "Fire") {
+					rm->extinguishFire(); // temp add for testing and fun until full implementation
 					if(player.getRoom()->FireExtinguished()) {
 						bool lock;
 						lock = player.getRoom()->pushSwitch();
@@ -191,6 +212,7 @@ void Game::startGame(string type)
 					}
 					else
 						cout << "A fire blocks you from pushing the switch!" << endl;
+				}
 				else 
 					cout << "There's nothing to push here." << endl;
 						 
@@ -198,9 +220,17 @@ void Game::startGame(string type)
 			else if (p.command == "EXPLORE") {
 				cout << rm->getExploreStory() << endl;
 			}
+			else if(p.command == "USE") {
+				// call rm->useItem(bag, p.firstObject);	// uses an item however it was intended in given room
+				cout << "Sorry, we haven't implemented that yet!" << endl;
+			} 
 			else if (p.command == "CHEAT") {
 				cave.unlockAllDoors();
 				cout << "CHEAT CODE ACTIVATED! All doors have been unlocked. Proceed with caution." << endl;  
+			}
+			else if (p.command == "UNCHEAT") {
+				cave.setLocks();
+				cout << "Cheat code has been deactivated. All locks have been reset" << endl;
 			}
 			else if (p.command == "INVENTORY") {
 				bag.displayBag();
@@ -232,7 +262,7 @@ void Game::enterRoom(Room* nextRoom)
 
 }
 
-string Game::loadSavedGameList()
+void Game::loadSavedGameList()
 {
 	vector<string> listOfGames;
 	string listFilename = "game.list";
@@ -263,10 +293,11 @@ string Game::loadSavedGameList()
 	while(choice < 1 || choice > i)
 	{
 		cout << "Invalid choice. Choose again!" << endl;
+		cin.ignore();
 		cin >> choice;
 	}
 	
-	return listOfGames[choice - 1];
+	//return listOfGames[choice - 1];
 	
 	setGameName(listOfGames[choice - 1]);
 	
@@ -287,7 +318,11 @@ void Game::loadGameFiles(string gameNameIn)
 		{
 			cave.air->setIsVisited();
 		}
-		
+		//Read in items
+		while(getline(airFile, sBuffer))
+		{
+			cave.air->addItem(cave.returnItem(sBuffer));
+		}
 	}
 	else
 	{
@@ -304,6 +339,11 @@ void Game::loadGameFiles(string gameNameIn)
 		if(iBuffer == 1)
 		{
 			cave.bridge->setIsVisited();
+		}
+		//Read in items
+		while(getline(bridgeFile, sBuffer))
+		{
+			cave.bridge->addItem(cave.returnItem(sBuffer));
 		}
 		
 	}
@@ -324,6 +364,27 @@ void Game::loadGameFiles(string gameNameIn)
 			cave.dragonLair->setIsVisited();
 		}
 		
+		//Read in westLocked value
+		getline(dragonLairFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 1)
+		{
+			cave.dragonLair->setLock(4, false);
+		}
+		
+		//Read in northLocked value
+		getline(dragonLairFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 1)
+		{
+			cave.dragonLair->setLock(1, false);
+		}
+		//Read in items
+		while(getline(dragonLairFile, sBuffer))
+		{
+			cave.dragonLair->addItem(cave.returnItem(sBuffer));
+		}
+		
 	}
 	else
 	{
@@ -340,6 +401,19 @@ void Game::loadGameFiles(string gameNameIn)
 		if(iBuffer == 1)
 		{
 			cave.earth->setIsVisited();
+		}
+		
+		//Read in northLocked value
+		getline(earthFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.earth->setLock(1, false);
+		}
+		//Read in items
+		while(getline(earthFile, sBuffer))
+		{
+			cave.earth->addItem(cave.returnItem(sBuffer));
 		}
 		
 	}
@@ -359,6 +433,11 @@ void Game::loadGameFiles(string gameNameIn)
 		{
 			cave.entrance->setIsVisited();
 		}
+		//Read in items
+		while(getline(entranceFile, sBuffer))
+		{
+			cave.entrance->addItem(cave.returnItem(sBuffer));
+		}
 		
 	}
 	else
@@ -377,6 +456,11 @@ void Game::loadGameFiles(string gameNameIn)
 		{
 			cave.exit->setIsVisited();
 		}
+		//Read in items
+		while(getline(exitFile, sBuffer))
+		{
+			cave.exit->addItem(cave.returnItem(sBuffer));
+		}
 		
 	}
 	else
@@ -394,6 +478,11 @@ void Game::loadGameFiles(string gameNameIn)
 		if(iBuffer == 1)
 		{
 			cave.fire->setIsVisited();
+		}
+		//Read in items
+		while(getline(fireFile, sBuffer))
+		{
+			cave.fire->addItem(cave.returnItem(sBuffer));
 		}
 		
 	}
@@ -414,6 +503,19 @@ void Game::loadGameFiles(string gameNameIn)
 			cave.greatCavern->setIsVisited();
 		}
 		
+		//Read in the value of northLocked
+		getline(greatCavernFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.greatCavern->setLock(1, false);
+		}
+		//Read in items
+		while(getline(greatCavernFile, sBuffer))
+		{
+			cave.greatCavern->addItem(cave.returnItem(sBuffer));
+		}
+		
 	}
 	else
 	{
@@ -430,6 +532,35 @@ void Game::loadGameFiles(string gameNameIn)
 		if(iBuffer == 1)
 		{
 			cave.guardianPost->setIsVisited();
+		}
+		
+		//Read in northLocked value
+		getline(guardianPostFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.guardianPost->setLock(1, false);
+		}
+		
+		//Read in eastLocked value
+		getline(guardianPostFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.guardianPost->setLock(3, false);
+		}
+		
+		//Read in westLocked value
+		getline(guardianPostFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.guardianPost->setLock(4, false);
+		}
+		//Read in items
+		while(getline(guardianPostFile, sBuffer))
+		{
+			cave.guardianPost->addItem(cave.returnItem(sBuffer));
 		}
 		
 	}
@@ -449,6 +580,11 @@ void Game::loadGameFiles(string gameNameIn)
 		{
 			cave.library->setIsVisited();
 		}
+		//Read in items
+		while(getline(libraryFile, sBuffer))
+		{
+			cave.library->addItem(cave.returnItem(sBuffer));
+		}
 		
 	}
 	else
@@ -466,6 +602,11 @@ void Game::loadGameFiles(string gameNameIn)
 		if(iBuffer == 1)
 		{
 			cave.mazeRoom->setIsVisited();
+		}
+		//Read in items
+		while(getline(mazeRoomFile, sBuffer))
+		{
+			cave.mazeRoom->addItem(cave.returnItem(sBuffer));
 		}
 		
 	}
@@ -486,6 +627,19 @@ void Game::loadGameFiles(string gameNameIn)
 			cave.mine->setIsVisited();
 		}
 		
+		//Read in northLocked value
+		getline(mineFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.mine->setLock(1, false);
+		}
+		//Read in items
+		while(getline(mineFile, sBuffer))
+		{
+			cave.mine->addItem(cave.returnItem(sBuffer));
+		}
+		
 	}
 	else
 	{
@@ -503,6 +657,11 @@ void Game::loadGameFiles(string gameNameIn)
 		{
 			cave.outside->setIsVisited();
 		}
+		//Read in items
+		while(getline(outsideFile, sBuffer))
+		{
+			cave.outside->addItem(cave.returnItem(sBuffer));
+		}
 		
 	}
 	else
@@ -510,6 +669,29 @@ void Game::loadGameFiles(string gameNameIn)
 		//TODO: Handle the error
 	}
 	outsideFile.close();
+	
+	std::ifstream outsideEndFile (gameNameIn + "/" + "outsideEnd");
+	if(outsideEndFile.is_open())
+	{
+		//Read in isVisited value
+		getline(outsideEndFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 1)
+		{
+			cave.outsideEnd->setIsVisited();
+		}
+		//Read in items
+		while(getline(outsideEndFile, sBuffer))
+		{
+			cave.outsideEnd->addItem(cave.returnItem(sBuffer));
+		}
+		
+	}
+	else
+	{
+		//TODO: Handle the error
+	}
+	outsideEndFile.close();
 	
 	std::ifstream treasureFile (gameNameIn + "/" + "treasure");
 	if(treasureFile.is_open())
@@ -521,7 +703,11 @@ void Game::loadGameFiles(string gameNameIn)
 		{
 			cave.treasure->setIsVisited();
 		}
-		
+		//Read in items
+		while(getline(treasureFile, sBuffer))
+		{
+			cave.treasure->addItem(cave.returnItem(sBuffer));
+		}
 	}
 	else
 	{
@@ -540,6 +726,19 @@ void Game::loadGameFiles(string gameNameIn)
 			cave.trollBridge->setIsVisited();
 		}
 		
+		//Read in northLocked value
+		getline(trollBridgeFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.trollBridge->setLock(1, false);
+		}
+		//Read in items
+		while(getline(trollBridgeFile, sBuffer))
+		{
+			cave.trollBridge->addItem(cave.returnItem(sBuffer));
+		}
+		
 	}
 	else
 	{
@@ -556,6 +755,11 @@ void Game::loadGameFiles(string gameNameIn)
 		if(iBuffer == 1)
 		{
 			cave.water->setIsVisited();
+		}
+		//Read in items
+		while(getline(waterFile, sBuffer))
+		{
+			cave.water->addItem(cave.returnItem(sBuffer));
 		}
 		
 	}
@@ -646,6 +850,11 @@ void Game::loadGameFiles(string gameNameIn)
 		{
 			player.setCurrentRoom(cave.water);
 		}
+		//Read in items
+		while(getline(playerFile, sBuffer))
+		{
+			bag.add(cave.returnItem(sBuffer));
+		}
 	}
 	else
 	{
@@ -718,6 +927,17 @@ void Game::setUpNewGame()
 
 	boost::filesystem::create_directory(dir);
 	
+	cave.entrance->addItem(cave.map);
+	cave.greatCavern->addItem(cave.torch);
+	cave.water->addItem(cave.waterskin);
+	cave.bridge->addItem(cave.pickaxe);
+	cave.mine->addItem(cave.ore);
+	cave.library->addItem(cave.inkPot);
+	cave.air->addItem(cave.feather);
+	cave.mazeRoom->addItem(cave.sword);
+	cave.guardianPost->addItem(cave.goldPiece);
+	cave.treasure->addItem(cave.treasureChest);
+	
 	saveGameFiles(gameNameUser);
 }
 
@@ -727,6 +947,12 @@ void Game::saveGameFiles(string gameNameIn)
 	if(airFile.is_open())
 	{
 		airFile << cave.air->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.air->items.size(); i++)
+		{
+			airFile << cave.air->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -738,6 +964,12 @@ void Game::saveGameFiles(string gameNameIn)
 	if(bridgeFile.is_open())
 	{
 		bridgeFile << cave.bridge->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.bridge->items.size(); i++)
+		{
+			bridgeFile << cave.bridge->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -749,6 +981,15 @@ void Game::saveGameFiles(string gameNameIn)
 	if(dragonLairFile.is_open())
 	{
 		dragonLairFile << cave.dragonLair->getIsVisited() << endl;
+		dragonLairFile << cave.dragonLair->isLocked("WEST") << endl;
+		dragonLairFile << cave.dragonLair->isLocked("NORTH") << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.dragonLair->items.size(); i++)
+		{
+			dragonLairFile << cave.dragonLair->items.at(i)->getName() << endl;
+		}
+		
 	}
 	else
 	{
@@ -760,6 +1001,13 @@ void Game::saveGameFiles(string gameNameIn)
 	if(earthFile.is_open())
 	{
 		earthFile << cave.earth->getIsVisited() << endl;
+		earthFile << cave.earth->isLocked("NORTH") << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.earth->items.size(); i++)
+		{
+			earthFile << cave.earth->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -771,6 +1019,12 @@ void Game::saveGameFiles(string gameNameIn)
 	if(entranceFile.is_open())
 	{
 		entranceFile << cave.entrance->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.entrance->items.size(); i++)
+		{
+			entranceFile << cave.entrance->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -782,6 +1036,12 @@ void Game::saveGameFiles(string gameNameIn)
 	if(exitFile.is_open())
 	{
 		exitFile << cave.exit->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.exit->items.size(); i++)
+		{
+			exitFile << cave.exit->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -793,6 +1053,12 @@ void Game::saveGameFiles(string gameNameIn)
 	if(fireFile.is_open())
 	{
 		fireFile << cave.fire->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.fire->items.size(); i++)
+		{
+			fireFile << cave.fire->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -804,6 +1070,13 @@ void Game::saveGameFiles(string gameNameIn)
 	if(greatCavernFile.is_open())
 	{
 		greatCavernFile << cave.greatCavern->getIsVisited() << endl;
+		greatCavernFile << cave.greatCavern->isLocked("NORTH") << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.greatCavern->items.size(); i++)
+		{
+			greatCavernFile << cave.greatCavern->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -815,6 +1088,15 @@ void Game::saveGameFiles(string gameNameIn)
 	if(guardianPostFile.is_open())
 	{
 		guardianPostFile << cave.guardianPost->getIsVisited() << endl;
+		guardianPostFile << cave.guardianPost->isLocked("NORTH") << endl;
+		guardianPostFile << cave.guardianPost->isLocked("EAST") << endl;
+		guardianPostFile << cave.guardianPost->isLocked("WEST") << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.guardianPost->items.size(); i++)
+		{
+			guardianPostFile << cave.guardianPost->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -826,6 +1108,12 @@ void Game::saveGameFiles(string gameNameIn)
 	if(libraryFile.is_open())
 	{
 		libraryFile << cave.library->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.library->items.size(); i++)
+		{
+			libraryFile << cave.library->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -837,6 +1125,12 @@ void Game::saveGameFiles(string gameNameIn)
 	if(mazeRoomFile.is_open())
 	{
 		mazeRoomFile << cave.mazeRoom->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.mazeRoom->items.size(); i++)
+		{
+			mazeRoomFile << cave.mazeRoom->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -848,6 +1142,13 @@ void Game::saveGameFiles(string gameNameIn)
 	if(mineFile.is_open())
 	{
 		mineFile << cave.mine->getIsVisited() << endl;
+		mineFile << cave.mine->isLocked("NORTH") << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.mine->items.size(); i++)
+		{
+			mineFile << cave.mine->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -859,6 +1160,12 @@ void Game::saveGameFiles(string gameNameIn)
 	if(outsideFile.is_open())
 	{
 		outsideFile << cave.outside->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.outside->items.size(); i++)
+		{
+			outsideFile << cave.outside->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -866,10 +1173,33 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	outsideFile.close();
 	
+	std::ofstream outsideEndFile (gameNameIn + "/" + "outsideEnd");
+	if(outsideEndFile.is_open())
+	{
+		outsideEndFile << cave.outsideEnd->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.outsideEnd->items.size(); i++)
+		{
+			outsideEndFile << cave.outsideEnd->items.at(i)->getName() << endl;
+		}
+	}
+	else
+	{
+		//TODO: Handle the error
+	}
+	outsideEndFile.close();
+	
 	std::ofstream treasureFile (gameNameIn + "/" + "treasure");
 	if(treasureFile.is_open())
 	{
 		treasureFile << cave.treasure->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.treasure->items.size(); i++)
+		{
+			treasureFile << cave.treasure->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -881,6 +1211,13 @@ void Game::saveGameFiles(string gameNameIn)
 	if(trollBridgeFile.is_open())
 	{
 		trollBridgeFile << cave.trollBridge->getIsVisited() << endl;
+		trollBridgeFile << cave.trollBridge->isLocked("NORTH") << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.trollBridge->items.size(); i++)
+		{
+			trollBridgeFile << cave.trollBridge->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -892,6 +1229,12 @@ void Game::saveGameFiles(string gameNameIn)
 	if(waterFile.is_open())
 	{
 		waterFile << cave.water->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.water->items.size(); i++)
+		{
+			waterFile << cave.water->items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
@@ -906,6 +1249,12 @@ void Game::saveGameFiles(string gameNameIn)
 		playerFile << timeLimit << endl;
 		playerFile << timeCount << endl;
 		playerFile << player.getRoom()->getName() << endl;
+		
+		//The player's current items
+		for(int i = 0; i < bag.items.size(); i++)
+		{
+			playerFile << bag.items.at(i)->getName() << endl;
+		}
 	}
 	else
 	{
