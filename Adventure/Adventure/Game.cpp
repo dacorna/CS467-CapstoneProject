@@ -931,7 +931,8 @@ void Game::setUpNewGame()
 	cave.mine->addItem(cave.ore);
 	cave.library->addItem(cave.inkPot);
 	cave.air->addItem(cave.feather);
-	cave.mazeRoom->addItem(cave.sword);
+	//cave.mazeRoom->addItem(cave.sword);
+	cave.postMaze->addItem(cave.sword);
 	cave.guardianPost->addItem(cave.goldPiece);
 	cave.treasure->addItem(cave.treasureChest);
 	

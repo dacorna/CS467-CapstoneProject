@@ -12,6 +12,7 @@ protected:
 	string name;
 	string description;
 	bool isAlive;
+	bool completedMaze;
 	Room* currentRoom;
 	Room* previousRoom;
 	Bag bag;
@@ -28,4 +29,5 @@ public:
 	string getDescription() { return description; }
 	void setName(string);
 	Bag getBag() {return bag;}
+	void CompletedMaze() { completedMaze = true; }
 };

@@ -1,9 +1,11 @@
 #include "Maze.h"
 #include <limits>
+#include <stdlib.h>
 
 Maze::Maze()
 {
 	isFinished = false;
+	mazeReversed = false;
 	start = new Node;
 	end = new Node;
 	one = new Node;
@@ -18,6 +20,9 @@ Maze::Maze()
 	start->west = start;
 	start->position = 0;
 	end->south = six;
+	end->north = end;
+	end->east = end;
+	end->west = end;
 	end->position = 7;
 	one->east = two;
 	one->south = start;
@@ -63,14 +68,73 @@ Maze::~Maze()
 	delete six;
 }
 
-void Maze::enterMaze()
+void Maze::reverseMaze()
 {
+	Node* temp;
+	temp = start;
+	start = end;
+	end = temp;
+	temp = one;
+	one = six;
+	six = temp;
+	temp = two;
+	two = five;
+	five = temp;
+	temp = three;
+	three = four;
+	four = temp;
+	one->west = start;
+	one->south = start;
+	two->east = start;
+	two->north = start;
+	three->west = start;
+	three->south = six;
+	four->north = start;
+	four->east = start;
+	five->east = start;
+	five->south = start;
+	six->west = start;
+	six->north = start;
+	mazeReversed = true;
+}	
+
+void Maze::setClues()
+{
+	start->clue = "clue:north";
+	end->clue = "clue:finished. Pick up the sword.";
+	one->clue = "clue:east";
+	two->clue = "clue:north";
+	three->clue = "clue:west";
+	four->clue = "clue:north";
+	five->clue = "clue:west";
+	six->clue = "clue:north";
+}
+
+int Maze::enterMaze(Room* room)
+{
+	isFinished = false;
+	setClues();
 	currentNode = start;
 	int choice;
 	bool validInput = false;
 	cout << "Entering..." << endl;
 	usleep(400000);
-	cout << "You are now inside the realm of the Avendorian elves. The way behind has shut. Forward lies the only reprieve." << endl;
+	if(mazeReversed) {
+		string input;
+		cout << "You've entered the maze from the north. Traverse backwards to get back to the Mines, or get out while you can" << endl;
+		cout << "Enter 1 to continue through the maze, anything else to go back" << endl;
+		cin.sync();
+		getline(cin,input);
+		if(input != "1") {
+			usleep(200000);
+			cout << "You got out before the door shut!" << endl;
+			return 0;
+		}
+	}
+	else {  
+		cout << "You are now inside the realm of the Avendorian elves. The way behind has shut. Forward lies the only reprieve." << endl;
+		cout << endl << start->clue << endl;
+	}
 	cout << endl << "Which way do you go? " << endl;
 	do {
 		cout << "1) North	2) East		3) South	4) West" << endl;
@@ -90,19 +154,33 @@ void Maze::enterMaze()
 			}
 		} while (!validInput);
 
+		std::system("clear");
 		go(choice);
-		if (currentNode->position == 7)
-			isFinished = true;
+		if(!mazeReversed)
+			if (currentNode->position == 7)
+				isFinished = true;
+			else
+				cout << "Where next? " << endl;
 		else
-			cout << "Where next? " << endl;
+			if(currentNode->position == 0)
+				isFinished = true;
+			else
+				cout << "Where next? " << endl;
+
+		if(!mazeReversed)
+			cout << endl << currentNode->clue << endl;
 
 	} while (!isFinished);
 
 	cout << "Congratulations! You have successfully navigated the maze. You've proven yourself a worthy adversary." << endl;
 	usleep(400000);
-	cout << "The Sword of the Evening appears on the ground before you. " << endl;
+	if(room->hasItem("SWORD")) {
+		room->getItem("SWORD")->setCanPickUp(true);
+		cout << "The Sword of the Evening appears on the ground before you. " << endl;
+	}
 	usleep(300000);
 	cin.get();
+	return 1;
 }
 
 void Maze::go(int direction)
@@ -126,8 +204,14 @@ void Maze::go(int direction)
 		cout << "You were thwarted. Try again" << endl;
 
 	}
-	if (!currentNode->position)
-		cout << "You fell into a time loop! All the way back to start." << endl;
+	if(!mazeReversed)
+		if (!currentNode->position)
+			cout << "You fell into a time loop! All the way back to start." << endl;
+		else
+			cout << "You've reached level " << currentNode->position << " of the maze" << endl;
 	else
-		cout << "You've reached level " << currentNode->position << " of the maze" << endl;
+		if(currentNode->position == 7)
+			cout << "Fell into time loop! Back to the start." << endl;
+		else
+			cout << "You've reached level " << currentNode->position << " of the maze" << endl; 
 }

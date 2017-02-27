@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Room.h"
 #include <unistd.h>
 #include <string>
 #include <vector>
@@ -25,12 +26,15 @@ private:
 	Node *one, *two, *three, *four, *five, *six;
 	Node* currentNode;
 	bool isFinished;
-
+	bool mazeReversed;
 public:
 	Maze();
 	~Maze();
-	void enterMaze();
+	void setClues();
+	void reverseMaze();
+	int enterMaze(Room*);
 	void go(int);
 	bool getIsFinished() { return isFinished; }
 	void setIsFinished(bool finished) { isFinished = finished; }
+	bool getMazeReversed() { return mazeReversed; }
 };
