@@ -9,6 +9,7 @@ private:
 	string name;
 	string description;
 	bool canPickup;
+	bool objectiveCompleted;
 	
 public:
 	Item();
@@ -21,4 +22,6 @@ public:
 	void setDescription(string);
 	bool canPickupItem() { return canPickup; }
 	void setCanPickUp(bool);
+	bool isObjectiveCompleted() { return objectiveCompleted; }
+	void completeObjective() { objectiveCompleted = true; }
 };

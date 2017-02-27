@@ -34,6 +34,13 @@ void Character::enterRoom(Room* roomIn)
 			 
 			cout << currentRoom->getShortDescription() << endl;
 			}
+		if (currentRoom->getName() == "Maze Room") {
+			usleep(200000);
+			cout << currentRoom->getExploreStory() << endl;
+			usleep(200000);
+			Maze maze;
+			maze.enterMaze();
+		}
 		}
 
 	else

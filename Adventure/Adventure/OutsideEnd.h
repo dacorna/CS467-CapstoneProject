@@ -1,16 +1,14 @@
 #include "Room.h"
 
-#include "Room.h"
-
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
 using std::vector;
 
-class Treasure : public Room {
-
+class OutsideEnd : public Room
+{
 public:
-	Treasure();
-	void useItem(Bag, string);
+	OutsideEnd();
+	~OutsideEnd();
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Room.h"
+#include "Maze.h"
 #include "Bag.h"
 #include <string>
 using std::string;
@@ -14,6 +15,8 @@ protected:
 	Room* currentRoom;
 	Room* previousRoom;
 	Bag bag;
+	
+	friend class Game;
 public:
 	Character();
 	~Character();

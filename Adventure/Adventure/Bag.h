@@ -9,9 +9,11 @@ using std::string;
 
 class Bag
 {
-private:
+protected:
 	int maxSize;
 	vector<Item*> items;
+
+	friend class Game;
 public:
 	Bag();
 	~Bag();
