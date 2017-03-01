@@ -2,82 +2,201 @@
 #include <iostream>
 #include "parser.h"
  
-void Check(std::string input);
+ParsedInput Check(std::string input);
 
 int main()
 {
 
 	std::string text;
-
-	text = "attack troll";
-	Check(text);
-
-	text = "grab treasure";
-	Check(text);
-
-                     text = "strike treasure chest with ink";
-	Check(text);
-
-	text = "sip the ink";
-	Check(text);
-
-	text = "strike troll with sword";
-	Check(text);
+	ParsedInput r;
 
 	std::cout << "****************************************************" << std::endl;
-	 text = "look at bird ";
-	Check(text);
+	text = "attack troll";
+	r = Check(text);
+	if (r.command == "ATTACK" && r.firstObject == "TROLL"){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
+
+ 	std::cout << "****************************************************" << std::endl;
+	text = "grab treasure";
+	r =  Check(text);
+	if (r.command == "TAKE" && r.firstObject == "TREASURECHEST"){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
+
+ 	std::cout << "****************************************************" << std::endl;
+                     text = "strike treasure chest with ink";
+	r = Check(text);
+	if (r.command == "ATTACK" && r.firstObject == "TREASURECHEST"
+	         && r.preposition == "WITH" && r.secondObject == "INKPOT" ){				
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
+                    
+   	std::cout << "****************************************************" << std::endl;
+	text = "sip the ink";
+	r = Check(text);
+	if (r.command == "CONSUME" && r.firstObject == "INKPOT"){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
+                    
+                     std::cout << "****************************************************" << std::endl;
+	text = "strike troll with sword";
+	r = Check(text);
+	if (r.command == "ATTACK" && r.firstObject == "TROLL" 
+		&& r.preposition == "WITH" && r.secondObject == "SWORD" ){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
+
+	std::cout << "****************************************************" << std::endl;
+	 text = "look at bird";
+	r = Check(text);
+	if (r.command == "LOOK AT" && r.firstObject == "BIRD"){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
 	std::cout << "****************************************************" << std::endl;
 	text = "look up the [TEXT] in's the [something's]";
-	Check(text);
+	r = Check(text);
+	if (r.command == "LOOK AT" && r.firstObject == "[TEXT]"
+		&& r.preposition == "IN" && r.secondObject == "[SOMETHING]" ){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
 	std::cout << "****************************************************" << std::endl;
 	 text = "Eat the yellow jelly bean with great bizantine fork.";
-	Check(text);
+	r = Check(text);
+	if (r.command == "CONSUME" && r.firstObject == "YELLOW JELLYBEAN"
+                             && r.preposition == "WITH" && r.secondObject == "GREAT BIZANTINE FORK" ){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
 	std::cout << "****************************************************" << std::endl;
 	 text = "Speak to the affable Ogre.";
-	Check(text);
+	r = Check(text);
+	if (r.command == "TALK" && r.firstObject == "AFFABLE OGRE" ){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
 	std::cout << "****************************************************" << std::endl;
 	 text = "Drink oily Potion";
-	Check(text);
+	r = Check(text);
+	if (r.command == "CONSUME" && r.firstObject == "OILY POTION"){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
 	std::cout << "****************************************************" << std::endl;
 	text = "load Game";
-	Check(text);
+	r = Check(text);
+	if (r.command == "LOAD"){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
 	std::cout << "****************************************************" << std::endl;
 	text = "save";
-	Check(text);
+	r = Check(text);
+	if (r.command == "SAVE"){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
 	std::cout << "****************************************************" << std::endl;
 	text = "save game";
-	Check(text);
+	r = Check(text);
+	if (r.command == "SAVE" ){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
 	std::cout << "****************************************************" << std::endl;
 	text = "attack";
-	Check(text);
+	r = Check(text);
+	if (r.isParsed == false){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
 	std::cout << "****************************************************" << std::endl;
 	text = "Speak to";
-	Check(text);
+	r = Check(text);
+	if (r.isParsed == false){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
 	std::cout << "****************************************************" << std::endl;
 	text = "";
-	Check(text);
+	r = Check(text);
+	if (r.isParsed == false){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
 	std::cout << "****************************************************" << std::endl;
 	text = " ";
-	Check(text);
+	r = Check(text);
+	if (r.isParsed == false){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
-
-
+	std::cout << "****************************************************" << std::endl;
+	text = " Go West ";
+	r = Check(text);
+	if (r.command == "GO" && r.firstObject == "WEST"){
+	      std::cout << "PASS! PASS! PASS! PASS! PASS! PASS! PASS!" << std::endl;
+	}else {
+	       std::cout << "FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL! FAIL!" << std::endl;
+                            return 0;
+	}
 
 }
 
-void Check(std::string input){
+ParsedInput Check(std::string input){
 
 	ParsedInput p;
 	p = parse(input);
@@ -95,5 +214,7 @@ void Check(std::string input){
 		std::cout << "Original: " << input << std::endl;
 		std::cout << "Parse Error: " << p.error << std::endl;
 	}
+
+	return p;
 
 }

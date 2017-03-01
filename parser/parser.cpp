@@ -18,6 +18,7 @@ bool FindPreposition (std::string input);
 {
 	
 	std::string cInput;
+	boost::trim(input);
 	cInput = Capitalize(input);
 
 	ParsedInput p;
@@ -89,11 +90,11 @@ bool FindPreposition (std::string input);
 
 	m["LOOK"]="LOOK";
 	
-	m["LOOK AT"]="LOOK  AT";
-                     m["LOOK UP"]="LOOK  AT";
-	m["LOOK INTO"]="LOOK  AT";
-	m["LOOK INSIDE"]="LOOK  AT";
-	m["INSPECT"]="LOOK  AT";
+	m["LOOK AT"]="LOOK AT";
+                     m["LOOK UP"]="LOOK AT";
+	m["LOOK INTO"]="LOOK AT";
+	m["LOOK INSIDE"]="LOOK AT";
+	m["INSPECT"]="LOOK AT";
 	m["SEARCH"]="LOOK AT";
 
 	m["CONSUME"]="CONSUME";
@@ -235,7 +236,7 @@ bool FindPreposition (std::string input);
 	int z;
 	for(z=objectOneEnd+2 ;z<nwords;z++){
 		p.secondObject.append(words[z]);
-		if (y<nwords-2){
+		if (z<nwords-1){
                                          		 p.secondObject.append(" ");
 		}
 	}
