@@ -690,6 +690,29 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	outsideEndFile.close();
 	
+	std::ifstream postMazeFile (gameNameIn + "/" + "postMaze");
+	if(postMazeFile.is_open())
+	{
+		//Read in isVisited value
+		getline(postMazeFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 1)
+		{
+			cave.postMaze->setIsVisited();
+		}
+		//Read in items
+		while(getline(postMazeFile, sBuffer))
+		{
+			cave.postMaze->addItem(cave.returnItem(sBuffer));
+		}
+		
+	}
+	else
+	{
+		//TODO: Handle the error
+	}
+	postMazeFile.close();
+	
 	std::ifstream treasureFile (gameNameIn + "/" + "treasure");
 	if(treasureFile.is_open())
 	{
@@ -781,6 +804,9 @@ void Game::loadGameFiles(string gameNameIn)
 		getline(playerFile, sBuffer);
 		timeCount = std::stoi(sBuffer);
 		
+		getline(playerFile, sBuffer);
+		player.completedMaze = std::stoi(sBuffer);
+		
 		//Read in player's current room name
 		getline(playerFile, sBuffer);
 		if(sBuffer == "Air")
@@ -834,6 +860,10 @@ void Game::loadGameFiles(string gameNameIn)
 		else if(sBuffer == "Outside")
 		{
 			player.setCurrentRoom(cave.outside);
+		}
+		else if(sBuffer == "Post Maze")
+		{
+			player.setCurrentRoom(cave.postMaze);
 		}
 		else if(sBuffer == "Room of Lost Treasure")
 		{
@@ -1188,6 +1218,23 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	outsideEndFile.close();
 	
+	std::ofstream postMazeFile (gameNameIn + "/" + "postMaze");
+	if(postMazeFile.is_open())
+	{
+		postMazeFile << cave.postMaze->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.outsideEnd->items.size(); i++)
+		{
+			outsideEndFile << cave.outsideEnd->items.at(i)->getName() << endl;
+		}
+	}
+	else
+	{
+		//TODO: Handle the error
+	}
+	postMazeFile.close();
+	
 	std::ofstream treasureFile (gameNameIn + "/" + "treasure");
 	if(treasureFile.is_open())
 	{
@@ -1246,6 +1293,7 @@ void Game::saveGameFiles(string gameNameIn)
 		playerFile << playerAlive << endl;
 		playerFile << timeLimit << endl;
 		playerFile << timeCount << endl;
+		playerFile << player.completedMaze << endl;
 		playerFile << player.getRoom()->getName() << endl;
 		
 		//The player's current items
