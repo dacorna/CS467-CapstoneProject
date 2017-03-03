@@ -17,7 +17,7 @@ Game::Game()
 
 Game::~Game()
 {
-
+	
 }
 
 void Game::displayCommands()
@@ -65,6 +65,8 @@ void Game::startGame(string type)
 			}
 			timeCount++;
 			if(timeCount > timeLimit) playerAlive = false;
+			//Make the Characters Bag the same as the Game Bag
+			player.bag = bag;
 
 			cout << "> ";
 			cin.sync();	// discard input buffer
@@ -247,7 +249,8 @@ void Game::startGame(string type)
 			else
 				cout << "I don't understand" << endl; 
 			
-
+			if(player.isAlive == false) playerAlive = false;
+			
 		} while (playerAlive);
 
 		if (!playerAlive) {
@@ -693,6 +696,29 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	outsideEndFile.close();
 	
+	std::ifstream postMazeFile (gameNameIn + "/" + "postMaze");
+	if(postMazeFile.is_open())
+	{
+		//Read in isVisited value
+		getline(postMazeFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 1)
+		{
+			cave.postMaze->setIsVisited();
+		}
+		//Read in items
+		while(getline(postMazeFile, sBuffer))
+		{
+			cave.postMaze->addItem(cave.returnItem(sBuffer));
+		}
+		
+	}
+	else
+	{
+		//TODO: Handle the error
+	}
+	postMazeFile.close();
+	
 	std::ifstream treasureFile (gameNameIn + "/" + "treasure");
 	if(treasureFile.is_open())
 	{
@@ -784,6 +810,9 @@ void Game::loadGameFiles(string gameNameIn)
 		getline(playerFile, sBuffer);
 		timeCount = std::stoi(sBuffer);
 		
+		getline(playerFile, sBuffer);
+		player.completedMaze = std::stoi(sBuffer);
+		
 		//Read in player's current room name
 		getline(playerFile, sBuffer);
 		if(sBuffer == "Air")
@@ -837,6 +866,10 @@ void Game::loadGameFiles(string gameNameIn)
 		else if(sBuffer == "Outside")
 		{
 			player.setCurrentRoom(cave.outside);
+		}
+		else if(sBuffer == "Post Maze")
+		{
+			player.setCurrentRoom(cave.postMaze);
 		}
 		else if(sBuffer == "Room of Lost Treasure")
 		{
@@ -934,7 +967,8 @@ void Game::setUpNewGame()
 	cave.mine->addItem(cave.ore);
 	cave.library->addItem(cave.inkPot);
 	cave.air->addItem(cave.feather);
-	cave.mazeRoom->addItem(cave.sword);
+	//cave.mazeRoom->addItem(cave.sword);
+	cave.postMaze->addItem(cave.sword);
 	cave.guardianPost->addItem(cave.goldPiece);
 	cave.treasure->addItem(cave.treasureChest);
 	
@@ -1190,6 +1224,23 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	outsideEndFile.close();
 	
+	std::ofstream postMazeFile (gameNameIn + "/" + "postMaze");
+	if(postMazeFile.is_open())
+	{
+		postMazeFile << cave.postMaze->getIsVisited() << endl;
+		
+		//This room's current items
+		for(int i = 0; i < cave.outsideEnd->items.size(); i++)
+		{
+			outsideEndFile << cave.outsideEnd->items.at(i)->getName() << endl;
+		}
+	}
+	else
+	{
+		//TODO: Handle the error
+	}
+	postMazeFile.close();
+	
 	std::ofstream treasureFile (gameNameIn + "/" + "treasure");
 	if(treasureFile.is_open())
 	{
@@ -1248,6 +1299,7 @@ void Game::saveGameFiles(string gameNameIn)
 		playerFile << playerAlive << endl;
 		playerFile << timeLimit << endl;
 		playerFile << timeCount << endl;
+		playerFile << player.completedMaze << endl;
 		playerFile << player.getRoom()->getName() << endl;
 		
 		//The player's current items

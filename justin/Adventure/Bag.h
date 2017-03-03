@@ -12,7 +12,7 @@ class Bag
 protected:
 	int maxSize;
 	vector<Item*> items;
-	
+
 	friend class Game;
 public:
 	Bag();

@@ -12,6 +12,7 @@
 #include "Water.h"
 #include "TrollBridge.h"
 #include "MazeRoom.h"
+#include "PostMaze.h"
 #include "Bridge.h"
 #include "DragonLair.h"
 #include "GuardianPost.h"
@@ -36,6 +37,7 @@ private:
 	Room* dragonDen;
 	Room* greatCavern;
 	Room* mazeRoom;
+	Room* postMaze;
 	Room* bridge;
 	Room* dragonLair;
 	Room* guardianPost;
