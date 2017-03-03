@@ -103,6 +103,16 @@ void Cave::setItems()
 	sword->setCanPickUp(true);	
 	goldPiece->setCanPickUp(true);
 	treasureChest->setCanPickUp(true);
+	map->setInRoomDescription("There is a map on the floor.");
+	torch->setInRoomDescription("A torch lies near your feet.");
+	waterskin->setInRoomDescription("There is a waterskin propped in the corner.");
+	pickaxe->setInRoomDescription("A pickaxe leans against the wall.");
+	ore->setInRoomDescription("Some ore is sitting at the edge of the room");
+	inkPot->setInRoomDescription("There is an inkpot.");
+	feather->setInRoomDescription("Is that a feather?");
+	sword->setInRoomDescription("The Sword of the Evening proudly waits.");
+	goldPiece->setInRoomDescription("Is that a piece of gold?");
+	treasureChest->setInRoomDescription("A chest of treasure, shouldn't you take it and leave?");
 	//JP - moving the intial item location assignment to the setUpNewGame function
 	//	because these items will be saved/loaded into different files when the game 
 	//	progresses.

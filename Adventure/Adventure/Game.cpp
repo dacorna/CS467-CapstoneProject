@@ -55,7 +55,8 @@ void Game::startGame(string type)
 	else {
 		loadGameFiles(getGameName());
 	}
-	cout << endl << player.getRoom()->getLongDescription() << endl;
+	cout << endl;// << player.getRoom()->getLongDescription() << endl;
+	player.getRoom()->printLongDescAndItems();
 	cin.get();
 		do {
 			if(player.getRoom()->getName() == "OutsideEnd") {
@@ -139,7 +140,8 @@ void Game::startGame(string type)
 				
 				if(p.firstObject == "ROOM") {
 					
-					cout << player.getRoom()->getLongDescription() << endl;
+					//cout << player.getRoom()->getLongDescription() << endl;
+					player.getRoom()->printLongDescAndItems();
 				}
 				else if(p.firstObject == "MAP") {
 					
@@ -152,7 +154,8 @@ void Game::startGame(string type)
 					bag.displayBag();
 				}
 				else {
-					cout << player.getRoom()->getLongDescription() << endl;
+					//cout << player.getRoom()->getLongDescription() << endl;
+					player.getRoom()->printLongDescAndItems();
 				}
 				
 			}
