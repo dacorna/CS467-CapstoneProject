@@ -28,7 +28,8 @@ void Character::enterRoom(Room* roomIn)
 		if (currentRoom->getIsVisited() == false)
 			 {
 			currentRoom->setIsVisited();
-			cout << currentRoom->getLongDescription() << endl;
+			//cout << currentRoom->getLongDescription() << endl;
+			currentRoom->printLongDescAndItems();
 			}
 		else
 			 {

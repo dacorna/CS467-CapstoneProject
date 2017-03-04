@@ -6,9 +6,9 @@ using std::cin;
 using std::endl;
 using std::vector;
 
-class GreatCavern : public Room {
+class PostMaze : public Room {
 
 public:
-	GreatCavern();
-
+	PostMaze();
+	~PostMaze();
 };

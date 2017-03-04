@@ -12,15 +12,17 @@ Cave::Cave()
 	air = new Air;
 	trollBridge = new TrollBridge;
 	mazeRoom = new MazeRoom;
+	postMaze = new PostMaze;
 	bridge = new Bridge;
 	dragonLair = new DragonLair;
 	guardianPost = new GuardianPost;
 	library = new Library;
 	mine = new Mine;
 	treasure = new Treasure;
+	outsideEnd = new OutsideEnd;
 	outside->setExits(entrance, NULL, NULL, NULL);
 	entrance->setExits(greatCavern, outside, NULL, NULL);
-	exit->setExits(outside, dragonLair, NULL, NULL);
+	exit->setExits(outsideEnd, dragonLair, outsideEnd, outsideEnd);
 	greatCavern->setExits(bridge, entrance, fire, water);
 	fire->setExits(NULL, NULL, NULL, greatCavern);
 	water->setExits(NULL, NULL, greatCavern, NULL);
@@ -29,8 +31,9 @@ Cave::Cave()
 	earth->setExits(air, NULL, NULL, mine);
 	air->setExits(NULL, earth, NULL, NULL);
 	library->setExits(NULL, NULL, mine, NULL);
-	trollBridge->setExits(guardianPost, mazeRoom, NULL, NULL);
-	mazeRoom->setExits(trollBridge, mine, NULL, NULL);
+	mazeRoom->setExits(postMaze, mine, NULL, NULL);
+	postMaze->setExits(trollBridge, mazeRoom, NULL, NULL);
+	trollBridge->setExits(guardianPost, postMaze, NULL, NULL);
 	guardianPost->setExits(dragonLair, trollBridge, dragonLair, dragonLair);
 	dragonLair->setExits(exit, guardianPost, NULL, treasure);
 	treasure->setExits(exit, NULL, dragonLair, NULL);
@@ -58,11 +61,13 @@ Cave::~Cave()
 	delete air;
 	delete trollBridge;
 	delete mazeRoom;
+	delete postMaze;
 	delete bridge;
 	delete dragonLair;
 	delete guardianPost;
 	delete library;
 	delete mine;
+	delete outsideEnd;
 	delete treasure;
 	delete map;
 	delete torch;
@@ -95,19 +100,32 @@ void Cave::setItems()
 	ore->setCanPickUp(true);
 	inkPot->setCanPickUp(true);
 	feather->setCanPickUp(true);
-	sword->setCanPickUp(true);
+	sword->setCanPickUp(true);	
 	goldPiece->setCanPickUp(true);
 	treasureChest->setCanPickUp(true);
-	entrance->addItem(map);
-	greatCavern->addItem(torch);
-	water->addItem(waterskin);
-	bridge->addItem(pickaxe);
-	mine->addItem(ore);
-	library->addItem(inkPot);
-	air->addItem(feather);
-	mazeRoom->addItem(sword);
-	guardianPost->addItem(goldPiece);
-	treasure->addItem(treasureChest);
+	map->setInRoomDescription("There is a map on the floor.");
+	torch->setInRoomDescription("A torch lies near your feet.");
+	waterskin->setInRoomDescription("There is a waterskin propped in the corner.");
+	pickaxe->setInRoomDescription("A pickaxe leans against the wall.");
+	ore->setInRoomDescription("Some ore is sitting at the edge of the room");
+	inkPot->setInRoomDescription("There is an inkpot.");
+	feather->setInRoomDescription("Is that a feather?");
+	sword->setInRoomDescription("The Sword of the Evening proudly waits.");
+	goldPiece->setInRoomDescription("Is that a piece of gold?");
+	treasureChest->setInRoomDescription("A chest of treasure, shouldn't you take it and leave?");
+	//JP - moving the intial item location assignment to the setUpNewGame function
+	//	because these items will be saved/loaded into different files when the game 
+	//	progresses.
+	//entrance->addItem(map);
+	//greatCavern->addItem(torch);
+	//water->addItem(waterskin);
+	//bridge->addItem(pickaxe);
+	//mine->addItem(ore);
+	//library->addItem(inkPot);
+	//air->addItem(feather);
+	//postMaze->addItem(sword);
+	//guardianPost->addItem(goldPiece);
+	//treasure->addItem(treasureChest);
 }
 
 void Cave::setLocks()
@@ -134,4 +152,52 @@ void Cave::unlockAllDoors()
 	guardianPost->setLock(4, false);
 	dragonLair->setLock(4, false);
 	dragonLair->setLock(1, false);
+}
+
+Item* Cave::returnItem(string nameIn)
+{
+	if(nameIn == "MAP")
+	{
+		return map;
+	}
+	else if(nameIn == "TORCH")
+	{
+		return torch;
+	}
+	else if(nameIn == "WATERSKIN")
+	{
+		return waterskin;
+	}
+	else if(nameIn == "PICKAXE")
+	{
+		return pickaxe;
+	}
+	else if(nameIn == "ORE")
+	{
+		return ore;
+	}
+	else if(nameIn == "INKPOT")
+	{
+		return inkPot;
+	}
+	else if(nameIn == "FEATHER")
+	{
+		return feather;
+	}
+	else if(nameIn == "SWORD")
+	{
+		return sword;
+	}
+	else if(nameIn == "GOLDPIECE")
+	{
+		return goldPiece;
+	}
+	else if(nameIn == "TREASURECHEST")
+	{
+		return treasureChest;
+	}
+	else
+	{
+		return NULL;
+	}
 }

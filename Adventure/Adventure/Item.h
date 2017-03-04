@@ -8,6 +8,7 @@ class Item
 private:
 	string name;
 	string description;
+	string inRoomDescription;
 	bool canPickup;
 	bool objectiveCompleted;
 	
@@ -23,5 +24,9 @@ public:
 	bool canPickupItem() { return canPickup; }
 	void setCanPickUp(bool);
 	bool isObjectiveCompleted() { return objectiveCompleted; }
+	void completeObjective() { objectiveCompleted = true; }
+	
+	string getInRoomDescription() { return inRoomDescription; }
+	void setInRoomDescription(string descIn) { inRoomDescription = descIn; }
 	void completeObjective(bool val) { objectiveCompleted = val; }
 };

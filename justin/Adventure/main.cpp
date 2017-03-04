@@ -1,8 +1,10 @@
 #include <iostream>
 #include "Game.h"
+#include <stdlib.h>
 
 int main()
 {
+	std::system("clear");
 	Game newGame;
 	string gameName;
 	cout << "               ______                              " << endl;
@@ -14,21 +16,24 @@ int main()
 	cout << "  / /| |/ __  / | / / _ \\/ __ \\/ __/ / / / ___/ _ \\" << endl;
 	cout << " / ___ / /_/ /| |/ /  __/ / / / /_/ /_/ / /  /  __/" << endl;
 	cout << "/_/  |_\\__,_/ |___/\\___/_/ /_/\\__/\\__,_/_/   \\___/ " << endl;
-	
+
 	cout << "Main Menu" << endl << endl;
 	cout << "1. Start a new game" << endl;
 	cout << "2. Continue saved game" << endl;
 	cout << "3. Exit" << endl;
 	int choice;
 	cin >> choice;
+	std::system("clear");
 	switch (choice) {
 	case 1:
 		cout << endl << "Starting new game ... " << endl;
 		newGame.startGame("new");
 		break;
 	case 2:
-		gameName = newGame.loadSavedGameList();	// this function will get list of all saved games, have user pick one, and then load that game instance
-		newGame.loadGameFiles(gameName);
+		cout << "Please choose a game to load: " << endl;
+		//gameName = newGame.loadSavedGameList();	// this function will get list of all saved games, have user pick one, and then load that game instance
+		//newGame.loadGameFiles(gameName);
+		newGame.loadSavedGameList();
 		newGame.startGame("load");
 		break;
 	case 3:
@@ -38,7 +43,7 @@ int main()
 		cout << endl << "Invalid Choice. Goodbye!" << endl;
 		return 0;
 	}
-	
+
 
 	cin.get();
 	return 0;

@@ -12,5 +12,5 @@ class Library : public Room {
 
 public:
 	Library();
-	~Library();
+	void useItem(Bag, string);
 };

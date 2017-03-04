@@ -7,11 +7,16 @@ using std::endl;
 using std::vector;
 
 class Fire : public Room{
+private:
+	bool switchPushed;
+	bool fireExtinguished;
 
 public:
 	Fire();
 	~Fire();
 	bool pushSwitch();
-	void extinguishFire();
-	bool FireExtinguished();
+	bool FireExtinguished() { return fireExtinguished; }
+	void extinguishFire() { fireExtinguished = true; }
+	bool switchState() { return switchPushed; }
+	void useItem(Bag, string);
 };

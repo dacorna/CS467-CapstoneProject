@@ -101,6 +101,15 @@ void Room::setExits(Room* northIn, Room* southIn, Room* eastIn, Room* westIn)
 	west = westIn;
 }
 
+void Room::printLongDescAndItems()
+{
+	cout << longDescription << endl;
+	for(int i = 0; i < items.size(); i++)
+	{
+		cout << items[i]->getInRoomDescription() << endl;
+	}
+}
+
 void Room::useItem(Bag bag, string item) 
 {
 	if(bag.hasItem(item))

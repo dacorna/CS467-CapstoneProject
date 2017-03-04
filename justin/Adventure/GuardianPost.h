@@ -1,4 +1,4 @@
-//#include "Room.h"
+#include "Room.h"
 
 #include "Room.h"
 
@@ -12,5 +12,4 @@ class GuardianPost : public Room {
 
 public:
 	GuardianPost();
-	~GuardianPost();
 };

@@ -23,6 +23,8 @@ protected:
 	string exploreStory;
 	bool isVisited = false;
 	bool northLocked, southLocked, eastLocked, westLocked;
+
+	friend class Game;
 		//JP - 	In the specific room subclasses, would we want to put room specific booleans? Like switchPulled, or would be want something like northLocked, southLocked, etc? Just my ideas. I think something standard, like northLocked, etc would
 		//		make for easier loading and saving. Maybe set item states within the items?
 		// DC - I agree with a standard like northLocked, southLocked
@@ -59,4 +61,8 @@ public:
 	virtual bool switchState() {}
 	virtual void useItem(Bag, string) {}
 	virtual int special() {} // implement in each room eventually, so we can call special each time a room is entered -- return int representing result of interaction
+	
+	void printLongDescAndItems();
+	virtual bool StrikeStatus() {}
+
 };
