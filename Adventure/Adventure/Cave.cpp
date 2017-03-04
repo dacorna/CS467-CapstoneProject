@@ -12,6 +12,7 @@ Cave::Cave()
 	air = new Air;
 	trollBridge = new TrollBridge;
 	mazeRoom = new MazeRoom;
+	postMaze = new PostMaze;
 	bridge = new Bridge;
 	dragonLair = new DragonLair;
 	guardianPost = new GuardianPost;
@@ -30,8 +31,9 @@ Cave::Cave()
 	earth->setExits(air, NULL, NULL, mine);
 	air->setExits(NULL, earth, NULL, NULL);
 	library->setExits(NULL, NULL, mine, NULL);
-	trollBridge->setExits(guardianPost, mazeRoom, NULL, NULL);
-	mazeRoom->setExits(trollBridge, mine, NULL, NULL);
+	mazeRoom->setExits(postMaze, mine, NULL, NULL);
+	postMaze->setExits(trollBridge, mazeRoom, NULL, NULL);
+	trollBridge->setExits(guardianPost, postMaze, NULL, NULL);
 	guardianPost->setExits(dragonLair, trollBridge, dragonLair, dragonLair);
 	dragonLair->setExits(exit, guardianPost, NULL, treasure);
 	treasure->setExits(exit, NULL, dragonLair, NULL);
@@ -59,6 +61,7 @@ Cave::~Cave()
 	delete air;
 	delete trollBridge;
 	delete mazeRoom;
+	delete postMaze;
 	delete bridge;
 	delete dragonLair;
 	delete guardianPost;
@@ -97,7 +100,7 @@ void Cave::setItems()
 	ore->setCanPickUp(true);
 	inkPot->setCanPickUp(true);
 	feather->setCanPickUp(true);
-	sword->setCanPickUp(true);
+	sword->setCanPickUp(true);	
 	goldPiece->setCanPickUp(true);
 	treasureChest->setCanPickUp(true);
 	//JP - moving the intial item location assignment to the setUpNewGame function
@@ -110,7 +113,7 @@ void Cave::setItems()
 	//mine->addItem(ore);
 	//library->addItem(inkPot);
 	//air->addItem(feather);
-	//mazeRoom->addItem(sword);
+	//postMaze->addItem(sword);
 	//guardianPost->addItem(goldPiece);
 	//treasure->addItem(treasureChest);
 }

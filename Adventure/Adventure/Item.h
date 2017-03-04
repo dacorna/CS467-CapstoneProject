@@ -23,5 +23,5 @@ public:
 	bool canPickupItem() { return canPickup; }
 	void setCanPickUp(bool);
 	bool isObjectiveCompleted() { return objectiveCompleted; }
-	void completeObjective() { objectiveCompleted = true; }
+	void completeObjective(bool val) { objectiveCompleted = val; }
 };

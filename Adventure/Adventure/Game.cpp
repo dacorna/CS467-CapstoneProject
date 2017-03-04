@@ -200,7 +200,7 @@ void Game::startGame(string type)
 			else if (p.command == "PUSH") {
 				// push the switch
 				if(player.getRoom()->getName() == "Fire") {
-					rm->extinguishFire(); // temp add for testing and fun until full implementation
+					
 					if(player.getRoom()->FireExtinguished()) {
 						bool lock;
 						lock = player.getRoom()->pushSwitch();
@@ -218,8 +218,8 @@ void Game::startGame(string type)
 				cout << rm->getExploreStory() << endl;
 			}
 			else if(p.command == "USE") {
-				// call rm->useItem(bag, p.firstObject);	// uses an item however it was intended in given room
-				cout << "Sorry, we haven't implemented that yet!" << endl;
+				rm->useItem(bag, p.firstObject);	// uses an item however it was intended in given room
+				//cout << "Sorry, we haven't implemented that yet!" << endl;
 			} 
 			else if (p.command == "CHEAT") {
 				cave.unlockAllDoors();
@@ -931,7 +931,8 @@ void Game::setUpNewGame()
 	cave.mine->addItem(cave.ore);
 	cave.library->addItem(cave.inkPot);
 	cave.air->addItem(cave.feather);
-	cave.mazeRoom->addItem(cave.sword);
+	//cave.mazeRoom->addItem(cave.sword);
+	cave.postMaze->addItem(cave.sword);
 	cave.guardianPost->addItem(cave.goldPiece);
 	cave.treasure->addItem(cave.treasureChest);
 	

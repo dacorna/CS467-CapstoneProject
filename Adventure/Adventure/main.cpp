@@ -1,8 +1,10 @@
 #include <iostream>
 #include "Game.h"
+#include <stdlib.h>
 
 int main()
 {
+	std::system("clear");
 	Game newGame;
 	string gameName;
 	cout << "               ______                              " << endl;
@@ -21,6 +23,7 @@ int main()
 	cout << "3. Exit" << endl;
 	int choice;
 	cin >> choice;
+	std::system("clear");
 	switch (choice) {
 	case 1:
 		cout << endl << "Starting new game ... " << endl;

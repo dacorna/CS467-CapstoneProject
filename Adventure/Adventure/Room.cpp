@@ -100,3 +100,11 @@ void Room::setExits(Room* northIn, Room* southIn, Room* eastIn, Room* westIn)
 	east = eastIn;
 	west = westIn;
 }
+
+void Room::useItem(Bag bag, string item) 
+{
+	if(bag.hasItem(item))
+		std::cout << "That item has no use here!" << std::endl;
+	else
+		std::cout << "You don't have such an item!" << std::endl;
+}
