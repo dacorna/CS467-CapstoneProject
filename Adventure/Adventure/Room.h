@@ -68,4 +68,5 @@ public:
 	virtual bool AlterStatus (){}
 	virtual void LightFurnace(){}
 	virtual void MeltLock(){}
+	virtual bool DoorStatus (){}
 };

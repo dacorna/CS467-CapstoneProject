@@ -237,6 +237,13 @@ void Game::startGame(string type)
 						Item* itm = rm->getItem("ORE");
 						bag.add(itm);
 					}
+				}
+				else if (player.getRoom()->getName() == "Mine" && p.firstObject == "FEATHER"  ) {
+					rm->useItem(bag, p.firstObject);
+					if(rm->DoorStatus ()){
+						cave.mine->setLock(1,0);
+					}
+		
 				}else if (player.getRoom()->getName() == "Library" && p.firstObject == "BOOK"){
 					rm->useItem(bag, p.firstObject);
 				}else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH"){
@@ -248,7 +255,7 @@ void Game::startGame(string type)
 				}
 				else{
 					rm->useItem(bag, p.firstObject);		// <-- we should be able to simply call this without using if/else statement
-			} 
+				} 
 			} 
 			else if (p.command == "CHEAT") {
 				cave.unlockAllDoors();
