@@ -120,6 +120,7 @@ bool FindPreposition (std::string input);
 	m["GRAB"] = "TAKE";
 	m["PICK UP"] = "TAKE";
 	m["PICKUP"] = "TAKE";
+	m["GET"] = "TAKE";
 
 	m["DROP"] = "DROP";
 	m["LEAVE"] = "DROP";
