@@ -28,4 +28,5 @@ public:
 	
 	string getInRoomDescription() { return inRoomDescription; }
 	void setInRoomDescription(string descIn) { inRoomDescription = descIn; }
+	void completeObjective(bool val) { objectiveCompleted = val; }
 };
