@@ -222,7 +222,15 @@ void Game::startGame(string type)
 			}
 			else if(p.command == "USE") {
 				// call rm->useItem(bag, p.firstObject);	// uses an item however it was intended in given room
-				cout << "Sorry, we haven't implemented that yet!" << endl;
+				if(player.getRoom()->getName() == "Mine" && p.firstObject == "PICKAXE") {
+					rm->useItem(bag, p.firstObject);
+					if (rm->StrikeStatus()  == true){
+						Item* itm = rm->getItem("ORE");
+						bag.add(itm);
+					}
+				}else{
+					cout << "Sorry, we haven't implemented that yet!" << endl;
+				}
 			} 
 			else if (p.command == "CHEAT") {
 				cave.unlockAllDoors();
