@@ -61,6 +61,5 @@ public:
 	virtual bool switchState() {}
 	virtual void useItem(Bag, string) {}
 	virtual int special() {} // implement in each room eventually, so we can call special each time a room is entered -- return int representing result of interaction
-	
-	void printLongDescAndItems();
+	virtual bool StrikeStatus() {}
 };
