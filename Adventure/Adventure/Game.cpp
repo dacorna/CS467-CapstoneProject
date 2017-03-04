@@ -219,6 +219,11 @@ void Game::startGame(string type)
 			}
 			else if (p.command == "EXPLORE") {
 				cout << rm->getExploreStory() << endl;
+			}else if (p.command == "PLACE") {
+				if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE") {
+					rm->PlaceORE();
+				}
+
 			}
 			else if(p.command == "USE") {
 				// call rm->useItem(bag, p.firstObject);	// uses an item however it was intended in given room
@@ -230,6 +235,11 @@ void Game::startGame(string type)
 					}
 				}else if (player.getRoom()->getName() == "Library" && p.firstObject == "BOOK"){
 					rm->useItem(bag, p.firstObject);
+				}else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH"){
+					if(rm->AlterStatus()== true){
+						rm->MeltLock();
+						cave.earth->setLock(1,0);
+					} 
 				}
 				else{
 					cout << "Sorry, we haven't implemented that yet!" << endl;

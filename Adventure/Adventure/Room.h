@@ -64,5 +64,7 @@ public:
 	
 	void printLongDescAndItems();
 	virtual bool StrikeStatus() {}
-
+	virtual void PlaceORE (){}
+	virtual bool AlterStatus (){}
+	virtual void MeltLock(){}
 };
