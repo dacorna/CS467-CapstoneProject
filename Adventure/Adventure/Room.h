@@ -64,4 +64,5 @@ public:
 	
 	void printLongDescAndItems();
 	virtual bool StrikeStatus() {}
+
 };

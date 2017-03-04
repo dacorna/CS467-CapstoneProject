@@ -228,7 +228,10 @@ void Game::startGame(string type)
 						Item* itm = rm->getItem("ORE");
 						bag.add(itm);
 					}
-				}else{
+				}else if (player.getRoom()->getName() == "Library" && p.firstObject == "BOOK"){
+					rm->useItem(bag, p.firstObject);
+				}
+				else{
 					cout << "Sorry, we haven't implemented that yet!" << endl;
 				}
 			} 
