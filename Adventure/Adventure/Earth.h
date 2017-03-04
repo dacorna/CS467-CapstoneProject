@@ -10,12 +10,16 @@ class Earth : public Room {
 
 private: 
 	bool PlacedOre;
+	bool FurnanceLit ;
+
 
 public:
 	Earth();
 	~Earth();
-	void useItem(Bag, string);
-	void MeltLock();
-	bool AlterStatus (){return  PlacedOre;}
+	//void useItem(Bag, string);
+	void LightFurnace();
+	bool AlterStatus ();
 	void PlaceORE ();
+	void MeltLock ();
+
 };

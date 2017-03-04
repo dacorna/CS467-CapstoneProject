@@ -10,10 +10,6 @@ Earth::Earth() {
 Earth::~Earth() {
 }
 
-void Earth::useItem(Bag bag, string item)
-{
-		cout << "That item has no effect here" << endl;
-}
 
 void Earth::PlaceORE (){
 	cout << "With a GREAT bang you place the ore on the altar." << endl;
@@ -21,6 +17,19 @@ void Earth::PlaceORE (){
 	
 }
 
-void Earth::MeltLock(){
-	cout << "The furnace begins to heat up and eventually the lock towards the north melts."  << endl;
+void Earth::LightFurnace(){
+	cout << "The furnace begins to heat up."  << endl;
+	FurnanceLit = true;
 }
+
+bool Earth::AlterStatus (){
+	if(PlacedOre && FurnanceLit ){
+		return 1;
+	}else return 0;
+}
+
+void Earth::MeltLock (){
+	cout << "Slowly the lock on the door to the north melts."  << endl;
+}
+
+

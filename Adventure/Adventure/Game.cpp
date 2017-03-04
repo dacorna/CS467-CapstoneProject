@@ -222,6 +222,10 @@ void Game::startGame(string type)
 			}else if (p.command == "PLACE") {
 				if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE") {
 					rm->PlaceORE();
+					if(rm->AlterStatus()== true){
+						rm->MeltLock();
+						cave.earth->setLock(1,0);
+					} 
 				}
 
 			}
@@ -236,6 +240,7 @@ void Game::startGame(string type)
 				}else if (player.getRoom()->getName() == "Library" && p.firstObject == "BOOK"){
 					rm->useItem(bag, p.firstObject);
 				}else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH"){
+					rm->LightFurnace();
 					if(rm->AlterStatus()== true){
 						rm->MeltLock();
 						cave.earth->setLock(1,0);

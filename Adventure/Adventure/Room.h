@@ -66,5 +66,6 @@ public:
 	virtual bool StrikeStatus() {}
 	virtual void PlaceORE (){}
 	virtual bool AlterStatus (){}
+	virtual void LightFurnace(){}
 	virtual void MeltLock(){}
 };
