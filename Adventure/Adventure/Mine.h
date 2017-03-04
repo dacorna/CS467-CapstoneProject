@@ -10,12 +10,7 @@ using std::vector;
 
 class Mine : public Room {
 
-private:	
-	bool secondStrike ; 
-	bool firstSrike;
-
 public:
-	bool StrikeStatus (){return secondStrike;}
 	Mine();
 	void useItem(Bag, string);
 };

@@ -13,15 +13,9 @@ void Mine::useItem(Bag bag, string item)
 {
 	if (item == "PICKAXE")
 	{
-		if (firstSrike == false){
-			cout << "You hit down with the pick end cracking the ore. Maybe another swing is needed!" << endl;
-			firstSrike = true;
-		}else {
-			cout << "You smash down with the blunt end knocking off a large ore chunk." << endl;
-			cout << "You shove it in your bag. Maybe it will make a good doorstop someday?" << endl;
-			secondStrike = true;
-		}
-		
+		// using pickaxe allows player to obtain ore
+		// use sleep() function to simulate player mining for ore
+		// add ore to player's bag 
 
 	}
 	else
