@@ -113,8 +113,8 @@ bool FindPreposition (std::string input);
 	m["SPEAK"]="TALK";
 	m["SPEAK TO"]="TALK";
 
-	m["SET"] = "SET";
-	m["PLACE"] = "SET";
+	m["SET"] = "PLACE";
+	m["PLACE"] = "PLACE";
 
 	m["TAKE"] = "TAKE";
 	m["GRAB"] = "TAKE";

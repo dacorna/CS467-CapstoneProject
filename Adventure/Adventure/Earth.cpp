@@ -29,7 +29,7 @@ bool Earth::AlterStatus (){
 }
 
 void Earth::MeltLock (){
-	cout << "Slowly the lock on the door to the north melts."  << endl;
+	cout << "The locks melts just enough to reveal a way north!"  << endl;
 }
 
 
