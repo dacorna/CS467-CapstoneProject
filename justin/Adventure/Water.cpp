@@ -1,4 +1,7 @@
 #include "Water.h"
+#include <stdlib.h>
+#include <limits>
+#include <unistd.h>
 
 Water::Water() {
 	name = "Water";
@@ -15,6 +18,11 @@ void Water::useItem(Bag bag, string item)
 {
 	if (item == "WATERSKIN") {
 		// check if bag has waterskin
+		if (bag.hasItem("WATERSKIN")) {
 		// fill waterskin with water
+			cout << "Filling up with some ice cold water..." << endl;
+			usleep(400000);
+			bag.getItem("WATERSKIN")->completeObjective(true);
+		}
 	}
 }

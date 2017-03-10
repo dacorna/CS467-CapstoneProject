@@ -12,6 +12,8 @@ Library::Library()
 void Library::useItem(Bag bag, string item)
 {
 	if (item == "BOOK") {
-		// read book -- aka reveal the "word of opening" 
+		cout << "The book describes the construction of this ancient place:" << endl;
+		cout << "Of note is a passage about the creation of a nearby magical door that is only opened by scribing a word on the face of the door itself!" << endl;
+		cout << "That word is in an ancient unspeakable-unpronounceable language, it is - YIGNAUT" << endl;
 	}
 }

@@ -79,6 +79,7 @@
     <ClInclude Include="GuardianPost.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Library.h" />
+    <ClInclude Include="Maze.h" />
     <ClInclude Include="MazeRoom.h" />
     <ClInclude Include="Mine.h" />
     <ClInclude Include="Outside.h" />
@@ -106,6 +107,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Library.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Maze.cpp" />
     <ClCompile Include="MazeRoom.cpp" />
     <ClCompile Include="Mine.cpp" />
     <ClCompile Include="Outside.cpp" />

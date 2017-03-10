@@ -78,7 +78,7 @@ bool Troll::fightTroll()
 	{
 		cout << "and you dodge!" << endl;
 		usleep(200000);
-		cout << "Strafing behind the troll you swing your weapon and end his life! Victory!" << endl;
+		cout << "Strafing behind the troll you swing your weapon and end his life! Victory! The troll's body falls into the ravine and disappears." << endl;
 		cin.get();
 		std::system("clear");
 		return true;
@@ -89,7 +89,6 @@ bool Troll::fightTroll()
 
 bool Troll::talkTroll()
 {
-	std::system("clear");
 	string choice;
 	bool validChoice = false;
 	cout << "The troll explains to you the ancient rule of Troll Bridges:" << endl 
@@ -158,10 +157,8 @@ bool Troll::talkTroll()
 		}
 		else if(choice == "3")
 		{
-			cout << "You've chosen wisely. All three riddles have been answered correctly. You may pass. I will bother you no longer." << endl;
+			cout << "You've chosen wisely. All three riddles have been answered correctly. You may pass. I will bother you no longer. In fact, I will leave this place." << endl;
 			validChoice = true;
-			cin.get();
-			std::system("clear");
 			return true;
 		}
 		else

@@ -23,5 +23,5 @@ public:
 	Item* getItem(string);
 	void displayBag();
 	void dropItem(string);	
-
+	int bagSize() { return items.size(); }
 };
