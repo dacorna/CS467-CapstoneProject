@@ -208,6 +208,7 @@ bool FindPreposition (std::string input);
 
 	n["INK POT"] = "INKPOT";
 	n["INK"] = "INKPOT";
+	n["GOLD"] = "GOLDPIECE";
 
 	if (p.hasPreposition == false){
 		int w;

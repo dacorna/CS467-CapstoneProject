@@ -65,7 +65,7 @@ void Game::startGame(string type)
 			}
 			timeCount++;
 			if(timeCount > timeLimit) playerAlive = false;
-
+			
 			cout << "> ";
 			cin.sync();	// discard input buffer
 			getline(cin, userInput);
@@ -593,29 +593,30 @@ void Game::loadGameFiles(string gameNameIn)
 			cave.guardianPost->setIsVisited();
 		}
 		
-		//Read in northLocked value
-		getline(guardianPostFile, sBuffer);
-		iBuffer = std::stoi(sBuffer);
-		if(iBuffer == 0)
-		{
-			cave.guardianPost->setLock(1, false);
-		}
-		
-		//Read in eastLocked value
-		getline(guardianPostFile, sBuffer);
-		iBuffer = std::stoi(sBuffer);
-		if(iBuffer == 0)
-		{
-			cave.guardianPost->setLock(3, false);
-		}
-		
-		//Read in westLocked value
-		getline(guardianPostFile, sBuffer);
-		iBuffer = std::stoi(sBuffer);
-		if(iBuffer == 0)
-		{
-			cave.guardianPost->setLock(4, false);
-		}
+		//	Guardian encounter takes care of these locks 
+		////Read in northLocked value
+		//getline(guardianPostFile, sBuffer);
+		//iBuffer = std::stoi(sBuffer);
+		//if(iBuffer == 0)
+		//{
+		//	cave.guardianPost->setLock(1, false);
+		//}
+		//
+		////Read in eastLocked value
+		//getline(guardianPostFile, sBuffer);
+		//iBuffer = std::stoi(sBuffer);
+		//if(iBuffer == 0)
+		//{
+		//	cave.guardianPost->setLock(3, false);
+		//}
+		//
+		////Read in westLocked value
+		//getline(guardianPostFile, sBuffer);
+		//iBuffer = std::stoi(sBuffer);
+		//if(iBuffer == 0)
+		//{
+		//	cave.guardianPost->setLock(4, false);
+		//}
 		//Read in items
 		while(getline(guardianPostFile, sBuffer))
 		{
@@ -868,6 +869,12 @@ void Game::loadGameFiles(string gameNameIn)
 		
 		getline(playerFile, sBuffer);
 		player.completedMaze = std::stoi(sBuffer);
+		
+		getline(playerFile, sBuffer);
+		player.completedTroll = std::stoi(sBuffer);
+		
+		getline(playerFile, sBuffer);
+		player.completedGuardian = std::stoi(sBuffer);
 		
 		//Read in player's current room name
 		getline(playerFile, sBuffer);
@@ -1180,9 +1187,10 @@ void Game::saveGameFiles(string gameNameIn)
 	if(guardianPostFile.is_open())
 	{
 		guardianPostFile << cave.guardianPost->getIsVisited() << endl;
-		guardianPostFile << cave.guardianPost->isLocked("NORTH") << endl;
-		guardianPostFile << cave.guardianPost->isLocked("EAST") << endl;
-		guardianPostFile << cave.guardianPost->isLocked("WEST") << endl;
+		//	Guardian encounter takes care of these locks
+		//guardianPostFile << cave.guardianPost->isLocked("NORTH") << endl;
+		//guardianPostFile << cave.guardianPost->isLocked("EAST") << endl;
+		//guardianPostFile << cave.guardianPost->isLocked("WEST") << endl;
 		
 		//This room's current items
 		for(int i = 0; i < cave.guardianPost->items.size(); i++)
@@ -1320,7 +1328,7 @@ void Game::saveGameFiles(string gameNameIn)
 	if(trollBridgeFile.is_open())
 	{
 		trollBridgeFile << cave.trollBridge->getIsVisited() << endl;
-		trollBridgeFile << cave.trollBridge->isLocked("NORTH") << endl;
+		//trollBridgeFile << cave.trollBridge->isLocked("NORTH") << endl; Don't need anymore due to troll bridge functionality
 		
 		//This room's current items
 		for(int i = 0; i < cave.trollBridge->items.size(); i++)
@@ -1358,6 +1366,8 @@ void Game::saveGameFiles(string gameNameIn)
 		playerFile << timeLimit << endl;
 		playerFile << timeCount << endl;
 		playerFile << player.completedMaze << endl;
+		playerFile << player.completedTroll << endl;
+		playerFile << player.completedGuardian << endl;
 		playerFile << player.getRoom()->getName() << endl;
 		
 		//The player's current items
