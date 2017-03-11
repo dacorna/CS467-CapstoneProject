@@ -2,7 +2,7 @@
 
 Bag::Bag()
 {
-	maxSize = 10;		// evaluate this number later 
+	maxSize = 7;		// evaluate this number later 
 }
 
 Bag::~Bag()
@@ -46,6 +46,11 @@ bool Bag::add(Item* item)
 		std::cout << "Item already in bag" << std::endl;
 		return false;
 	}
+	if(items.size() >= maxSize) {
+		std::cout << "Your bag is full! You'll have to drop an item first" << std::endl;
+		return false;
+	}
+		
 	items.push_back(item);
 	
 	return true;
