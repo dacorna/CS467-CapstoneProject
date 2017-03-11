@@ -29,7 +29,6 @@ protected:
 		//		make for easier loading and saving. Maybe set item states within the items?
 		// DC - I agree with a standard like northLocked, southLocked
 		
-	friend class Game;
 public:
 	Room();
 	~Room();

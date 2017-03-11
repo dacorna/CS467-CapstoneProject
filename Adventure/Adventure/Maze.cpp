@@ -14,16 +14,18 @@ Maze::Maze()
 	four = new Node;
 	five = new Node;
 	six = new Node;
+	seven = new Node;
+	eight = new Node;
 	start->north = one;
 	start->south = start;
 	start->east = start;
 	start->west = start;
 	start->position = 0;
-	end->south = six;
+	end->south = eight;
 	end->north = end;
 	end->east = end;
 	end->west = end;
-	end->position = 7;
+	end->position = 9;
 	one->east = two;
 	one->south = start;
 	one->west = start;
@@ -52,8 +54,20 @@ Maze::Maze()
 	six->east = five;
 	six->south = start;
 	six->west = start;
-	six->north = end;
+	six->north = seven;
 	six->position = 6;
+	seven->south = six;
+	seven->north = eight;
+	seven->west = start;
+	seven->east = start;
+	seven->position = 7;
+	eight->south = seven;
+	eight->west = end;
+	eight->north = start;
+	eight->east = start;
+	eight->position = 8;
+	xLoc = 3;
+	yLoc = 5; 
 }
 
 Maze::~Maze()
@@ -66,35 +80,71 @@ Maze::~Maze()
 	delete four;
 	delete five;
 	delete six;
+	delete seven;
+	delete eight;
 }
 
+void Maze::displayMaze(bool reversed)
+{
+	char grid[6][6];
+	for(int i=0; i<6; i++) {
+	    for(int j=0; j<6; j++) {
+		grid[i][j] = 'O';	
+	    }
+	}
+	grid[yLoc][xLoc] = '*';
+	if(!reversed)
+		grid[0][1] = 'X';
+	else
+		grid[5][3] = 'X';
+
+		
+	for(int i=0; i<6; i++) {
+	   cout << endl;
+	  	   
+	   for(int j=0; j<6; j++) {
+		cout << grid[i][j] << "  ";
+	   }
+	}
+}
 void Maze::reverseMaze()
 {
+	xLoc = 1;
+	yLoc = 0;
 	Node* temp;
 	temp = start;
 	start = end;
 	end = temp;
 	temp = one;
-	one = six;
-	six = temp;
+	one = eight;
+	eight = temp;
 	temp = two;
-	two = five;
-	five = temp;
+	two = seven;
+	seven = temp;
 	temp = three;
-	three = four;
-	four = temp;
-	one->west = start;
-	one->south = start;
-	two->east = start;
-	two->north = start;
-	three->west = start;
-	three->south = six;
-	four->north = start;
-	four->east = start;
-	five->east = start;
-	five->south = start;
-	six->west = start;
-	six->north = start;
+	three = six;
+	six = temp;
+	temp = four;
+	four = five;
+	five = temp;
+	start->east = one; start->south = start; start->west = start; start->north = start;
+	one->west = start; one->east = start;
+	one->south = two; one->north = start;
+	two->east = start; two->west = start;
+	two->north = one; two->south = three;
+	three->west = start; three->east = four;
+	three->south = start; three->north = two;
+	four->north = start; four->south = five;
+	four->east = start; four->west = three;
+	five->east = six; five->west = start; 
+	five->south = start; five->north = four;
+	six->west = five; six->east = start; 
+	six->north = start; six->south = seven;
+	seven->west = eight; seven->east = start; 
+	seven->south = start; seven->north = six;
+	eight->north = five; eight->south = end;
+	eight->west = start; eight->east = seven; 
+	end->north = eight; end->west = end; end->east = end; end->south = end;
 	mazeReversed = true;
 }	
 
@@ -108,6 +158,8 @@ void Maze::setClues()
 	four->clue = "clue:north";
 	five->clue = "clue:west";
 	six->clue = "clue:north";
+	seven->clue = "north";
+	eight->clue = "west";
 }
 
 int Maze::enterMaze(Room* room)
@@ -135,9 +187,11 @@ int Maze::enterMaze(Room* room)
 		cout << "You are now inside the realm of the Avendorian elves. The way behind has shut. Forward lies the only reprieve." << endl;
 		cout << endl << start->clue << endl;
 	}
+	displayMaze(mazeReversed);
+	cout << endl << endl << "X marks the spot " << endl;
 	cout << endl << "Which way do you go? " << endl;
+	cout << "1 = North, 2 = South, 3 = East, 4 = West" << endl;
 	do {
-		cout << "1) North	2) East		3) South	4) West" << endl;
 		cout << ">  ";
 		cin.sync();
 		do{
@@ -150,22 +204,26 @@ int Maze::enterMaze(Room* room)
 				cin.clear();
 				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				cout << "The ancient maze only recognizes 1, 2, 3, or 4" << endl;
-				cout << "<  ";
+				cout << ">  ";
 			}
+						
 		} while (!validInput);
-
+					
 		std::system("clear");
+				
 		go(choice);
+		displayMaze(mazeReversed);
+		
 		if(!mazeReversed)
-			if (currentNode->position == 7)
+			if (currentNode->position == 9)
 				isFinished = true;
 			else
-				cout << "Where next? " << endl;
+				cout << endl << "Where next? " << endl;
 		else
 			if(currentNode->position == 0)
 				isFinished = true;
 			else
-				cout << "Where next? " << endl;
+				cout << endl << "Where next? " << endl;
 
 		if(!mazeReversed)
 			cout << endl << currentNode->clue << endl;
@@ -174,8 +232,8 @@ int Maze::enterMaze(Room* room)
 
 	cout << "Congratulations! You have successfully navigated the maze. You've proven yourself a worthy adversary." << endl;
 	usleep(400000);
-	if(room->hasItem("SWORD")) {
-		room->getItem("SWORD")->setCanPickUp(true);
+	if(room->getNorth()->hasItem("SWORD")) {
+		room->getNorth()->getItem("SWORD")->setCanPickUp(true);
 		cout << "The Sword of the Evening appears on the ground before you. " << endl;
 	}
 	usleep(300000);
@@ -190,28 +248,38 @@ void Maze::go(int direction)
 	{
 	case 1:
 		currentNode = currentNode->north;
+		yLoc--;
 		break;
 	case 2:
-		currentNode = currentNode->east;
+		currentNode = currentNode->south;
+		yLoc++;
 		break;
 	case 3:
-		currentNode = currentNode->south;
+		currentNode = currentNode->east;
+		xLoc++;
 		break;
 	case 4:
 		currentNode = currentNode->west;
+		xLoc--;
 		break;
 	default:
 		cout << "You were thwarted. Try again" << endl;
 
 	}
 	if(!mazeReversed)
-		if (!currentNode->position)
-			cout << "You fell into a time loop! All the way back to start." << endl;
+		if (!currentNode->position) {
+			xLoc = 3;
+			yLoc = 5;
+			cout << "Fell into a time loop! Back to the start." << endl;
+		}
 		else
 			cout << "You've reached level " << currentNode->position << " of the maze" << endl;
 	else
-		if(currentNode->position == 7)
-			cout << "Fell into time loop! Back to the start." << endl;
+		if(currentNode->position == 9) {
+			xLoc = 1;
+			yLoc = 0;
+			cout << "Fell into a time loop! Back to the start." << endl;
+		}
 		else
 			cout << "You've reached level " << currentNode->position << " of the maze" << endl; 
 }
