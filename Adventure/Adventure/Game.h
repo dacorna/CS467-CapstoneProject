@@ -46,7 +46,7 @@ public:
 	void startGame(string);
 	void enterRoom(Room*);
 	void displayCommands();
-	
+	void displayMap();
 	void loadSavedGameList();
 	void loadGameFiles(string);
 	void setUpNewGame();

@@ -56,10 +56,11 @@ private:
 	Item* goldPiece;
 	Item* treasureChest;
 	Item* map;
+	Item* oar;
+	Item* ale;
+	Item* flagon;
 
 	friend class Game;
-	//JP - should all of the items be contained in here, too?
-	// DC- yep, just started thinking about this, and it seems that they should
 
 public:
 	Cave();

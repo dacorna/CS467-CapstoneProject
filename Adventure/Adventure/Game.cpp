@@ -65,8 +65,7 @@ void Game::startGame(string type)
 			}
 			timeCount++;
 			if(timeCount > timeLimit) playerAlive = false;
-			player.bag = bag;
-			
+
 			cout << "> ";
 			cin.sync();	// discard input buffer
 			getline(cin, userInput);
@@ -147,7 +146,7 @@ void Game::startGame(string type)
 				else if(p.firstObject == "MAP") {
 					
 					if(bag.hasItem("MAP"))
-				  	   cout << "Looking at map..." << endl;
+				 	   displayMap(); 	   
 					else
 					   cout << "You don't have a map!" << endl;	
 				}
@@ -223,7 +222,6 @@ void Game::startGame(string type)
 			}else if (p.command == "PLACE") {
 				if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE") {
 					rm->PlaceORE();
-					bag.dropItem("ORE");
 					if(rm->AlterStatus()== true){
 						rm->MeltLock();
 						cave.earth->setLock(1,0);
@@ -233,20 +231,15 @@ void Game::startGame(string type)
 			}
 			else if(p.command == "USE") {
 				// call rm->useItem(bag, p.firstObject);	// uses an item however it was intended in given room
-				if(player.getRoom()->getName() == "Mine" && p.firstObject == "PICKAXE") {
+				if(p.firstObject == "MAP")
+					if(bag.hasItem("MAP"))
+					    displayMap();	
+				else if(player.getRoom()->getName() == "Mine" && p.firstObject == "PICKAXE") {
 					rm->useItem(bag, p.firstObject);
 					if (rm->StrikeStatus()  == true){
 						Item* itm = rm->getItem("ORE");
 						bag.add(itm);
 					}
-				}
-				else if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE") {
-					rm->PlaceORE();
-					bag.dropItem("ORE");
-					if(rm->AlterStatus()== true){
-						rm->MeltLock();
-						cave.earth->setLock(1,0);
-					} 
 				}
 				else if (player.getRoom()->getName() == "Mine" && p.firstObject == "FEATHER"  ) {
 					rm->useItem(bag, p.firstObject);
@@ -264,7 +257,7 @@ void Game::startGame(string type)
 					} 
 				}
 				else{
-					rm->useItem(bag, p.firstObject);		// <-- we should be able to simply call this without using if/else statement
+					rm->useItem(bag, p.firstObject);		
 				} 
 			} 
 			else if (p.command == "CHEAT") {
@@ -290,7 +283,6 @@ void Game::startGame(string type)
 			else
 				cout << "I don't understand" << endl; 
 			
-			if(player.isAlive == false) playerAlive = false;
 
 		} while (playerAlive);
 
@@ -299,12 +291,35 @@ void Game::startGame(string type)
 		}
 }
 
-
+void Game::displayMap()
+{
+	cout << "---------------------------------------------------------------------\n" << endl;
+	cout <<	"				Outside				      \n";
+	cout << "---------------------------------------------------------------------\n";
+	cout << "\t\t\t|\t\t|\n\t\t\t|\tExit\t|\n\t\t\t|\t\t|" << endl;	
+	cout << "  ---------------------------------------------------------------\n";
+	cout << "  |\t\t\t\t|\t\t\t\t|\n  |\t\t\t\t|\t\t\t\t|\n  |\tTreasure\t\t|\t\tLair\t\t|\n";
+	cout << "  |\t\t\t\t|\t\tof  \t\t|\n  |\t\t\t\t|\t\tFlame\t\t|\n  |\t\t\t\t|\t\t\t\t|\n";
+	cout << "   --------------------------------------------------------------\n";
+	cout << "   \t\t\t\t|\t\t\t|\n   \t\t\t\t|\tGuardian's\t|\n   \t\t\t\t|\t  Post  \t|\n   \t\t\t\t|\t\t\t|\n";
+	cout << "   \t\t\t\t ------------------------\n";
+	cout << "   \t\t\t\t   |\t|\n   \t\t\t\t   |\t|\n    \t\t\t\t   |\t|\n";
+	cout << "   \tUnknown\t\t---------------------------------\n";   
+	cout << "   \t\t\t|\t\t\t\t|\n   \t\t\t|\tAvendorian\t\t|\n";
+	cout << "   \t\t\t|\tTerritory\t\t|\n   \t\t\t|\t\t\t\t|\n";
+	cout << "   \t\t\t---------------------------------\n";
+	cout << "   Library\t\t\t\t\t\t\t--------------\n   \t\t\t\tMining\t\t\t\t| Spirit's Wind |\n";
+	cout << "   \t\t\t\tRegion\t\t\t\t------------------\n   \t\t\t\t\t\t\t\t|  Earth's Gate    |\n";
+	cout << "   \t--------------------------------------------------------|\t\t|\n   \t\t|\t|\t\t\t\t\t------------------\n";
+	cout << "   \t\t|\t|\n   \t\t|\t|\n";	// bridge
+	cout << " -----------\t--------------------------------\n|\t   |\t|\t\t\t\t|----------------\n";
+	cout << "| Waterfall|____| Great Cavern \t\t\t| Fiery Chasm \t|\n";
+	cout << " -----------____ \t\t\t\t|\t\t|\n\t\t--------------------------------|-----------------\n"; 
+	cout << "\t\t\t| Entrance |\n\t\t\t ----------" << endl;         
+}
 
 void Game::enterRoom(Room* nextRoom)
-{
-
-}
+{}
 
 void Game::loadSavedGameList()
 {
@@ -793,13 +808,13 @@ void Game::loadGameFiles(string gameNameIn)
 			cave.trollBridge->setIsVisited();
 		}
 		
-		//Read in northLocked value --Don't need anymore due to Troll encounter functionality
-		//getline(trollBridgeFile, sBuffer);
-		//iBuffer = std::stoi(sBuffer);
-		//if(iBuffer == 0)
-		//{
-		//	cave.trollBridge->setLock(1, false);
-		//}
+		//Read in northLocked value
+		getline(trollBridgeFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		if(iBuffer == 0)
+		{
+			cave.trollBridge->setLock(1, false);
+		}
 		//Read in items
 		while(getline(trollBridgeFile, sBuffer))
 		{
@@ -853,9 +868,6 @@ void Game::loadGameFiles(string gameNameIn)
 		
 		getline(playerFile, sBuffer);
 		player.completedMaze = std::stoi(sBuffer);
-		
-		getline(playerFile, sBuffer);
-		player.completedTroll = std::stoi(sBuffer);
 		
 		//Read in player's current room name
 		getline(playerFile, sBuffer);
@@ -1005,16 +1017,18 @@ void Game::setUpNewGame()
 	boost::filesystem::create_directory(dir);
 	
 	cave.entrance->addItem(cave.map);
+	cave.entrance->addItem(cave.flagon);
 	cave.greatCavern->addItem(cave.torch);
 	cave.water->addItem(cave.waterskin);
+	cave.water->addItem(cave.oar);
 	cave.bridge->addItem(cave.pickaxe);
 	cave.mine->addItem(cave.ore);
 	cave.library->addItem(cave.inkPot);
 	cave.air->addItem(cave.feather);
-	//cave.mazeRoom->addItem(cave.sword);
 	cave.postMaze->addItem(cave.sword);
 	cave.guardianPost->addItem(cave.goldPiece);
 	cave.treasure->addItem(cave.treasureChest);
+	cave.exit->addItem(cave.ale);
 	
 	saveGameFiles(gameNameUser);
 }
@@ -1306,7 +1320,7 @@ void Game::saveGameFiles(string gameNameIn)
 	if(trollBridgeFile.is_open())
 	{
 		trollBridgeFile << cave.trollBridge->getIsVisited() << endl;
-		//trollBridgeFile << cave.trollBridge->isLocked("NORTH") << endl; Don't need anymore due to troll bridge functionality
+		trollBridgeFile << cave.trollBridge->isLocked("NORTH") << endl;
 		
 		//This room's current items
 		for(int i = 0; i < cave.trollBridge->items.size(); i++)
@@ -1344,7 +1358,6 @@ void Game::saveGameFiles(string gameNameIn)
 		playerFile << timeLimit << endl;
 		playerFile << timeCount << endl;
 		playerFile << player.completedMaze << endl;
-		playerFile << player.completedTroll << endl;
 		playerFile << player.getRoom()->getName() << endl;
 		
 		//The player's current items

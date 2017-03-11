@@ -47,6 +47,9 @@ Cave::Cave()
 	feather = new Item;
 	inkPot = new Item;
 	ore = new Item;
+	oar = new Item;
+	ale = new Item;
+	flagon = new Item;
 }
 
 Cave::~Cave()
@@ -79,6 +82,9 @@ Cave::~Cave()
 	delete feather;
 	delete inkPot;
 	delete ore;
+	delete oar;
+	delete flagon;
+	delete ale;
 }
 
 void Cave::setItems()
@@ -91,6 +97,9 @@ void Cave::setItems()
 	inkPot->setName("INKPOT");
 	feather->setName("FEATHER");
 	sword->setName("SWORD");
+	ale->setName("ALE");
+	oar->setName("OAR");
+	flagon->setName("FLAGON");
 	goldPiece->setName("GOLDPIECE");
 	treasureChest->setName("TREASURECHEST");
 	map->setCanPickUp(true);
@@ -103,6 +112,7 @@ void Cave::setItems()
 	sword->setCanPickUp(true);	
 	goldPiece->setCanPickUp(true);
 	treasureChest->setCanPickUp(true);
+	oar->setCanPickUp(true); ale->setCanPickUp(true); flagon->setCanPickUp(true);
 	map->setInRoomDescription("There is a map on the floor.");
 	torch->setInRoomDescription("A torch lies near your feet.");
 	waterskin->setInRoomDescription("There is a waterskin propped in the corner.");
@@ -112,6 +122,9 @@ void Cave::setItems()
 	feather->setInRoomDescription("Is that a feather?");
 	sword->setInRoomDescription("The Sword of the Evening proudly waits.");
 	goldPiece->setInRoomDescription("Is that a piece of gold?");
+	oar->setInRoomDescription("An oar lies on the bank of the pond");
+	ale->setInRoomDescription("A pint of ale is near the door");
+	flagon->setInRoomDescription("A mysterious flagon is underneath some old papers"); 
 	treasureChest->setInRoomDescription("A chest of treasure, shouldn't you take it and leave?");
 	//JP - moving the intial item location assignment to the setUpNewGame function
 	//	because these items will be saved/loaded into different files when the game 
@@ -133,7 +146,7 @@ void Cave::setLocks()
 	greatCavern->setLock(1, true);
 	mine->setLock(1, true);
 	earth->setLock(1, true);
-	//trollBridge->setLock(1, true); Troll encounter takes care of this
+	trollBridge->setLock(1, true);
 	guardianPost->setLock(1, true);
 	guardianPost->setLock(3, true);
 	guardianPost->setLock(4, true);
@@ -195,6 +208,18 @@ Item* Cave::returnItem(string nameIn)
 	else if(nameIn == "TREASURECHEST")
 	{
 		return treasureChest;
+	}
+	else if(nameIn == "ALE")
+	{
+		return ale;
+	}
+	else if(nameIn == "FLAGON")
+	{
+		return flagon;
+	}
+	else if(nameIn == "OAR")
+	{
+		return oar;	
 	}
 	else
 	{
