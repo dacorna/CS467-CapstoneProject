@@ -5,8 +5,8 @@ PROGS = test
 
 all: ${PROGS}
 
-test: main.cpp Air.o Bag.o Bridge.o Cave.o Character.o DragonLair.o Earth.o Entrance.o Exit.o Fire.o Game.o GreatCavern.o GuardianPost.o Item.o Library.o MazeRoom.o Mine.o Outside.o parser.o Room.o Treasure.o TrollBridge.o Water.o OutsideEnd.o PostMaze.o Maze.o Troll.o
-	${CXX} ${CXXFLAGS} main.cpp Air.o Bag.o Bridge.o Cave.o Character.o DragonLair.o Earth.o Entrance.o Exit.o Fire.o Game.o GreatCavern.o GuardianPost.o Item.o Library.o MazeRoom.o Mine.o Outside.o parser.o Room.o Treasure.o TrollBridge.o Water.o OutsideEnd.o PostMaze.o Maze.o Troll.o -o caveAdventure
+test: main.cpp Air.o Bag.o Bridge.o Cave.o Character.o DragonLair.o Earth.o Entrance.o Exit.o Fire.o Game.o GreatCavern.o GuardianPost.o Item.o Library.o MazeRoom.o Mine.o Outside.o parser.o Room.o Treasure.o TrollBridge.o Water.o OutsideEnd.o PostMaze.o Maze.o Troll.o Guardian.o
+	${CXX} ${CXXFLAGS} main.cpp Air.o Bag.o Bridge.o Cave.o Character.o DragonLair.o Earth.o Entrance.o Exit.o Fire.o Game.o GreatCavern.o GuardianPost.o Item.o Library.o MazeRoom.o Mine.o Outside.o parser.o Room.o Treasure.o TrollBridge.o Water.o OutsideEnd.o PostMaze.o Maze.o Troll.o Guardian.o -o caveAdventure
 	
 OutsideEnd.o: OutsideEnd.cpp OutsideEnd.h
 	${CXX} ${CXXFLAGS} -c OutsideEnd.cpp
@@ -85,9 +85,12 @@ PostMaze.o: PostMaze.cpp PostMaze.h
 
 Maze.o: Maze.cpp Maze.h
 	${CXX} ${CXXFLAGS} -c Maze.cpp
-
+	
 Troll.o: Troll.cpp Troll.h
 	${CXX} ${CXXFLAGS} -c Troll.cpp
+	
+Guardian.o: Guardian.cpp Guardian.h
+	${CXX} ${CXXFLAGS} -c Guardian.cpp
 
 clean:
 	rm -f *.o *~

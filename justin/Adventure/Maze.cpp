@@ -150,7 +150,7 @@ int Maze::enterMaze(Room* room)
 				cin.clear();
 				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				cout << "The ancient maze only recognizes 1, 2, 3, or 4" << endl;
-				cout << ">  ";
+				cout << "<  ";
 			}
 		} while (!validInput);
 

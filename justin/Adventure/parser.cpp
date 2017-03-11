@@ -67,9 +67,12 @@ bool FindPreposition (std::string input);
 
 	std::map<std::string, std::string> m;
 
-	m["PUSH"] = "PUSH";
 	m["CHEAT"] = "CHEAT";
+	m["UNCHEAT"] = "UNCHEAT";
+	m["PUSH"] = "PUSH";
 	m["USE"] = "USE";
+	m["EXPLORE"] =  "EXPLORE";
+	m["OPEN"] =  "OPEN";
 
 	m["GO"]="GO";
 	m["GO IN"]="GO";
@@ -86,7 +89,6 @@ bool FindPreposition (std::string input);
 	m["SOUTH"] = "quickGO";
 	m["EAST"] = "quickGO";
 	m["WEST"] = "quickGO";
-
 
 	m["LOOK"]="LOOK";
 	
@@ -111,13 +113,14 @@ bool FindPreposition (std::string input);
 	m["SPEAK"]="TALK";
 	m["SPEAK TO"]="TALK";
 
-	m["SET"] = "SET";
-	m["PLACE"] = "SET";
+	m["SET"] = "PLACE";
+	m["PLACE"] = "PLACE";
 
 	m["TAKE"] = "TAKE";
 	m["GRAB"] = "TAKE";
 	m["PICK UP"] = "TAKE";
 	m["PICKUP"] = "TAKE";
+	m["GET"] = "TAKE";
 
 	m["DROP"] = "DROP";
 	m["LEAVE"] = "DROP";
@@ -133,9 +136,7 @@ bool FindPreposition (std::string input);
 	m["RESTORE"] = "LOAD";
 
 	m["INVENTORY"] =  "INVENTORY"	;
-	m["BAG"] =  "BAG";
-
-	m["EXPLORE"] =  "EXPLORE";
+	m["BAG"] =  "INVENTORY";
 
 	m["HELP"] =  "HELP";
 	m["?"] =  "HELP";
@@ -207,6 +208,8 @@ bool FindPreposition (std::string input);
 
 	n["INK POT"] = "INKPOT";
 	n["INK"] = "INKPOT";
+	
+	n["GOLD"] = "GOLDPIECE";
 
 	if (p.hasPreposition == false){
 		int w;

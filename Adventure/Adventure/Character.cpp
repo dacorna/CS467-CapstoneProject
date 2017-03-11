@@ -64,6 +64,44 @@ void Character::enterRoom(Room* roomIn)
 				currentRoom = currentRoom->getNorth();
 			}
 		}
+		else if(currentRoom->getName() == "Troll Bridge" && !completedTroll){
+			usleep(200000);
+			string choice;
+			bool validChoice = false;
+			bool alive;
+			cout << currentRoom->getExploreStory() << endl;
+			do{
+				cout << "1) Face the troll \t 2) Go back" << endl;
+				cin.sync();
+				getline(cin,choice);
+			
+				if(choice == "1"){
+					validChoice = true;
+					usleep(200000);
+					Troll troll;
+					troll.setWeaponStatus(bag);
+					alive = troll.encounterTroll();
+					if(!alive)
+					{
+						isAlive = false;
+					}
+					else
+					{
+						completedTroll = true;
+					}
+				}
+				else if(choice == "2")
+				{
+					enterRoom(currentRoom->getSouth());
+					validChoice = true;
+				}
+				else
+				{
+					std::system("clear");
+					cout << "Please choose a valid response" << endl;
+				}
+			} while(validChoice == false);
+		}
 	}	
 
 	else

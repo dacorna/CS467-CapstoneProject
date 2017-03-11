@@ -109,3 +109,11 @@ void Room::printLongDescAndItems()
 		cout << items[i]->getInRoomDescription() << endl;
 	}
 }
+
+void Room::useItem(Bag bag, string item) 
+{
+	if(bag.hasItem(item))
+		std::cout << "That item has no use here!" << std::endl;
+	else
+		std::cout << "You don't have such an item!" << std::endl;
+}

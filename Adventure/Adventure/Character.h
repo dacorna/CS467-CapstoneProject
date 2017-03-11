@@ -3,6 +3,7 @@
 #include "Room.h"
 #include "Maze.h"
 #include "Bag.h"
+#include "Troll.h"
 #include <string>
 using std::string;
 
@@ -13,6 +14,7 @@ protected:
 	string description;
 	bool isAlive;
 	bool completedMaze;
+	bool completedTroll;
 	Room* currentRoom;
 	Room* previousRoom;
 	Bag bag;
@@ -30,4 +32,5 @@ public:
 	void setName(string);
 	Bag getBag() {return bag;}
 	void CompletedMaze() { completedMaze = true; }
+	void CompletedTroll() { completedTroll = true; }
 };

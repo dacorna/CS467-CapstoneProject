@@ -65,7 +65,8 @@ void Game::startGame(string type)
 			}
 			timeCount++;
 			if(timeCount > timeLimit) playerAlive = false;
-
+			player.bag = bag;
+			
 			cout << "> ";
 			cin.sync();	// discard input buffer
 			getline(cin, userInput);
@@ -222,6 +223,7 @@ void Game::startGame(string type)
 			}else if (p.command == "PLACE") {
 				if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE") {
 					rm->PlaceORE();
+					bag.dropItem("ORE");
 					if(rm->AlterStatus()== true){
 						rm->MeltLock();
 						cave.earth->setLock(1,0);
@@ -237,6 +239,14 @@ void Game::startGame(string type)
 						Item* itm = rm->getItem("ORE");
 						bag.add(itm);
 					}
+				}
+				else if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE") {
+					rm->PlaceORE();
+					bag.dropItem("ORE");
+					if(rm->AlterStatus()== true){
+						rm->MeltLock();
+						cave.earth->setLock(1,0);
+					} 
 				}
 				else if (player.getRoom()->getName() == "Mine" && p.firstObject == "FEATHER"  ) {
 					rm->useItem(bag, p.firstObject);
@@ -280,6 +290,7 @@ void Game::startGame(string type)
 			else
 				cout << "I don't understand" << endl; 
 			
+			if(player.isAlive == false) playerAlive = false;
 
 		} while (playerAlive);
 
@@ -782,13 +793,13 @@ void Game::loadGameFiles(string gameNameIn)
 			cave.trollBridge->setIsVisited();
 		}
 		
-		//Read in northLocked value
-		getline(trollBridgeFile, sBuffer);
-		iBuffer = std::stoi(sBuffer);
-		if(iBuffer == 0)
-		{
-			cave.trollBridge->setLock(1, false);
-		}
+		//Read in northLocked value --Don't need anymore due to Troll encounter functionality
+		//getline(trollBridgeFile, sBuffer);
+		//iBuffer = std::stoi(sBuffer);
+		//if(iBuffer == 0)
+		//{
+		//	cave.trollBridge->setLock(1, false);
+		//}
 		//Read in items
 		while(getline(trollBridgeFile, sBuffer))
 		{
@@ -842,6 +853,9 @@ void Game::loadGameFiles(string gameNameIn)
 		
 		getline(playerFile, sBuffer);
 		player.completedMaze = std::stoi(sBuffer);
+		
+		getline(playerFile, sBuffer);
+		player.completedTroll = std::stoi(sBuffer);
 		
 		//Read in player's current room name
 		getline(playerFile, sBuffer);
@@ -1292,7 +1306,7 @@ void Game::saveGameFiles(string gameNameIn)
 	if(trollBridgeFile.is_open())
 	{
 		trollBridgeFile << cave.trollBridge->getIsVisited() << endl;
-		trollBridgeFile << cave.trollBridge->isLocked("NORTH") << endl;
+		//trollBridgeFile << cave.trollBridge->isLocked("NORTH") << endl; Don't need anymore due to troll bridge functionality
 		
 		//This room's current items
 		for(int i = 0; i < cave.trollBridge->items.size(); i++)
@@ -1330,6 +1344,7 @@ void Game::saveGameFiles(string gameNameIn)
 		playerFile << timeLimit << endl;
 		playerFile << timeCount << endl;
 		playerFile << player.completedMaze << endl;
+		playerFile << player.completedTroll << endl;
 		playerFile << player.getRoom()->getName() << endl;
 		
 		//The player's current items
