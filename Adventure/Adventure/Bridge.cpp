@@ -8,8 +8,3 @@ Bridge::Bridge()
 	shortDescription = "Great and ancient bridge. Best not venture east or west.";
 	exploreStory = "Do you dare look down to pick anything up here?";
 }
-
-int Bridge::special()
-{
-
-}
