@@ -237,8 +237,10 @@ void Game::startGame(string type)
 				else if(player.getRoom()->getName() == "Mine" && p.firstObject == "PICKAXE") {
 					rm->useItem(bag, p.firstObject);
 					if (rm->StrikeStatus()  == true){
+						cave.mine->addItem(cave.ore);
 						Item* itm = rm->getItem("ORE");
 						bag.add(itm);
+						rm->removeItem("ORE");
 					}
 				}
 				else if (player.getRoom()->getName() == "Mine" && p.firstObject == "FEATHER"  ) {
@@ -250,7 +252,7 @@ void Game::startGame(string type)
 				}else if (player.getRoom()->getName() == "Library" && p.firstObject == "BOOK"){
 					rm->useItem(bag, p.firstObject);
 				}else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH"){
-					rm->LightFurnace();
+					rm->LightFurnace(bag);
 					if(rm->AlterStatus()== true){
 						rm->MeltLock();
 						cave.earth->setLock(1,0);
@@ -1029,7 +1031,7 @@ void Game::setUpNewGame()
 	cave.water->addItem(cave.waterskin);
 	cave.water->addItem(cave.oar);
 	cave.bridge->addItem(cave.pickaxe);
-	cave.mine->addItem(cave.ore);
+	//cave.mine->addItem(cave.ore);
 	cave.library->addItem(cave.inkPot);
 	cave.air->addItem(cave.feather);
 	cave.postMaze->addItem(cave.sword);
