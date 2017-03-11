@@ -25,7 +25,7 @@ void Character::enterRoom(Room* roomIn)
 		{
 		previousRoom = currentRoom;
 		currentRoom = roomIn;
-		if (currentRoom->getIsVisited() == false)
+		if (currentRoom->getIsVisited() == false && currentRoom->getName() != "Troll Bridge" && currentRoom->getName() != "Cave Guardian's Post")
 			 {
 			currentRoom->setIsVisited();
 			//cout << currentRoom->getLongDescription() << endl;
@@ -88,6 +88,45 @@ void Character::enterRoom(Room* roomIn)
 					else
 					{
 						completedTroll = true;
+					}
+				}
+				else if(choice == "2")
+				{
+					enterRoom(currentRoom->getSouth());
+					validChoice = true;
+				}
+				else
+				{
+					std::system("clear");
+					cout << "Please choose a valid response" << endl;
+				}
+			} while(validChoice == false);
+		}
+		
+		else if(currentRoom->getName() == "Cave Guardian's Post" && !completedGuardian){
+			usleep(200000);
+			string choice;
+			bool validChoice = false;
+			bool alive;
+			cout << currentRoom->getExploreStory() << endl;
+			do{
+				cout << "1) Fight the guardian \t 2) Go back" << endl;
+				cin.sync();
+				getline(cin,choice);
+			
+				if(choice == "1"){
+					validChoice = true;
+					usleep(200000);
+					Guardian guardian;
+					guardian.setWeaponStatus(bag);
+					alive = guardian.encounterGuardian();
+					if(!alive)
+					{
+						isAlive = false;
+					}
+					else
+					{
+						completedGuardian = true;
 					}
 				}
 				else if(choice == "2")

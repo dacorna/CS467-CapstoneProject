@@ -31,7 +31,7 @@ void Character::enterRoom(Room* roomIn)
 			//cout << currentRoom->getLongDescription() << endl;
 			currentRoom->printLongDescAndItems();
 			}
-		else if(currentRoom->getIsVisited() == true && currentRoom->getName() != "Troll Bridge" && currentRoom->getName() != "Cave Guardian's Post")
+		else// if(currentRoom->getIsVisited() == true && currentRoom->getName() != "Troll Bridge" && currentRoom->getName() != "Cave Guardian's Post")
 			 {
 			 
 			cout << currentRoom->getShortDescription() << endl;

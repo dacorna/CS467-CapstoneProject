@@ -134,9 +134,9 @@ void Cave::setLocks()
 	mine->setLock(1, true);
 	earth->setLock(1, true);
 	//trollBridge->setLock(1, true); Troll encounter takes care of this
-	guardianPost->setLock(1, true);
-	guardianPost->setLock(3, true);
-	guardianPost->setLock(4, true);
+	//guardianPost->setLock(1, true);
+	//guardianPost->setLock(3, true);	Guardian encounter takes care of these
+	//guardianPost->setLock(4, true);
 	dragonLair->setLock(4, true);
 	dragonLair->setLock(1, true);	
 }
