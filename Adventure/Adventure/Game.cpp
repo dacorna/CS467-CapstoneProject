@@ -220,7 +220,7 @@ void Game::startGame(string type)
 			else if (p.command == "EXPLORE") {
 				cout << rm->getExploreStory() << endl;
 			}else if (p.command == "PLACE") {
-				if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE") {
+				if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE" && bag.hasItem("ORE")) {
 					rm->PlaceORE();
 					if(rm->AlterStatus()== true){
 						rm->MeltLock();
@@ -231,10 +231,12 @@ void Game::startGame(string type)
 			}
 			else if(p.command == "USE") {
 				// call rm->useItem(bag, p.firstObject);	// uses an item however it was intended in given room
-				if(p.firstObject == "MAP")
-					if(bag.hasItem("MAP"))
-					    displayMap();	
-				else if(player.getRoom()->getName() == "Mine" && p.firstObject == "PICKAXE") {
+				if(p.firstObject == "MAP"){
+					if(bag.hasItem("MAP")){
+					  	  displayMap();
+					}	
+				}
+				else if(player.getRoom()->getName() == "Mine" && p.firstObject == "PICKAXE" && bag.hasItem("PICKAXE") ) {
 					rm->useItem(bag, p.firstObject);
 					if (rm->StrikeStatus()  == true){
 						cave.mine->addItem(cave.ore);
@@ -243,7 +245,16 @@ void Game::startGame(string type)
 						rm->removeItem("ORE");
 					}
 				}
-				else if (player.getRoom()->getName() == "Mine" && p.firstObject == "FEATHER"  ) {
+				else if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE" && bag.hasItem("ORE")) {
+					rm->PlaceORE();
+					bag.dropItem("ORE");
+					if(rm->AlterStatus()== true){
+						rm->MeltLock();
+						cave.earth->setLock(1,0);
+					} 
+				}
+				else if (player.getRoom()->getName() == "Mine" && p.firstObject == "FEATHER"  ||
+					player.getRoom()->getName() == "Mine" && p.firstObject == "INKPOT") {
 					rm->useItem(bag, p.firstObject);
 					if(rm->DoorStatus ()){
 						cave.mine->setLock(1,0);
@@ -251,7 +262,7 @@ void Game::startGame(string type)
 		
 				}else if (player.getRoom()->getName() == "Library" && p.firstObject == "BOOK"){
 					rm->useItem(bag, p.firstObject);
-				}else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH"){
+				}else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH" && bag.hasItem("TORCH") ){
 					rm->LightFurnace(bag);
 					if(rm->AlterStatus()== true){
 						rm->MeltLock();

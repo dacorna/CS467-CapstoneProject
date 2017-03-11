@@ -23,10 +23,15 @@ void Mine::useItem(Bag bag, string item)
 		}
 		
 
-	}else if (item == "FEATHER") {
+	}else if (item == "FEATHER" ||  item == "INKPOT" ) {
 
 		if( !bag.hasItem("INKPOT")){
 			cout << "Find some ink." << endl;
+			return;
+		}
+
+		if( !bag.hasItem("FEATHER")){
+			cout << "Find something to write with." << endl;
 			return;
 		}
 
@@ -42,6 +47,7 @@ void Mine::useItem(Bag bag, string item)
 			cout << "Nothing Happens." << endl;
 
 		}
+
 
 	} else
 		cout << "Sounds fun, but that item has no effect here" << endl;
