@@ -12,5 +12,7 @@ class Bridge : public Room {
 
 public:
 	Bridge();
+	bool GotPickaxe();
+	bool firstTimeGotPickaxe;
 
 };

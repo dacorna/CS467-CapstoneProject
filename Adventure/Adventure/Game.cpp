@@ -178,9 +178,17 @@ void Game::startGame(string type)
 			else if (p.command == "TAKE") {
 				if (p.firstObject == "treasure") p.firstObject = "TREASURECHEST";	// temporary fix
 				if (p.firstObject == "ink") p.firstObject = "INKPOT";			// same
-				if (p.firstObject == "")
+				if (p.firstObject == ""){
 					cout << "Take what? " << endl;
-				
+				}
+				else if (player.getRoom()->getName() == "Great Bridge" && p.firstObject == "PICKAXE"){
+					if(rm->GotPickaxe()){
+						cave.bridge->addItem(cave.pickaxe);
+						Item* itm = rm->getItem(p.firstObject);
+						bag.add(itm);
+						rm->removeItem(p.firstObject);
+					}
+				}
 				else {
 					
 					if (rm->hasItem(p.firstObject)) {
@@ -237,7 +245,7 @@ void Game::startGame(string type)
 					}	
 				}
 				else if(player.getRoom()->getName() == "Mine" && p.firstObject == "PICKAXE" && bag.hasItem("PICKAXE") ) {
-					rm->useItem(bag, p.firstObject);
+					rm->useItem(bag, p.firstObject); 
 					if (rm->StrikeStatus()  == true){
 						cave.mine->addItem(cave.ore);
 						Item* itm = rm->getItem("ORE");

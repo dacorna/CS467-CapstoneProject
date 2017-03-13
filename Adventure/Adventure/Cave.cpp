@@ -116,7 +116,7 @@ void Cave::setItems()
 	map->setInRoomDescription("There is a map on the floor.");
 	torch->setInRoomDescription("A torch lies near your feet.");
 	waterskin->setInRoomDescription("There is a waterskin propped in the corner.");
-	pickaxe->setInRoomDescription("A pickaxe leans against the wall.");
+	pickaxe->setInRoomDescription("A pickaxe is here.");
 	ore->setInRoomDescription("Some ore is sitting at the edge of the room");
 	inkPot->setInRoomDescription("There is an inkpot.");
 	feather->setInRoomDescription("Is that a feather?");

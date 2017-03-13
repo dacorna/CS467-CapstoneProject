@@ -68,4 +68,5 @@ public:
 	virtual void LightFurnace(Bag bag){}
 	virtual void MeltLock(){}
 	virtual bool DoorStatus (){}
+	virtual bool GotPickaxe(){}
 };
