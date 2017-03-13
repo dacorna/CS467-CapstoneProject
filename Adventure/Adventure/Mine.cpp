@@ -11,7 +11,7 @@ Mine::Mine()
 
 void Mine::useItem(Bag bag, string item)
 {
-	if (item == "PICKAXE")
+	if (item == "PICKAXE" && bag.hasItem("PICKAXE"))
 	{
 		if (firstSrike == false){
 			cout << "You hit down with the pick end cracking the ore. Maybe another swing is needed!" << endl;
@@ -50,5 +50,5 @@ void Mine::useItem(Bag bag, string item)
 
 
 	} else
-		cout << "Sounds fun, but that item has no effect here" << endl;
+		cout << "Sounds fun, but huh?" << endl;
 }
