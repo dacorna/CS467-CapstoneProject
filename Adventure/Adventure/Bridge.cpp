@@ -12,9 +12,21 @@ Bridge::Bridge()
 bool Bridge::GotPickaxe()
 {
 
+
 	if (firstTimeGotPickaxe == false){
 	 	cout << "The pickaxe is at a perilous place on the bridge!"<<endl;
 		firstTimeGotPickaxe = true;
+		cout << "Are you brave enough to reach for it? (yes/no):" ;
+		cin.sync();
+		string input;
+		getline(cin,input);
+		if(input != "y" && input != "yes" && input != "YES"  ) {
+			cout << "OK, but sometime it is GOOD to be brave."<<endl;
+			firstTimeGotPickaxe = false;
+			return 0;
+			
+		}
+
 	}
 
 	 int number;
