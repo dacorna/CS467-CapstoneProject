@@ -28,6 +28,14 @@ int Bag::getItemIndex(string itemName)
 	return -1;
 }
 
+Item* Bag::getItemAtIndex(int index)
+{
+	if(index >= 0 && items.size() > index) 
+		return items.at(index);
+
+	else return NULL; // bad index given
+}
+
 Item* Bag::getItem(string itemName)
 {
 	for(unsigned i = 0; i < items.size(); i++) {

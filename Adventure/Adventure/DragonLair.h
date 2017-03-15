@@ -1,6 +1,5 @@
 #include "Room.h"
-
-#include "Room.h"
+#include "Character.h"
 
 using std::string;
 using std::cout;
@@ -12,4 +11,5 @@ class DragonLair : public Room {
 
 public:
 	DragonLair();
+	//int special(Character,Bag);
 };

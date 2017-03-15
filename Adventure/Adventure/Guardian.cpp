@@ -120,6 +120,9 @@ bool Guardian::encounterGuardian()
 		if(score >= 15)
 		{
 			cout << "Your final attack has finally broken through the guardian's defense! He falls to the ground with a resounding THUD." << endl;
+			usleep(300000);	
+			cout << "Something falls from the guardian's pocket. A glowing, mysterious gold piece of some sort..." << endl;
+			usleep(300000);
 			result = true;
 		}
 		else

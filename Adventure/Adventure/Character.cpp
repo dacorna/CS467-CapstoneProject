@@ -56,7 +56,7 @@ void Character::enterRoom(Room* roomIn)
 		else if (currentRoom->getName() == "Post Maze" && previousRoom->getName() == "Troll Bridge") {	
 			int finishedMaze = 0; 
 			Maze mazeR;
-			cout << "Entering from north!" << endl;	// entering from north - reverse maze
+			//cout << "Entering from north!" << endl;	// entering from north - reverse maze
 			mazeR.reverseMaze();
 			finishedMaze = mazeR.enterMaze(currentRoom);
 			if(finishedMaze) {
@@ -146,10 +146,58 @@ void Character::enterRoom(Room* roomIn)
 				}
 			} while(validChoice == false);
 		}
+		else if (currentRoom->getName() == "Dragon's Lair") {
+			if(!completedDragon) {
+				// create Dragon object
+				Dragon d;
+				d.setItemStatus(bag); 
+				string encounterType;
+				cout << "What do you do?" << endl;
+				cout << "a) Speak to dragon" << endl;
+				cout << "b) Fight dragon" << endl;
+				cout << "c) Explore a bit" << endl;
+				cin.sync();
+				getline(cin,encounterType);
+				trim(encounterType);
+				if(encounterType == "Speak" || encounterType == "speak") encounterType = "a";
+				else if(encounterType == "Fight" || encounterType == "fight") encounterType = "b";
+				else if(encounterType == "Explore" || encounterType == "explore") encounterType = "c";
+ 				if(encounterType != "a" && encounterType != "b" && encounterType != "c")
+					encounterType = "b";
+				bool result;
+				result = d.encounter(encounterType,bag);
+				usleep(1000000);
+				if(result) {
+					// enter the Treasure Room
+					completedDragon = true; 
+					enterRoom(currentRoom->getWest());
+				}
+				else enterRoom(currentRoom->getSouth());
+			}
+			else {
+				cout << "The dragon has left its lair. You are safe to continue" << endl;   
+			}
+		}
+		
 	}	
 
 	else
 		 {
 		cout << "You can't go that way!" << endl;
 		}
+}
+
+int Character::fightDragon(Bag bag)
+{
+	return 0;
+}
+
+int Character::speakToDragon(Bag bag)
+{
+	return 0;
+}
+
+int Character::exploreDragon(Bag bag, string room)
+{
+	return 0;
 }

@@ -93,6 +93,7 @@ void Game::startGame(string type)
 
 			// this is for testing until certain commands are added to the parser 
 			// ********************************************************************
+			/*
 			trim(userInput);
 			if (userInput == "cheat")
 				p.command = "CHEAT";
@@ -102,18 +103,27 @@ void Game::startGame(string type)
 				p.command = "UNCHEAT";
 			else if (userInput == "use")
 				p.command = "USE";
+			*/
 			// ********************************************************************
 
 			rm = player.getRoom();
-			
-			// considering using a table-driven method with function pointers 
-			//  but for now we go with the big huge if-else block
-			  
+			player.setBag(bag);
+								  
 			if(p.command == "GO") {
 				if(p.firstObject == "NORTH") {
 					if(!(rm->isLocked("NORTH")))
 						player.enterRoom(rm->getNorth());
-					else
+					else if(rm->getName() == "Mine") {
+						cout << "The door is locked" << endl;
+						usleep(500000);
+						cout << "...wait a minute..." << endl;
+						usleep(350000);
+						cout << "There appears a place to write on this door" << endl;
+						usleep(250000);
+						cout << "But you will need something to write with..." << endl;
+						usleep(750000);  
+					}	
+					else 
 						cout << "The door is locked" << endl; 
 				}	
 				else if(p.firstObject == "SOUTH")
@@ -193,6 +203,9 @@ void Game::startGame(string type)
 															
 							}
 						}
+						else if(rm->getItem(p.firstObject)->getName() == "ORE") {
+							cout << "The ore is beneath the surface. Try using a tool!" << endl;
+						}
 						else
 							cout << "Can't reach that item yet!" << endl;
 					}
@@ -229,36 +242,77 @@ void Game::startGame(string type)
 				}
 
 			}
+			else if (p.command == "LIGHT") {
+				if(rm->getName() == "Earth" && (p.firstObject == "ORE" || p.firstObject == "FURNACE")) {
+					rm->LightFurnace();
+					if(rm->AlterStatus() == true) {
+						rm->MeltLock();
+						cave.earth->setLock(1,0);
+					} 
+				}
+			}
 			else if(p.command == "USE") {
-				// call rm->useItem(bag, p.firstObject);	// uses an item however it was intended in given room
-				if(p.firstObject == "MAP")
+							
+				if(p.firstObject == "MAP") {
 					if(bag.hasItem("MAP"))
-					    displayMap();	
+					    displayMap();
+					else cout << "You don't have a map!" << endl;
+				}
+				else if(rm->getName() == "Earth" && p.firstObject == "ORE") {
+					if(bag.hasItem("ORE")) {
+						rm->PlaceORE();
+						if(rm->AlterStatus() == true) {
+							rm->MeltLock();
+							cave.earth->setLock(1,0);
+						}
+					}
+				}	
 				else if(player.getRoom()->getName() == "Mine" && p.firstObject == "PICKAXE") {
 					rm->useItem(bag, p.firstObject);
 					if (rm->StrikeStatus()  == true){
 						Item* itm = rm->getItem("ORE");
-						bag.add(itm);
+						if(itm != NULL)
+							bag.add(itm);
 					}
 				}
+				
 				else if (player.getRoom()->getName() == "Mine" && p.firstObject == "FEATHER"  ) {
 					rm->useItem(bag, p.firstObject);
 					if(rm->DoorStatus ()){
 						cave.mine->setLock(1,0);
 					}
 		
-				}else if (player.getRoom()->getName() == "Library" && p.firstObject == "BOOK"){
+				} 
+				else if (player.getRoom()->getName() == "Library" && p.firstObject == "BOOK"){
 					rm->useItem(bag, p.firstObject);
-				}else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH"){
+				} 
+				else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH"){
 					rm->LightFurnace();
 					if(rm->AlterStatus()== true){
 						rm->MeltLock();
 						cave.earth->setLock(1,0);
 					} 
-				}
+				} 
 				else{
 					rm->useItem(bag, p.firstObject);		
-				} 
+				}
+				 
+			}
+			else if(p.command == "POUR") {
+				if(rm->getName() != "Earth")
+					rm->useItem(bag, "WATERSKIN");
+			}
+
+			else if(p.command == "FILL") {
+				if(rm->getName() != "Fire") {
+					rm->useItem(bag, "WATERSKIN");
+				}
+			}
+			else if(p.command == "READ") {
+				if(rm->getName() == "Library")
+					if(p.firstObject == "BOOK")
+						rm->useItem(bag, p.firstObject);
+					else cout << "you can't read that!" << endl; 
 			} 
 			else if (p.command == "CHEAT") {
 				cave.unlockAllDoors();

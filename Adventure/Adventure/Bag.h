@@ -21,7 +21,8 @@ public:
 	bool hasItem(string);	// enter item.name
 	int getItemIndex(string);
 	Item* getItem(string);
+	Item* getItemAtIndex(int);
 	void displayBag();
-	void dropItem(string);	
-	int bagSize() { return items.size(); }
+	void dropItem(string);
+	int bagSize() { return items.size(); }	
 };

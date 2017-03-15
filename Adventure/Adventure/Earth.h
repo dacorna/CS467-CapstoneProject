@@ -16,10 +16,10 @@ private:
 public:
 	Earth();
 	~Earth();
-	//void useItem(Bag, string);
+	void useItem(Bag, string);
 	void LightFurnace();
 	bool AlterStatus ();
 	void PlaceORE ();
 	void MeltLock ();
-
+	
 };

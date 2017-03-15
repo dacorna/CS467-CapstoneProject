@@ -73,6 +73,13 @@ bool FindPreposition (std::string input);
 	m["USE"] = "USE";
 	m["EXPLORE"] =  "EXPLORE";
 	m["OPEN"] =  "OPEN";
+	m["READ"] = "READ";
+	m["POUR"] = "POUR";
+	m["PUT OUT"] = "POUR";
+	m["FILL"] = "FILL";
+	
+	m["LIGHT"] = "LIGHT";
+	m["BURN"] = "BURN";
 
 	m["GO"]="GO";
 	m["GO IN"]="GO";
@@ -93,7 +100,7 @@ bool FindPreposition (std::string input);
 	m["LOOK"]="LOOK";
 	
 	m["LOOK AT"]="LOOK AT";
-                     m["LOOK UP"]="LOOK AT";
+        m["LOOK UP"]="LOOK AT";
 	m["LOOK INTO"]="LOOK AT";
 	m["LOOK INSIDE"]="LOOK AT";
 	m["INSPECT"]="LOOK AT";
@@ -107,6 +114,20 @@ bool FindPreposition (std::string input);
 	m["ATTACK"]="ATTACK";
 	m["STRIKE"]="ATTACK";
 	m["SWING"]="ATTACK";
+	m["FIGHT"]="ATTACK";
+	m["BATTLE"]="ATTACK";
+	
+	m["GIVE"]="GIVE";
+	m["OFFER"]="GIVE";
+	m["HAND"]="GIVE";
+
+	m["POUR"]="POUR";
+	m["DUMP"]="POUR";
+	
+	m["RUN"]="RUN";
+	m["FLEE"]="RUN";
+	m["ESCAPE"]="RUN";
+	m["LEAVE"]="RUN";	
 
 	m["TALK"]="TALK";
 	m["TALK TO"]="TALK";
@@ -115,6 +136,11 @@ bool FindPreposition (std::string input);
 
 	m["SET"] = "PLACE";
 	m["PLACE"] = "PLACE";
+	
+	m["GOLD"] = "GOLDPIECE";
+	m["GOLDPIECE"] = "GOLDPIECE";
+	m["GOLD PIECE"] = "GOLDPIECE";
+	m["PIECE OF GOLD"] = "GOLDPIECE";
 
 	m["TAKE"] = "TAKE";
 	m["GRAB"] = "TAKE";
@@ -209,7 +235,9 @@ bool FindPreposition (std::string input);
 	n["INK POT"] = "INKPOT";
 	n["INK"] = "INKPOT";
 	n["GOLD"] = "GOLDPIECE";
-
+	n["GOLD PIECE"] = "GOLDPIECE";
+	n["WATER"] = "WATERSKIN";
+	n["AXE"] = "PICKAXE";
 	if (p.hasPreposition == false){
 		int w;
 		for(w=objectOneStart ;w<nwords;w++){

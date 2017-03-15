@@ -106,7 +106,7 @@ void Cave::setItems()
 	torch->setCanPickUp(true);
 	waterskin->setCanPickUp(true);
 	pickaxe->setCanPickUp(true);
-	ore->setCanPickUp(true);
+	ore->setCanPickUp(false);
 	inkPot->setCanPickUp(true);
 	feather->setCanPickUp(true);
 	sword->setCanPickUp(true);	
@@ -117,7 +117,7 @@ void Cave::setItems()
 	torch->setInRoomDescription("A torch lies near your feet.");
 	waterskin->setInRoomDescription("There is a waterskin propped in the corner.");
 	pickaxe->setInRoomDescription("A pickaxe leans against the wall.");
-	ore->setInRoomDescription("Some ore is sitting at the edge of the room");
+	ore->setInRoomDescription("Some ore is visible just beneath the surface");
 	inkPot->setInRoomDescription("There is an inkpot.");
 	feather->setInRoomDescription("Is that a feather?");
 	sword->setInRoomDescription("The Sword of the Evening proudly waits.");

@@ -5,8 +5,11 @@
 #include "Bag.h"
 #include "Troll.h"
 #include "Guardian.h"
+#include "Dragon.h"
+#include <boost/algorithm/string.hpp>
 #include <string>
 using std::string;
+using namespace boost;
 
 class Character
 {
@@ -17,6 +20,7 @@ protected:
 	bool completedMaze;
 	bool completedTroll;
 	bool completedGuardian;
+	bool completedDragon;
 	Room* currentRoom;
 	Room* previousRoom;
 	Bag bag;
@@ -33,7 +37,12 @@ public:
 	string getDescription() { return description; }
 	void setName(string);
 	Bag getBag() {return bag;}
+	void setBag(Bag bagIn) { bag = bagIn; }
 	void CompletedMaze() { completedMaze = true; }
 	void CompletedTroll() { completedTroll = true; }
 	void CompletedGuardian() { completedGuardian = true; }
+	void CompletedDragon() { completedDragon = true; }
+	int fightDragon(Bag);
+	int speakToDragon(Bag);
+	int exploreDragon(Bag,string);
 };
