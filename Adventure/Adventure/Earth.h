@@ -21,5 +21,5 @@ public:
 	bool AlterStatus ();
 	void PlaceORE ();
 	void MeltLock ();
-	
+
 };

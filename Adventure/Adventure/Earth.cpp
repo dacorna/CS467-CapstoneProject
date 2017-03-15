@@ -17,9 +17,13 @@ void Earth::PlaceORE (){
 	PlacedOre= true;
 }
 
-void Earth::LightFurnace(){
-	cout << "The furnace begins to heat up."  << endl;
-	FurnanceLit = true;
+void Earth::LightFurnace(Bag bag){
+	if (bag.getItem("TORCH")->isObjectiveCompleted()){
+		cout << "The furnace begins to heat up."  << endl;
+		FurnanceLit = true;
+	}else {
+		cout << "The torch is not lit. Find a fire." << endl;
+	}
 }
 
 bool Earth::AlterStatus (){

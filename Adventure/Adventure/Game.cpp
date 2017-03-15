@@ -40,6 +40,7 @@ void Game::startGame(string type)
 		// start new game
 		player.setCurrentRoom(cave.outside);
 		setUpNewGame();
+		saveGameFiles(getGameName());
 		// load background/story files 
 		// below will likely be stored in a game background/story file that will be loaded in
 		// maybe the player has to read a scroll (or something) to get this information 
@@ -108,7 +109,7 @@ void Game::startGame(string type)
 
 			rm = player.getRoom();
 			player.setBag(bag);
-								  
+			
 			if(p.command == "GO") {
 				if(p.firstObject == "NORTH") {
 					if(!(rm->isLocked("NORTH")))
@@ -123,7 +124,7 @@ void Game::startGame(string type)
 						cout << "But you will need something to write with..." << endl;
 						usleep(750000);  
 					}	
-					else 
+					else
 						cout << "The door is locked" << endl; 
 				}	
 				else if(p.firstObject == "SOUTH")
@@ -188,9 +189,17 @@ void Game::startGame(string type)
 			else if (p.command == "TAKE") {
 				if (p.firstObject == "treasure") p.firstObject = "TREASURECHEST";	// temporary fix
 				if (p.firstObject == "ink") p.firstObject = "INKPOT";			// same
-				if (p.firstObject == "")
+				if (p.firstObject == ""){
 					cout << "Take what? " << endl;
-				
+				}
+				else if (player.getRoom()->getName() == "Great Bridge" && p.firstObject == "PICKAXE"){
+					if(rm->GotPickaxe()){
+						cave.bridge->addItem(cave.pickaxe);
+						Item* itm = rm->getItem(p.firstObject);
+						bag.add(itm);
+						rm->removeItem(p.firstObject);
+					}
+				}
 				else {
 					
 					if (rm->hasItem(p.firstObject)) {
@@ -233,7 +242,7 @@ void Game::startGame(string type)
 			else if (p.command == "EXPLORE") {
 				cout << rm->getExploreStory() << endl;
 			}else if (p.command == "PLACE") {
-				if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE") {
+				if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE" && bag.hasItem("ORE")) {
 					rm->PlaceORE();
 					if(rm->AlterStatus()== true){
 						rm->MeltLock();
@@ -255,28 +264,29 @@ void Game::startGame(string type)
 							
 				if(p.firstObject == "MAP") {
 					if(bag.hasItem("MAP"))
-					    displayMap();
-					else cout << "You don't have a map!" << endl;
+					    displayMap();	
+					}	
 				}
-				else if(rm->getName() == "Earth" && p.firstObject == "ORE") {
-					if(bag.hasItem("ORE")) {
-						rm->PlaceORE();
-						if(rm->AlterStatus() == true) {
-							rm->MeltLock();
-							cave.earth->setLock(1,0);
-						}
-					}
-				}	
-				else if(player.getRoom()->getName() == "Mine" && p.firstObject == "PICKAXE") {
+				else if(player.getRoom()->getName() == "Mine" && p.firstObject == "PICKAXE" && bag.hasItem("PICKAXE") ) {
 					rm->useItem(bag, p.firstObject);
 					if (rm->StrikeStatus()  == true){
+						cave.mine->addItem(cave.ore);
 						Item* itm = rm->getItem("ORE");
 						if(itm != NULL)
-							bag.add(itm);
+						bag.add(itm);
+						rm->removeItem("ORE");
 					}
 				}
-				
-				else if (player.getRoom()->getName() == "Mine" && p.firstObject == "FEATHER"  ) {
+				else if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE" && bag.hasItem("ORE")) {
+					rm->PlaceORE();
+					bag.dropItem("ORE");
+					if(rm->AlterStatus()== true){
+						rm->MeltLock();
+						cave.earth->setLock(1,0);
+					}
+				}
+				else if (player.getRoom()->getName() == "Mine" && p.firstObject == "FEATHER"  ||
+					player.getRoom()->getName() == "Mine" && p.firstObject == "INKPOT") {
 					rm->useItem(bag, p.firstObject);
 					if(rm->DoorStatus ()){
 						cave.mine->setLock(1,0);
@@ -285,17 +295,16 @@ void Game::startGame(string type)
 				} 
 				else if (player.getRoom()->getName() == "Library" && p.firstObject == "BOOK"){
 					rm->useItem(bag, p.firstObject);
-				} 
-				else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH"){
-					rm->LightFurnace();
+				}else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH" && bag.hasItem("TORCH") ){
+					rm->LightFurnace(bag);
 					if(rm->AlterStatus()== true){
 						rm->MeltLock();
 						cave.earth->setLock(1,0);
 					} 
-				} 
+				}
 				else{
 					rm->useItem(bag, p.firstObject);		
-				}
+				} 
 				 
 			}
 			else if(p.command == "POUR") {
@@ -863,13 +872,13 @@ void Game::loadGameFiles(string gameNameIn)
 			cave.trollBridge->setIsVisited();
 		}
 		
-		//Read in northLocked value
-		getline(trollBridgeFile, sBuffer);
-		iBuffer = std::stoi(sBuffer);
-		if(iBuffer == 0)
-		{
-			cave.trollBridge->setLock(1, false);
-		}
+		////Read in northLocked value
+		//getline(trollBridgeFile, sBuffer);	Don't need anymore due to troll encounter
+		//iBuffer = std::stoi(sBuffer);
+		//if(iBuffer == 0)
+		//{
+		//	cave.trollBridge->setLock(1, false);
+		//}
 		//Read in items
 		while(getline(trollBridgeFile, sBuffer))
 		{
@@ -1083,7 +1092,7 @@ void Game::setUpNewGame()
 	cave.water->addItem(cave.waterskin);
 	cave.water->addItem(cave.oar);
 	cave.bridge->addItem(cave.pickaxe);
-	cave.mine->addItem(cave.ore);
+	//cave.mine->addItem(cave.ore);
 	cave.library->addItem(cave.inkPot);
 	cave.air->addItem(cave.feather);
 	cave.postMaze->addItem(cave.sword);
