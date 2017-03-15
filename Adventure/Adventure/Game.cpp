@@ -40,6 +40,7 @@ void Game::startGame(string type)
 		// start new game
 		player.setCurrentRoom(cave.outside);
 		setUpNewGame();
+		saveGameFiles(getGameName());
 		// load background/story files 
 		// below will likely be stored in a game background/story file that will be loaded in
 		// maybe the player has to read a scroll (or something) to get this information 
@@ -830,13 +831,13 @@ void Game::loadGameFiles(string gameNameIn)
 			cave.trollBridge->setIsVisited();
 		}
 		
-		//Read in northLocked value
-		getline(trollBridgeFile, sBuffer);
-		iBuffer = std::stoi(sBuffer);
-		if(iBuffer == 0)
-		{
-			cave.trollBridge->setLock(1, false);
-		}
+		////Read in northLocked value
+		//getline(trollBridgeFile, sBuffer);	Don't need anymore due to troll encounter
+		//iBuffer = std::stoi(sBuffer);
+		//if(iBuffer == 0)
+		//{
+		//	cave.trollBridge->setLock(1, false);
+		//}
 		//Read in items
 		while(getline(trollBridgeFile, sBuffer))
 		{
