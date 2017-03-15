@@ -259,14 +259,19 @@ void Game::startGame(string type)
 						cave.earth->setLock(1,0);
 					} 
 				}
+				else if (rm->getName() == "Fire" && p.firstObject == "TORCH") {
+					rm->useItem(bag, p.firstObject);
+				}
+				else cout << "Can't light anything right now!" << endl;
 			}
 			else if(p.command == "USE") {
 							
 				if(p.firstObject == "MAP") {
 					if(bag.hasItem("MAP"))
 					    displayMap();	
-					}	
+					else cout << "You don't have a map!" << endl;
 				}
+				
 				else if(player.getRoom()->getName() == "Mine" && p.firstObject == "PICKAXE" && bag.hasItem("PICKAXE") ) {
 					rm->useItem(bag, p.firstObject);
 					if (rm->StrikeStatus()  == true){
