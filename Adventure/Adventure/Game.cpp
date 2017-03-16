@@ -425,7 +425,7 @@ void Game::loadSavedGameList()
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening game.list file" << endl;
 	}
 	int choice;
 	cin >> choice;
@@ -465,7 +465,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening air file." << endl;
 	}
 	airFile.close();
 	
@@ -479,6 +479,12 @@ void Game::loadGameFiles(string gameNameIn)
 		{
 			cave.bridge->setIsVisited();
 		}
+		
+		//Pickaxe picked up Boolean Value
+		getline(bridgeFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		cave.bridge->firstTimeGotPickaxe = iBuffer;
+		
 		//Read in items
 		while(getline(bridgeFile, sBuffer))
 		{
@@ -488,7 +494,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening bridge file." << endl;
 	}
 	bridgeFile.close();
 	
@@ -527,7 +533,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening dragon lair file." << endl;
 	}
 	dragonLairFile.close();
 	
@@ -558,7 +564,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening earth file." << endl;
 	}
 	earthFile.close();
 	
@@ -581,7 +587,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening entrance file." << endl;
 	}
 	entranceFile.close();
 	
@@ -604,7 +610,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening exit file." << endl;
 	}
 	exitFile.close();
 	
@@ -627,7 +633,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening fire file." << endl;
 	}
 	fireFile.close();
 	
@@ -658,7 +664,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening great cavern file." << endl;
 	}
 	greatCavernFile.close();
 	
@@ -706,7 +712,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening guardia post file." << endl;
 	}
 	guardianPostFile.close();
 	
@@ -729,7 +735,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening library file." << endl;
 	}
 	libraryFile.close();
 	
@@ -752,7 +758,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening maze file." << endl;
 	}
 	mazeRoomFile.close();
 	
@@ -783,7 +789,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening mine file." << endl;
 	}
 	mineFile.close();
 	
@@ -806,7 +812,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening outside file." << endl;
 	}
 	outsideFile.close();
 	
@@ -829,7 +835,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening outside end file." << endl;
 	}
 	outsideEndFile.close();
 	
@@ -852,7 +858,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening post maze file." << endl;
 	}
 	postMazeFile.close();
 	
@@ -874,7 +880,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening treasure file." << endl;
 	}
 	treasureFile.close();
 	
@@ -905,7 +911,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening troll bridge file." << endl;
 	}
 	trollBridgeFile.close();
 	
@@ -928,9 +934,29 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening water file." << endl;
 	}
 	waterFile.close();
+	
+	std::ifstream itemsFile (gameNameIn + "/" + "items");
+	if(itemsFile.is_open())
+	{
+		//Read in waterskin state
+		getline(itemsFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);		
+		cave.waterskin->objectiveCompleted = iBuffer;
+	
+		//Read in torch state
+		getline(itemsFile, sBuffer);
+		iBuffer = std::stoi(sBuffer);
+		cave.torch->objectiveCompleted = iBuffer;
+		
+	}
+	else
+	{
+		cout << "Error opening items file." << endl;
+	}
+	itemsFile.close();
 	
 	std::ifstream playerFile (gameNameIn + "/" + "player");
 	if(playerFile.is_open())
@@ -955,6 +981,9 @@ void Game::loadGameFiles(string gameNameIn)
 		
 		getline(playerFile, sBuffer);
 		player.completedGuardian = std::stoi(sBuffer);
+		
+		getline(playerFile, sBuffer);
+		player.completedDragon = std::stoi(sBuffer);
 		
 		//Read in player's current room name
 		getline(playerFile, sBuffer);
@@ -1034,7 +1063,7 @@ void Game::loadGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening player file." << endl;
 	}
 	playerFile.close();
 }
@@ -1135,7 +1164,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening air file." << endl;
 	}
 	airFile.close();
 	
@@ -1143,6 +1172,8 @@ void Game::saveGameFiles(string gameNameIn)
 	if(bridgeFile.is_open())
 	{
 		bridgeFile << cave.bridge->getIsVisited() << endl;
+		
+		bridgeFile << cave.bridge->firstTimeGotPickaxe << endl;
 		
 		//This room's current items
 		for(int i = 0; i < cave.bridge->items.size(); i++)
@@ -1152,7 +1183,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening bridge file." << endl;
 	}
 	bridgeFile.close();
 	
@@ -1172,7 +1203,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening dragon lair file." << endl;
 	}
 	dragonLairFile.close();
 	
@@ -1190,7 +1221,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening earth file." << endl;
 	}
 	earthFile.close();
 	
@@ -1207,7 +1238,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening entrance file." << endl;
 	}
 	entranceFile.close();
 	
@@ -1224,7 +1255,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening exit file." << endl;
 	}
 	exitFile.close();
 	
@@ -1241,7 +1272,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening fire file." << endl;
 	}
 	fireFile.close();
 	
@@ -1259,7 +1290,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening great cavern file." << endl;
 	}
 	greatCavernFile.close();
 	
@@ -1280,7 +1311,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening guardian post file." << endl;
 	}
 	guardianPostFile.close();
 	
@@ -1297,7 +1328,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening library file." << endl;
 	}
 	libraryFile.close();
 	
@@ -1314,7 +1345,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening maze file." << endl;
 	}
 	mazeRoomFile.close();
 	
@@ -1332,7 +1363,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening mine file." << endl;
 	}
 	mineFile.close();
 	
@@ -1349,7 +1380,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening outside file." << endl;
 	}
 	outsideFile.close();
 	
@@ -1366,7 +1397,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening outside end file." << endl;
 	}
 	outsideEndFile.close();
 	
@@ -1383,7 +1414,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening post maze file." << endl;
 	}
 	postMazeFile.close();
 	
@@ -1400,7 +1431,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening treasure file." << endl;
 	}
 	treasureFile.close();
 	
@@ -1418,7 +1449,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening troll bridge file." << endl;
 	}
 	trollBridgeFile.close();
 	
@@ -1435,7 +1466,7 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening water file." << endl;
 	}
 	waterFile.close();
 	
@@ -1448,6 +1479,7 @@ void Game::saveGameFiles(string gameNameIn)
 		playerFile << player.completedMaze << endl;
 		playerFile << player.completedTroll << endl;
 		playerFile << player.completedGuardian << endl;
+		playerFile << player.completedDragon << endl;
 		playerFile << player.getRoom()->getName() << endl;
 		
 		//The player's current items
@@ -1458,9 +1490,24 @@ void Game::saveGameFiles(string gameNameIn)
 	}
 	else
 	{
-		//TODO: Handle the error
+		cout << "Error opening player file." << endl;
 	}
 	playerFile.close();
+	
+	std::ofstream itemsFile (gameNameIn + "/" + "items");
+	if(itemsFile.is_open())
+	{
+		//Waterskin state
+		itemsFile << cave.waterskin->objectiveCompleted << endl;
+		//Torch State
+		itemsFile << cave.torch->objectiveCompleted << endl;
+		
+	}
+	else
+	{
+		cout << "Error opening items file." << endl;
+	}
+	itemsFile.close();
 }
 
 void Game::setGameName(string gameNameIn)
