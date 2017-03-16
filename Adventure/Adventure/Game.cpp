@@ -944,12 +944,12 @@ void Game::loadGameFiles(string gameNameIn)
 		//Read in waterskin state
 		getline(itemsFile, sBuffer);
 		iBuffer = std::stoi(sBuffer);		
-		cave.waterskin->objectiveCompleted = iBuffer;
-	
+		cave.waterskin->completeObjective(iBuffer);
+ 	
 		//Read in torch state
 		getline(itemsFile, sBuffer);
 		iBuffer = std::stoi(sBuffer);
-		cave.torch->objectiveCompleted = iBuffer;
+		cave.torch->completeObjective(iBuffer); 
 		
 	}
 	else
@@ -1498,9 +1498,9 @@ void Game::saveGameFiles(string gameNameIn)
 	if(itemsFile.is_open())
 	{
 		//Waterskin state
-		itemsFile << cave.waterskin->objectiveCompleted << endl;
+		itemsFile << cave.waterskin->isObjectiveCompleted() << endl;
 		//Torch State
-		itemsFile << cave.torch->objectiveCompleted << endl;
+		itemsFile << cave.torch->isObjectiveCompleted() << endl;
 		
 	}
 	else

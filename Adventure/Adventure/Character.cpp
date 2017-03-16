@@ -42,31 +42,58 @@ void Character::enterRoom(Room* roomIn)
 			cout << currentRoom->getShortDescription() << endl;
 			}
 		if (currentRoom->getName() == "Maze Room") {
-			usleep(200000);
+			usleep(500000);
+			bool skipMaze = false;
 			if(!completedMaze) {
 				cout << currentRoom->getExploreStory() << endl;
-				usleep(200000);
+				usleep(500000);
 			}
-			Maze maze;
-			maze.enterMaze(currentRoom);
-			completedMaze = true;
+			if(completedMaze) {
+				cout << "You have already completed the maze..." << endl;
+				cout << "Take secret passage below maze? (y/n)" << endl;
+				string input;
+				cin.clear(); cin.sync();
+				cin >> input; 
+				trim(input);
+				if(input == "y" || input == "yes")
+					skipMaze = true;
+			}
+			if(!skipMaze) {
+				Maze maze;
+				maze.enterMaze(currentRoom);
+				completedMaze = true;
+			}
 			previousRoom = currentRoom;
 			currentRoom = currentRoom->getNorth();
 		}
 		else if (currentRoom->getName() == "Post Maze" && previousRoom->getName() == "Troll Bridge") {	
-			int finishedMaze = 0; 
-			Maze mazeR;
+			cout << endl << "The Avendorians built a secret passage to be seen only by those who have completed the maze" << endl;
+			cout << "The passage appears to go below the maze" << endl;
+			usleep(750000);
+			cout << endl << "Take secret passage? (y/n)" << endl; 
+			string input;
+			bool skipMaze = false;
+			cin.clear(); cin.sync();
+			cin >> input;
+			trim(input);
+			if(input == "y" || input == "yes")
+				skipMaze = true;
+
+			if(!skipMaze) {
+				int finishedMaze = 0; 
+				Maze mazeR;
 			//cout << "Entering from north!" << endl;	// entering from north - reverse maze
-			mazeR.reverseMaze();
-			finishedMaze = mazeR.enterMaze(currentRoom);
-			if(finishedMaze) {
-				completedMaze = true;
-				previousRoom = currentRoom;
-				currentRoom = currentRoom->getSouth();
-			}
-			else {
-				previousRoom = currentRoom;
-				currentRoom = currentRoom->getNorth();
+				mazeR.reverseMaze();
+				finishedMaze = mazeR.enterMaze(currentRoom);
+				if(finishedMaze) {
+					completedMaze = true;
+					previousRoom = currentRoom;
+					currentRoom = currentRoom->getSouth();
+				}
+				else {
+					previousRoom = currentRoom;
+					currentRoom = currentRoom->getNorth();
+				}
 			}
 		}
 		else if(currentRoom->getName() == "Troll Bridge" && !completedTroll){

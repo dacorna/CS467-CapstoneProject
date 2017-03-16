@@ -70,4 +70,5 @@ public:
 	virtual void MeltLock(){}
 	virtual bool DoorStatus (){}
 	virtual bool GotPickaxe(){}
+	bool firstTimeGotPickaxe;
 };
