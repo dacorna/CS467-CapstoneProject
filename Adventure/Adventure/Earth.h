@@ -17,7 +17,7 @@ public:
 	Earth();
 	~Earth();
 	void useItem(Bag, string);
-	void LightFurnace();
+	void LightFurnace(Bag);
 	bool AlterStatus ();
 	void PlaceORE ();
 	void MeltLock ();

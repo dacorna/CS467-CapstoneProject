@@ -253,7 +253,7 @@ void Game::startGame(string type)
 			}
 			else if (p.command == "LIGHT") {
 				if(rm->getName() == "Earth" && (p.firstObject == "ORE" || p.firstObject == "FURNACE")) {
-					rm->LightFurnace();
+					rm->LightFurnace(bag);
 					if(rm->AlterStatus() == true) {
 						rm->MeltLock();
 						cave.earth->setLock(1,0);
@@ -300,7 +300,8 @@ void Game::startGame(string type)
 				} 
 				else if (player.getRoom()->getName() == "Library" && p.firstObject == "BOOK"){
 					rm->useItem(bag, p.firstObject);
-				}else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH" && bag.hasItem("TORCH") ){
+				}
+				else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH" && bag.hasItem("TORCH") ){
 					rm->LightFurnace(bag);
 					if(rm->AlterStatus()== true){
 						rm->MeltLock();
@@ -311,6 +312,17 @@ void Game::startGame(string type)
 					rm->useItem(bag, p.firstObject);		
 				} 
 				 
+			}
+			else if (p.command == "WRITE") {
+				if (rm->getName() == "Mine") {
+					if (bag.hasItem("FEATHER")) {
+						if (bag.hasItem("INKPOT"))
+							rm->useItem(bag, "FEATHER");
+						else cout << "You need ink!" << endl;
+					}
+					else cout << "You don't have anything to write with!" << endl;
+				}
+				else cout << "There's nothing to write on here!" << endl;
 			}
 			else if(p.command == "POUR") {
 				if(rm->getName() != "Earth")
