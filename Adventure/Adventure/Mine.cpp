@@ -6,7 +6,7 @@ Mine::Mine()
 	name = "Mine";
 	longDescription = "A mine which was once the greatest producer of ore in the kingdom. During the age in which this mine was active,\n it was typical of the architects to include many exits, so as to avoid entrapment from a cave-in.\nThere is ore here just beneath the surface";
 	shortDescription = "An inactive mine. Ore beneath the surface";
-	exploreStory = "There is still plenty of ore here, but we'd need some sort of tool to get at it. The door to the north - something was written here once, but it is now worn mostly away.";
+	exploreStory = "There is still plenty of ore here, but we'd need some sort of tool to get at it.\nThe door to the north - something was written here once, but it is now worn mostly away.";
 }
 
 void Mine::useItem(Bag bag, string item)

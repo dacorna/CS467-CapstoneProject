@@ -6,8 +6,8 @@
 Fire::Fire() {
 	name = "Fire";
 	shortDescription = "Fire room. No further exits.";
-	longDescription = "A room of fire and light. A greath hearth lies ahead...must have been burning for centuries. The fire blocks a switch";
-	exploreStory = "Would be interesting to find out what that switch does, but won't be able to push it until that fire is out. I don't see any water in here though.";
+	longDescription = "A room of fire and light. A greath hearth lies ahead...must have been burning for centuries.\nThe fire blocks a switch";
+	exploreStory = "Would be interesting to find out what that switch does, but won't be able to push it until that fire is out.\nI don't see any water in here though.";
 	switchPushed = false;
 	fireExtinguished = false;
 }

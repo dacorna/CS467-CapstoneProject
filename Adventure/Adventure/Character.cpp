@@ -216,6 +216,8 @@ void Character::enterRoom(Room* roomIn)
 				cout << endl;
 				if(result) {
 					// enter the Treasure Room
+					cout << endl << "You move forward through the glowing doors..." << endl;
+					usleep(750000);  
 					completedDragon = true; 
 					enterRoom(currentRoom->getWest());
 				}

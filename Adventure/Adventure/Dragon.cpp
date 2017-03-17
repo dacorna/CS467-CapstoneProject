@@ -61,13 +61,17 @@ bool Dragon::encounter(string type, Bag bag)
 		cout << "2) Reason" << endl;
 		cin >> choice;
 		trim(choice);
+		cin.clear();
+		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');	
 		if(choice == "1")
 			result = fightDragon(bag);
 		else 
 			result = speakToDragon(bag);
 	}	
 	else {
-		cout << "I don't understand what you want, which is annoying, so you've woken the dragon. Hope you have your wits about you!" << endl;
+		cout << "I don't understand what you want, which is annoying, so you've woken the dragon.\n Hope you have your wits about you!" << endl;
+		cin.clear();
+		cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');	
 		result = fightDragon(bag);  
 	}
 	return result;

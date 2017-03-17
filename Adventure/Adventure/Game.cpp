@@ -200,6 +200,9 @@ void Game::startGame(string type)
 						rm->removeItem(p.firstObject);
 					}
 				}
+				else if (rm->getName() == "Mine" && p.firstObject == "ORE") {
+					cout << "The ore is beneath the surface. Try using a tool!" << endl;
+				}
 				else {
 					
 					if (rm->hasItem(p.firstObject)) {
@@ -335,6 +338,8 @@ void Game::startGame(string type)
 					if(p.firstObject == "BOOK" || p.firstObject == "PAGE"){
 						rm->useItem(bag, p.firstObject);
 					}
+					else if(p.firstObject == "TORCH")
+						rm->useItem(bag, p.firstObject);
 					else cout << "That has no use here!" << endl;  
 				}
 				/*
@@ -376,6 +381,17 @@ void Game::startGame(string type)
 					rm->useItem(bag, "WATERSKIN");
 				}
 				else cout << "Nothing to fill here!" << endl;
+			}
+			else if (p.command == "DISPLAY") {
+				if(p.firstObject == "MAP") {
+					if(bag.hasItem("MAP"))
+						displayMap();
+					else cout << "You don't have a map!" << endl;
+				}
+				else if(p.firstObject == "BAG") {
+					bag.displayBag();
+				}
+				else cout << "Nothing to show!" << endl;
 			}
 			else if(p.command == "READ") {
 				if(rm->getName() == "Library") {

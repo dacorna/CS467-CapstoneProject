@@ -78,6 +78,11 @@ bool FindPreposition (std::string input);
 	m["POUR"] = "POUR";
 	m["PUT OUT"] = "POUR";
 	m["FILL"] = "FILL";
+	m["BARGAIN"] = "GIVE";
+	m["KILL"] = "ATTACK";
+
+	m["DISPLAY"] = "DISPLAY";
+	m["SHOW"] = "DISPLAY";
 
 	m["WRITE"] = "WRITE";	
 	m["WRITE ON"] = "WRITE";
