@@ -80,7 +80,6 @@ bool Troll::fightTroll()
 		usleep(200000);
 		cout << "Strafing behind the troll you swing your weapon and end his life! Victory! The troll's body falls into the ravine and disappears." << endl;
 		cin.get();
-		std::system("clear");
 		return true;
 	}
 	
