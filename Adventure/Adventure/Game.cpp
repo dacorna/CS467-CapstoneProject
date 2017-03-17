@@ -408,11 +408,18 @@ void Game::startGame(string type)
 			else
 				cout << "I don't understand" << endl; 
 			
+			if(player.isAlive == false) playerAlive = false;
+			
 
 		} while (playerAlive);
-
-		if (!playerAlive) {
+		
+		if(timeCount > timeLimit)
+		{
 			cout << "You have run out of time! The exit has been closed forever..." << endl;
+		}
+		
+		if (!playerAlive) {
+			cout << "GAME OVER" << endl;
 		}
 }
 
@@ -1453,9 +1460,9 @@ void Game::saveGameFiles(string gameNameIn)
 		postMazeFile << cave.postMaze->getIsVisited() << endl;
 		
 		//This room's current items
-		for(int i = 0; i < cave.outsideEnd->items.size(); i++)
+		for(int i = 0; i < cave.postMaze->items.size(); i++)
 		{
-			outsideEndFile << cave.outsideEnd->items.at(i)->getName() << endl;
+			postMazeFile << cave.postMaze->items.at(i)->getName() << endl;
 		}
 	}
 	else
