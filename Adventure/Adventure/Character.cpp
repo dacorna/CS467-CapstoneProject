@@ -48,6 +48,7 @@ void Character::enterRoom(Room* roomIn)
 				cout << currentRoom->getExploreStory() << endl;
 				usleep(500000);
 			}
+				
 			if(completedMaze) {
 				cout << "You have already completed the maze..." << endl;
 				cout << "Take secret passage below maze? (y/n)" << endl;
@@ -57,14 +58,24 @@ void Character::enterRoom(Room* roomIn)
 				trim(input);
 				if(input == "y" || input == "yes")
 					skipMaze = true;
+
+				cin.clear(); cin.sync();
 			}
 			if(!skipMaze) {
 				Maze maze;
 				maze.enterMaze(currentRoom);
 				completedMaze = true;
 			}
-			previousRoom = currentRoom;
-			currentRoom = currentRoom->getNorth();
+			usleep(750000);
+			cin.clear();
+			cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+			if(previousRoom->getName() == "Mine") {
+				enterRoom(currentRoom->getNorth());
+			}
+			else {
+				enterRoom(currentRoom->getSouth());
+			}
+				
 		}
 		else if (currentRoom->getName() == "Post Maze" && previousRoom->getName() == "Troll Bridge") {	
 			cout << endl << "The Avendorians built a secret passage to be seen only by those who have completed the maze" << endl;
@@ -78,7 +89,8 @@ void Character::enterRoom(Room* roomIn)
 			trim(input);
 			if(input == "y" || input == "yes")
 				skipMaze = true;
-
+			
+			cin.clear(); cin.sync();
 			if(!skipMaze) {
 				int finishedMaze = 0; 
 				Maze mazeR;
@@ -87,14 +99,21 @@ void Character::enterRoom(Room* roomIn)
 				finishedMaze = mazeR.enterMaze(currentRoom);
 				if(finishedMaze) {
 					completedMaze = true;
-					previousRoom = currentRoom;
-					currentRoom = currentRoom->getSouth();
+					previousRoom = currentRoom->getSouth();
+					currentRoom = currentRoom->getSouth()->getSouth(); // we want to get back to the Mines 
 				}
 				else {
-					previousRoom = currentRoom;
-					currentRoom = currentRoom->getNorth();
+					enterRoom(currentRoom->getNorth());
 				}
 			}
+			if(skipMaze) {
+				previousRoom = currentRoom->getSouth();
+				currentRoom = currentRoom->getSouth()->getSouth(); // back to the Mine
+			}
+			cout << endl << currentRoom->getShortDescription() << endl;
+			usleep(750000);
+			cin.clear();
+			cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
 		}
 		else if(currentRoom->getName() == "Troll Bridge" && !completedTroll){
 			usleep(200000);
@@ -194,12 +213,18 @@ void Character::enterRoom(Room* roomIn)
 				bool result;
 				result = d.encounter(encounterType,bag);
 				usleep(1000000);
+				cout << endl;
 				if(result) {
 					// enter the Treasure Room
 					completedDragon = true; 
 					enterRoom(currentRoom->getWest());
 				}
-				else enterRoom(currentRoom->getSouth());
+				else {
+					cout << endl << "You are defeated..." << endl << endl;
+					cout << "Press [Enter] to continue" << endl;
+					cin.get();
+					enterRoom(currentRoom->getSouth());
+				}
 			}
 			else {
 				cout << "The dragon has left its lair. You are safe to continue" << endl;   

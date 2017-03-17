@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
+#include <unistd.h>
 using std::string;
 using std::cout;
 using std::cin;

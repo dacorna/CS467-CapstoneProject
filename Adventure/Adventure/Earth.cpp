@@ -3,13 +3,12 @@
 
 Earth::Earth() {
 	name = "Earth";
-	shortDescription = "Earth room. A waterfall nearby. A strong wind swirls to the north.";
+	shortDescription = "Earth room. Waterfall nearby. A strong wind swirls to the north.";
 	longDescription = "A room full of rock and earth. A strong wind blows to the north, where there looks to be an opening.\n Yet it is unreachable, as a great iron lock bars the way. It sits atop a furnace altar.\nA small waterfall is nearby";
-	exploreStory = "Seems to me that furnace altar could melt away the iron lock. Too bad there is nothing to burn in it.";
+	exploreStory = "Seems to me that furnace altar could melt away the iron lock.\nBut you'd have to place something in it that will burn hot enough. Maybe try lighting it?"; 
 }
 
-Earth::~Earth() {
-}
+Earth::~Earth() {}
 
 
 void Earth::PlaceORE (){
@@ -18,12 +17,12 @@ void Earth::PlaceORE (){
 }
 
 void Earth::LightFurnace(Bag bag){
-	if (bag.getItem("TORCH")->isObjectiveCompleted()){
+	if(bag.getItem("TORCH")->isObjectiveCompleted()) {
 		cout << "The furnace begins to heat up."  << endl;
 		FurnanceLit = true;
-	}else {
+	} else {
 		cout << "The torch is not lit. Find a fire." << endl;
-	}
+	}		
 }
 
 bool Earth::AlterStatus (){

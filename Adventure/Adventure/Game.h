@@ -35,6 +35,11 @@ private:
 			, { "cheat", "unlocks all doors" }
 			, { "uncheat", "re-locks the doors" }
 			, { "push", "pushes a switch (or other pushable things)" }
+			, { "light [object]", "lights a torch/furnace, etc" }
+			, { "read book/page", "reads something on a page"}
+			, { "fill water", "if near water, can fill a container" }
+			, { "pour water", "can pour water on something" }
+			, { "get/grab/pickup [object]", "adds object to bag" }
 	};
 	
 	string gameName;

@@ -252,16 +252,23 @@ void Game::startGame(string type)
 
 			}
 			else if (p.command == "LIGHT") {
-				if(rm->getName() == "Earth" && (p.firstObject == "ORE" || p.firstObject == "FURNACE")) {
-					rm->LightFurnace(bag);
-					if(rm->AlterStatus() == true) {
-						rm->MeltLock();
-						cave.earth->setLock(1,0);
+				if(rm->getName() == "Earth") {
+					if(p.firstObject == "ORE" || p.firstObject == "FURNACE") {
+					    if(bag.hasItem("TORCH")) {
+						rm->LightFurnace(bag);
+						if(rm->AlterStatus() == true) {
+						    rm->MeltLock();
+						    cave.earth->setLock(1,0);
+						}
+					    } else cout << "You don't have a torch!" << endl;
 					} 
 				}
-				else if (rm->getName() == "Fire" && p.firstObject == "TORCH") {
-					rm->useItem(bag, p.firstObject);
+				else if (rm->getName() == "Fire" || rm->getName() == "Library") {
+					if(p.firstObject == "TORCH") 
+						rm->useItem(bag, p.firstObject);
+					else cout << "You can't light that!" << endl;
 				}
+								
 				else cout << "Can't light anything right now!" << endl;
 			}
 			else if(p.command == "USE") {
@@ -272,22 +279,48 @@ void Game::startGame(string type)
 					else cout << "You don't have a map!" << endl;
 				}
 				
-				else if(player.getRoom()->getName() == "Mine" && p.firstObject == "PICKAXE" && bag.hasItem("PICKAXE") ) {
-					rm->useItem(bag, p.firstObject);
-					if (rm->StrikeStatus()  == true){
-						cave.mine->addItem(cave.ore);
-						Item* itm = rm->getItem("ORE");
-						if(itm != NULL)
-						bag.add(itm);
-						rm->removeItem("ORE");
+				else if(player.getRoom()->getName() == "Mine") {
+					if(p.firstObject == "PICKAXE") {
+					    if(bag.hasItem("PICKAXE")) {
+						rm->useItem(bag, p.firstObject);
+						if (rm->StrikeStatus()  == true){
+							cave.mine->addItem(cave.ore);
+							Item* itm = rm->getItem("ORE");
+							if(itm != NULL)
+							    bag.add(itm);
+						        rm->removeItem("ORE");
+						}
+					    } else cout << "You don't have a pickaxe!" << endl;
 					}
+					else if(p.firstObject == "FEATHER" || p.firstObject == "INKPOT") {
+						rm->useItem(bag,p.firstObject);
+						if(rm->DoorStatus()) {
+							cave.mine->setLock(1,0);
+						}
+					}
+					 else cout << "That item has no effect here" << endl;
 				}
-				else if(player.getRoom()->getName() == "Earth" && p.firstObject == "ORE" && bag.hasItem("ORE")) {
-					rm->PlaceORE();
-					bag.dropItem("ORE");
-					if(rm->AlterStatus()== true){
-						rm->MeltLock();
-						cave.earth->setLock(1,0);
+				else if(player.getRoom()->getName() == "Earth") {
+					if(p.firstObject == "ORE") {
+						if(bag.hasItem("ORE")) {
+						    rm->PlaceORE();
+						    bag.dropItem("ORE");
+						    if(rm->AlterStatus()== true){
+							rm->MeltLock();
+							cave.earth->setLock(1,0);
+						    }
+						}
+						else cout << "You don't have ore. Do some mining!" << endl;  
+					}
+					else if(p.firstObject == "TORCH") {
+						if(bag.hasItem("TORCH")) {
+							rm->LightFurnace(bag);
+							if(rm->AlterStatus() == true) {
+								rm->MeltLock();
+								cave.earth->setLock(1,0);
+							}
+						}
+						else cout << "You don't have a torch!" << endl;
 					}
 				}
 				else if (player.getRoom()->getName() == "Mine" && p.firstObject == "FEATHER"  ||
@@ -298,16 +331,21 @@ void Game::startGame(string type)
 					}
 		
 				} 
-				else if (player.getRoom()->getName() == "Library" && p.firstObject == "BOOK"){
-					rm->useItem(bag, p.firstObject);
+				else if (player.getRoom()->getName() == "Library") {
+					if(p.firstObject == "BOOK" || p.firstObject == "PAGE"){
+						rm->useItem(bag, p.firstObject);
+					}
+					else cout << "That has no use here!" << endl;  
 				}
+				/*
 				else if (player.getRoom()->getName() == "Earth" && p.firstObject == "TORCH" && bag.hasItem("TORCH") ){
 					rm->LightFurnace(bag);
 					if(rm->AlterStatus()== true){
 						rm->MeltLock();
 						cave.earth->setLock(1,0);
 					} 
-				}
+				}*/
+
 				else{
 					rm->useItem(bag, p.firstObject);		
 				} 
@@ -316,8 +354,11 @@ void Game::startGame(string type)
 			else if (p.command == "WRITE") {
 				if (rm->getName() == "Mine") {
 					if (bag.hasItem("FEATHER")) {
-						if (bag.hasItem("INKPOT"))
+						if (bag.hasItem("INKPOT")) {
 							rm->useItem(bag, "FEATHER");
+							if(rm->DoorStatus())
+								cave.mine->setLock(1,0);
+						}
 						else cout << "You need ink!" << endl;
 					}
 					else cout << "You don't have anything to write with!" << endl;
@@ -325,20 +366,24 @@ void Game::startGame(string type)
 				else cout << "There's nothing to write on here!" << endl;
 			}
 			else if(p.command == "POUR") {
-				if(rm->getName() != "Earth")
+				if(rm->getName() != "Earth" && rm->getName() != "Water")
 					rm->useItem(bag, "WATERSKIN");
+				else cout << "Can't pour anything in here!" << endl;
 			}
 
 			else if(p.command == "FILL") {
 				if(rm->getName() != "Fire") {
 					rm->useItem(bag, "WATERSKIN");
 				}
+				else cout << "Nothing to fill here!" << endl;
 			}
 			else if(p.command == "READ") {
-				if(rm->getName() == "Library")
-					if(p.firstObject == "BOOK")
+				if(rm->getName() == "Library") {
+					if(p.firstObject == "BOOK" || p.firstObject == "PAGE")
 						rm->useItem(bag, p.firstObject);
-					else cout << "you can't read that!" << endl; 
+					else cout << "you can't read that!" << endl;
+				}
+				else cout << "Nothing to read in here!" << endl; 
 			} 
 			else if (p.command == "CHEAT") {
 				cave.unlockAllDoors();
@@ -432,7 +477,8 @@ void Game::loadSavedGameList()
 	while(choice < 1 || choice > i)
 	{
 		cout << "Invalid choice. Choose again!" << endl;
-		cin.ignore();
+		cin.clear();
+		cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
 		cin >> choice;
 	}
 	

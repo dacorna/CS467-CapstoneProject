@@ -172,19 +172,10 @@ int Maze::enterMaze(Room* room)
 	cout << "Entering..." << endl;
 	usleep(400000);
 	if(mazeReversed) {
-		string input;
-		cout << "You've entered the maze from the north. Traverse backwards to get back to the Mines, or get out while you can" << endl;
-		cout << "Enter 1 to continue through the maze, anything else to go back" << endl;
-		cin.sync();
-		getline(cin,input);
-		if(input != "1") {
-			usleep(200000);
-			cout << "You got out before the door shut!" << endl;
-			return 0;
-		}
+		cout << "You've entered the maze from the north. Traverse backwards to get back to the Mines" << endl;
 	}
 	else {  
-		cout << "You are now inside the realm of the Avendorian elves. The way behind has shut. Forward lies the only reprieve." << endl;
+		cout << "You are now inside the realm of the Avendorian elves. The way behind has shut.\n Forward lies the only reprieve." << endl;
 		cout << endl << start->clue << endl;
 	}
 	displayMaze(mazeReversed);
@@ -237,7 +228,7 @@ int Maze::enterMaze(Room* room)
 		cout << "The Sword of the Evening appears on the ground before you. " << endl;
 	}
 	usleep(300000);
-	cin.get();
+		
 	return 1;
 }
 

@@ -41,17 +41,17 @@ bool Dragon::encounter(string type, Bag bag)
 	}
 	else if(type == "c") {
 		cout << "You tiptoe quietly around the room, trying not to wake the fiery beast..." << endl;
-		usleep(250000);
+		usleep(450000);
 		cout << "It is impossible but to notice the charred remains of some former occupants." << endl;
 		usleep(250000);
 		cout << "Treasure pieces are scattered about, but become more prevalent on the westerly edge of the room, near where the dragon sleeps.\n It looks as though a door of sorts lies beneath the monster" << endl;
 		usleep(250000);
 		cout << "You recall old stories which say the dragon cannot be defeated with any solid objects of mankind. Greed may be its greatest weakness" << endl;
-		usleep(350000);
+		usleep(950000);
 		cout << "Something stirs in the darkness ..." << endl;
 		usleep(500000);
 		cout << "..." << endl;
-		usleep(500000);
+		usleep(700000);
 		cout << "The dragon wakes in a confused rage!" << endl;     
 		cout << "Cannot escape now" << endl;
 		cout << "To fight it or to reason with it?" << endl;  
@@ -115,7 +115,7 @@ bool Dragon::fightDragon(Bag bag)
 		else {
 			isGlowing = false;
 			cout << "The dragon attacks!" << endl;
-			usleep(250000);
+			usleep(450000);
 			cout << "You are hit..." << endl;
 			healthPts -= 25;
 			if(healthPts <= 0) {
@@ -180,8 +180,7 @@ bool Dragon::fightDragon(Bag bag)
 
 		boost::to_upper(p.firstObject);
 		outcome = rand() % 10+1;
-		cout << endl << "p.command = " << p.command << endl;
-		cout << "p.firstObject = " << p.firstObject << endl << endl;
+		
 		if(p.command == "USE" || p.command == "GIVE") {
 			if(p.firstObject == "SWORD") {
 				if(opponentHasSword) {
@@ -276,7 +275,7 @@ bool Dragon::speakToDragon(Bag bag)
 	cout << " for it is no longer in your hands'" << endl;
 	usleep(250000);
 	cout << "What do you say to the dragon?" << endl;
-	cout << "a) Let's play a game" << endl;
+	cout << "a) Give me all your treasure and leave" << endl;
 	cout << "b) I have something for you" << endl;
 	cout << "c) You have an ugly face" << endl;
 	cout << "d) Perhaps not, winged snake...but yours is (draws sword)" << endl;
@@ -285,13 +284,19 @@ bool Dragon::speakToDragon(Bag bag)
 	cin.sync();
 	cin >> choice; 
 	if(choice == 'a') {
-		result = playGame();
+		usleep(300000);
+		cout << endl << "I don't think it liked that answer..." << endl; 	
+		usleep(500000);
+		result = fightDragon(bag);
 	}
 	else if(choice == 'b') {
 		result = giveGift(bag);
 	}
 	else if(choice == 'c') {
 		// player dies
+		cout << "The dragon enters a fit of rage at this insult. " << endl;
+		cout << "It's flames consume you...this adventure is over" << endl;
+		usleep(1000000);  
 		result = false; 	
 	}
 	else {

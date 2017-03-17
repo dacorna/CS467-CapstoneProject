@@ -70,17 +70,20 @@ bool FindPreposition (std::string input);
 	m["CHEAT"] = "CHEAT";
 	m["UNCHEAT"] = "UNCHEAT";
 	m["PUSH"] = "PUSH";
+	m["PRESS"] = "PUSH";
 	m["USE"] = "USE";
 	m["EXPLORE"] =  "EXPLORE";
 	m["OPEN"] =  "OPEN";
 	m["READ"] = "READ";
+	m["POUR"] = "POUR";
+	m["PUT OUT"] = "POUR";
 	m["FILL"] = "FILL";
-	
-	m["WRITE"] = "WRITE";
-	m["WRITE ON"] = "WRITE";
 
+	m["WRITE"] = "WRITE";	
+	m["WRITE ON"] = "WRITE";
+ 
 	m["LIGHT"] = "LIGHT";
-	m["BURN"] = "LIGHT";
+	m["BURN"] = "BURN";
 
 	m["GO"]="GO";
 	m["GO IN"]="GO";
@@ -101,7 +104,7 @@ bool FindPreposition (std::string input);
 	m["LOOK"]="LOOK";
 	
 	m["LOOK AT"]="LOOK AT";
-    m["LOOK UP"]="LOOK AT";
+        m["LOOK UP"]="LOOK AT";
 	m["LOOK INTO"]="LOOK AT";
 	m["LOOK INSIDE"]="LOOK AT";
 	m["INSPECT"]="LOOK AT";
@@ -124,7 +127,6 @@ bool FindPreposition (std::string input);
 
 	m["POUR"]="POUR";
 	m["DUMP"]="POUR";
-	m["PUT OUT"] = "POUR";
 	
 	m["RUN"]="RUN";
 	m["FLEE"]="RUN";
@@ -242,7 +244,8 @@ bool FindPreposition (std::string input);
 	n["AXE"] = "PICKAXE";
 	n["QUILL"] = "FEATHER";
 	n["PEN"] = "FEATHER";
-	n["INK AND FEATHER"] = "FEATHER";
+	n["FEATHER AND INK"] = "FEATHER";
+
 	if (p.hasPreposition == false){
 		int w;
 		for(w=objectOneStart ;w<nwords;w++){
